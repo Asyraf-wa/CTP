@@ -77,6 +77,33 @@ class ContactsTable extends Table
      */
     public function validationDefault(Validator $validator): Validator
     {
+        $validator
+            ->scalar('ticket')
+            ->maxLength('ticket', 255)
+            ->requirePresence('ticket', 'create')
+            ->notEmptyString('ticket');
+
+        $validator
+            ->scalar('subject')
+            ->maxLength('subject', 255)
+            ->requirePresence('subject', 'create')
+            ->notEmptyString('subject');
+
+        $validator
+            ->scalar('name')
+            ->maxLength('name', 255)
+            ->requirePresence('name', 'create')
+            ->notEmptyString('name');
+
+        $validator
+            ->email('email')
+            ->requirePresence('email', 'create')
+            ->notEmptyString('email');
+
+        $validator
+            ->scalar('notes')
+            ->requirePresence('notes', 'create')
+            ->notEmptyString('notes');
 
         return $validator;
     }
