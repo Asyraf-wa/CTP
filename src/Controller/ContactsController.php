@@ -77,7 +77,33 @@ class ContactsController extends AppController
         $users = $this->Contacts->Users->find('list', ['limit' => 200]);
         $this->set(compact('contact', 'users'));
     } */
-	
+/*     public function add()
+    {
+        $contact = $this->Contacts->newEmptyEntity();
+        if ($this->request->is('post')) {
+			//$formdata = $this->getRequest()->getData();
+			//$contact = $this->Contacts->patchEntity($contact, $formdata);
+            $contact = $this->Contacts->patchEntity($contact, $this->request->getData());
+				$subject = $this->request->getData('subject');
+				$name = $this->request->getData('name');
+				$email = $this->request->getData('email');
+				$notes = $this->request->getData('notes');
+				$ip = $this->request->clientIp();
+            if ($this->Contacts->save($contact)) {
+				$contact->subject = $subject;
+				$contact->name = $name;
+				$contact->email = $email;
+				$contact->notes = $notes;	
+				$contact->ip = $ip;	
+                $this->Flash->success(__('The contact has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The contact could not be saved. Please, try again.'));
+        }
+        $users = $this->Contacts->Users->find('list', ['limit' => 200])->all();
+        $this->set(compact('contact', 'users'));
+    } */
     public function add()
     {
         $contact = $this->Contacts->newEmptyEntity();
@@ -90,14 +116,13 @@ class ContactsController extends AppController
 			$notes = $this->request->getData('notes');
 			$ip = $this->request->clientIp();
 
-			$contact->subject = $subject;
-			$contact->name = $name;
-			$contact->email = $email;
-			$contact->notes = $notes;	
-			$contact->ip = $ip;			
-			
             if ($this->Contacts->save($contact)) {
-				
+				$contact->subject = $subject;
+				$contact->name = $name;
+				$contact->email = $email;
+				$contact->notes = $notes;	
+				$contact->ip = $ip;	
+			
                 $mailer = new Mailer('default');
 				$mailer->setTransport('smtp');
 				$mailer->setFrom(['noreply@codethepixel.com' => 'Code The Pixel'])
