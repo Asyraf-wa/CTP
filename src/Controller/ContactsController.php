@@ -25,6 +25,7 @@ class ContactsController extends AppController
 		$this->loadComponent('Search.Search', [
 			'actions' => ['search','check','index'],
 		]);
+		
 		$this->loadComponent('Captcha.Captcha', ['actions' => ['add']]);
 		$this->viewBuilder()->setHelpers(['Captcha.Captcha' => ['ext' => 'png']]);
 	}

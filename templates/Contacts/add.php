@@ -71,7 +71,12 @@
 	</div>
 
 	<?php echo $this->Form->control('notes', ['class' => 'form-control ckeditor','required' => false]); ?>
-
+<?php
+/* if ($this->Identity->isLoggedIn()) {
+    echo '';
+}else
+	echo $this->Captcha->render(['placeholder' => __('Please solve the riddle')]); */
+?>
 <?php echo $this->Captcha->render(['placeholder' => __('Please solve the riddle')]); ?>
 	</fieldset>
 		</div>
