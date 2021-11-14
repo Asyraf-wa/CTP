@@ -25,6 +25,8 @@ class ContactsController extends AppController
 		$this->loadComponent('Search.Search', [
 			'actions' => ['search','check','index'],
 		]);
+		$this->loadComponent('Captcha.Captcha', ['actions' => ['add']]);
+		$this->viewBuilder()->setHelpers(['Captcha.Captcha' => ['ext' => 'png']]);
 	}
     /**
      * Index method
@@ -104,7 +106,120 @@ class ContactsController extends AppController
         $users = $this->Contacts->Users->find('list', ['limit' => 200])->all();
         $this->set(compact('contact', 'users'));
     } */
-    public function add()
+	public function add() {
+        $contact = $this->Contacts->newEmptyEntity();
+        if ($this->request->is('post')) {
+            $contact = $this->Contacts->patchEntity($contact, $this->request->getData());
+			
+			$subject = $this->request->getData('subject');
+			$name = $this->request->getData('name');
+			$email = $this->request->getData('email');
+			$notes = $this->request->getData('notes');
+			$ip = $this->request->clientIp();
+
+            if ($this->Contacts->save($contact)) {
+				$contact->subject = $subject;
+				$contact->name = $name;
+				$contact->email = $email;
+				$contact->notes = $notes;	
+				$contact->ip = $ip;	
+			
+                $mailer = new Mailer('default');
+				$mailer->setTransport('smtp');
+				$mailer->setFrom(['noreply@codethepixel.com' => 'Code The Pixel'])
+			    ->setTo('asyraf.wahianuar@gmail.com') //your email
+			    ->setEmailFormat('html')
+			    ->setSubject('New Support Ticket')
+			    ->deliver('Hi Moderator/Administrator<br/><br/>New contact ticket has been submitted via contact us form. Please check and respond the to the ticket.<br/>Login to <a href="http://localhost/dev/users/verification/">Code The Pixel</a> to respond.<br/><br/>Thank you.');
+				
+				$this->Flash->success(__('The contact has been submitted. CTP administrator will respond to your ticket ASAP. Thank you.'));
+
+                return $this->redirect(['action' => 'add']);
+            }
+            $this->Flash->error(__('The contact could not be submit. Please, try again.'));
+        }
+        $users = $this->Contacts->Users->find('list', ['limit' => 200]);
+        $this->set(compact('contact', 'users'));
+	}
+	
+    public function addx()
+    {
+        $contact = $this->Contacts->newEmptyEntity();
+        if ($this->request->is('post')) {
+            $contact = $this->Contacts->patchEntity($contact, $this->request->getData());
+			
+			$subject = $this->request->getData('subject');
+			$name = $this->request->getData('name');
+			$email = $this->request->getData('email');
+			$notes = $this->request->getData('notes');
+			$ip = $this->request->clientIp();
+
+            if ($this->Contacts->save($contact)) {
+				$contact->subject = $subject;
+				$contact->name = $name;
+				$contact->email = $email;
+				$contact->notes = $notes;	
+				$contact->ip = $ip;	
+			
+                $mailer = new Mailer('default');
+				$mailer->setTransport('smtp');
+				$mailer->setFrom(['noreply@codethepixel.com' => 'Code The Pixel'])
+			    ->setTo('asyraf.wahianuar@gmail.com') //your email
+			    ->setEmailFormat('html')
+			    ->setSubject('New Support Ticket')
+			    ->deliver('Hi Moderator/Administrator<br/><br/>New contact ticket has been submitted via contact us form. Please check and respond the to the ticket.<br/>Login to <a href="http://localhost/dev/users/verification/">Code The Pixel</a> to respond.<br/><br/>Thank you.');
+				
+				$this->Flash->success(__('The contact has been submitted. CTP administrator will respond to your ticket ASAP. Thank you.'));
+
+                return $this->redirect(['action' => 'add']);
+            }
+            $this->Flash->error(__('The contact could not be submit. Please, try again.'));
+        }
+        $users = $this->Contacts->Users->find('list', ['limit' => 200]);
+        $this->set(compact('contact', 'users'));
+    }
+	
+	public function add3()
+    {
+		$contact = $this->Contacts->newEmptyEntity();
+        if ($this->request->is('post')) {
+            if ($this->Recaptcha->verify()) { // if configure enable = false, it will always return true
+            $contact = $this->Contacts->patchEntity($contact, $this->request->getData());
+			
+			$subject = $this->request->getData('subject');
+			$name = $this->request->getData('name');
+			$email = $this->request->getData('email');
+			$notes = $this->request->getData('notes');
+			$ip = $this->request->clientIp();
+
+            if ($this->Contacts->save($contact)) {
+				$contact->subject = $subject;
+				$contact->name = $name;
+				$contact->email = $email;
+				$contact->notes = $notes;	
+				$contact->ip = $ip;	
+			
+                $mailer = new Mailer('default');
+				$mailer->setTransport('smtp');
+				$mailer->setFrom(['noreply@codethepixel.com' => 'Code The Pixel'])
+			    ->setTo('asyraf.wahianuar@gmail.com') //your email
+			    ->setEmailFormat('html')
+			    ->setSubject('New Support Ticket')
+			    ->deliver('Hi Moderator/Administrator<br/><br/>New contact ticket has been submitted via contact us form. Please check and respond the to the ticket.<br/>Login to <a href="http://localhost/dev/users/verification/">Code The Pixel</a> to respond.<br/><br/>Thank you.');
+				
+				$this->Flash->success(__('The contact has been submitted. CTP administrator will respond to your ticket ASAP. Thank you.'));
+
+                return $this->redirect(['action' => 'add']);
+            }
+            $this->Flash->error(__('The contact could not be submit. Please, try again.'));
+            }
+            $this->Flash->error(__('Please pass Google Recaptcha first'));
+        }
+		$users = $this->Contacts->Users->find('list', ['limit' => 200]);
+        $this->set(compact('contact', 'users'));
+    }
+	
+    public function add2()
     {
         $contact = $this->Contacts->newEmptyEntity();
         if ($this->request->is('post')) {

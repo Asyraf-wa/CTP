@@ -72,6 +72,7 @@
 
 	<?php echo $this->Form->control('notes', ['class' => 'form-control ckeditor','required' => false]); ?>
 
+<?php echo $this->Captcha->render(['placeholder' => __('Please solve the riddle')]); ?>
 	</fieldset>
 		</div>
 		  <div class="card-footer text-end bg-light">

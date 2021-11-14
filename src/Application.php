@@ -50,6 +50,10 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
      */
     public function bootstrap(): void
     {
+        //$this->addPlugin('Recaptcha');
+
+        $this->addPlugin('Captcha');
+
         $this->addPlugin('Josegonzalez/Upload');
 
         $this->addPlugin('Proffer');
