@@ -201,6 +201,7 @@ switch ($i++) {
 	echo '<div>';
 	echo '<button type="button" class="btn hits">' . $article->category->title . ' </button> ';
 	echo '<button type="button" class="btn hits"><i class="far fa-eye"></i> ' . h($article->hits) . '</button> ';
+	echo '<button type="button" class="btn hits"><i class="far fa-calendar-alt"></i> ' . date('M d, Y', strtotime($article->publish_on)) . '</button> ';
 	if ($article->featured == 1){
 		echo '<button type="button" class="btn btn-circle text-warning" title="Recommended"><i class="fas fa-star"></i></button> ';
 	}else
@@ -226,6 +227,7 @@ switch ($i++) {
 	echo '<div>';
 	echo '<button type="button" class="btn hits">' . $article->category->title . ' </button> ';
 	echo '<button type="button" class="btn hits"><i class="far fa-eye"></i> ' . h($article->hits) . '</button> ';
+	echo '<button type="button" class="btn hits"><i class="far fa-calendar-alt"></i> ' . date('M d, Y', strtotime($article->publish_on)) . '</button> ';
 	if ($article->featured == 1){
 		echo '<button type="button" class="btn btn-circle text-warning" title="Recommended"><i class="fas fa-star"></i></button> ';
 	}else
@@ -251,6 +253,7 @@ switch ($i++) {
 	echo '<div>';
 	echo '<button type="button" class="btn hits">' . $article->category->title . ' </button> ';
 	echo '<button type="button" class="btn hits"><i class="far fa-eye"></i> ' . h($article->hits) . '</button> ';
+	echo '<button type="button" class="btn hits"><i class="far fa-calendar-alt"></i> ' . date('M d, Y', strtotime($article->publish_on)) . '</button> ';
 	if ($article->featured == 1){
 		echo '<button type="button" class="btn btn-circle text-warning" title="Recommended"><i class="fas fa-star"></i></button> ';
 	}else
@@ -277,6 +280,7 @@ switch ($i++) {
 	echo '<div>';
 	echo '<button type="button" class="btn hits">' . $article->category->title . ' </button> ';
 	echo '<button type="button" class="btn hits"><i class="far fa-eye"></i> ' . h($article->hits) . '</button> ';
+	echo '<button type="button" class="btn hits"><i class="far fa-calendar-alt"></i> ' . date('M d, Y', strtotime($article->publish_on)) . '</button> ';
 	if ($article->featured == 1){
 		echo '<button type="button" class="btn btn-circle text-warning" title="Recommended"><i class="fas fa-star"></i></button> ';
 	}else
@@ -308,6 +312,7 @@ switch ($i++) {
 	echo '<div>';
 	echo '<button type="button" class="btn hits">' . $article->category->title . ' </button> ';
 	echo '<button type="button" class="btn hits"><i class="far fa-eye"></i> ' . h($article->hits) . '</button> ';
+	echo '<button type="button" class="btn hits"><i class="far fa-calendar-alt"></i> ' . date('M d, Y', strtotime($article->publish_on)) . '</button> ';
 	if ($article->featured == 1){
 		echo '<button type="button" class="btn btn-circle text-warning" title="Recommended"><i class="fas fa-star"></i></button> ';
 	}else
@@ -333,6 +338,7 @@ switch ($i++) {
 	echo '<div>';
 	echo '<button type="button" class="btn hits">' . $article->category->title . ' </button> ';
 	echo '<button type="button" class="btn hits"><i class="far fa-eye"></i> ' . h($article->hits) . '</button> ';
+	echo '<button type="button" class="btn hits"><i class="far fa-calendar-alt"></i> ' . date('M d, Y', strtotime($article->publish_on)) . '</button> ';
 	if ($article->featured == 1){
 		echo '<button type="button" class="btn btn-circle text-warning" title="Recommended"><i class="fas fa-star"></i></button> ';
 	}else
@@ -359,6 +365,7 @@ switch ($i++) {
 	echo '<div>';
 	echo '<button type="button" class="btn hits">' . $article->category->title . ' </button> ';
 	echo '<button type="button" class="btn hits"><i class="far fa-eye"></i> ' . h($article->hits) . '</button> ';
+	echo '<button type="button" class="btn hits"><i class="far fa-calendar-alt"></i> ' . date('M d, Y', strtotime($article->publish_on)) . '</button> ';
 	if ($article->featured == 1){
 		echo '<button type="button" class="btn btn-circle text-warning" title="Recommended"><i class="fas fa-star"></i></button> ';
 	}else
@@ -385,6 +392,7 @@ switch ($i++) {
 	echo '<div>';
 	echo '<button type="button" class="btn hits">' . $article->category->title . ' </button> ';
 	echo '<button type="button" class="btn hits"><i class="far fa-eye"></i> ' . h($article->hits) . '</button> ';
+	echo '<button type="button" class="btn hits"><i class="far fa-calendar-alt"></i> ' . date('M d, Y', strtotime($article->publish_on)) . '</button> ';
 	if ($article->featured == 1){
 		echo '<button type="button" class="btn btn-circle text-warning" title="Recommended"><i class="fas fa-star"></i></button> ';
 	}else
@@ -410,6 +418,7 @@ switch ($i++) {
 	echo '<div>';
 	echo '<button type="button" class="btn hits">' . $article->category->title . ' </button> ';
 	echo '<button type="button" class="btn hits"><i class="far fa-eye"></i> ' . h($article->hits) . '</button> ';
+	echo '<button type="button" class="btn hits"><i class="far fa-calendar-alt"></i> ' . date('M d, Y', strtotime($article->publish_on)) . '</button> ';
 	if ($article->featured == 1){
 		echo '<button type="button" class="btn btn-circle text-warning" title="Recommended"><i class="fas fa-star"></i></button> ';
 	}else
@@ -435,6 +444,7 @@ switch ($i++) {
 	echo '<div>';
 	echo '<button type="button" class="btn hits">' . $article->category->title . ' </button> ';
 	echo '<button type="button" class="btn hits"><i class="far fa-eye"></i> ' . h($article->hits) . '</button> ';
+	echo '<button type="button" class="btn hits"><i class="far fa-calendar-alt"></i> ' . date('M d, Y', strtotime($article->publish_on)) . '</button> ';
 	if ($article->featured == 1){
 		echo '<button type="button" class="btn btn-circle text-warning" title="Recommended"><i class="fas fa-star"></i></button> ';
 	}else
@@ -461,6 +471,7 @@ switch ($i++) {
 	echo '<div>';
 	echo '<button type="button" class="btn hits">' . $article->category->title . ' </button> ';
 	echo '<button type="button" class="btn hits"><i class="far fa-eye"></i> ' . h($article->hits) . '</button> ';
+	echo '<button type="button" class="btn hits"><i class="far fa-calendar-alt"></i> ' . date('M d, Y', strtotime($article->publish_on)) . '</button> ';
 	if ($article->featured == 1){
 		echo '<button type="button" class="btn btn-circle text-warning" title="Recommended"><i class="fas fa-star"></i></button> ';
 	}else
@@ -486,6 +497,7 @@ switch ($i++) {
 	echo '<div>';
 	echo '<button type="button" class="btn hits">' . $article->category->title . ' </button> ';
 	echo '<button type="button" class="btn hits"><i class="far fa-eye"></i> ' . h($article->hits) . '</button> ';
+	echo '<button type="button" class="btn hits"><i class="far fa-calendar-alt"></i> ' . date('M d, Y', strtotime($article->publish_on)) . '</button> ';
 	if ($article->featured == 1){
 		echo '<button type="button" class="btn btn-circle text-warning" title="Recommended"><i class="fas fa-star"></i></button> ';
 	}else
@@ -511,6 +523,7 @@ switch ($i++) {
 	echo '<div>';
 	echo '<button type="button" class="btn hits">' . $article->category->title . ' </button> ';
 	echo '<button type="button" class="btn hits"><i class="far fa-eye"></i> ' . h($article->hits) . '</button> ';
+	echo '<button type="button" class="btn hits"><i class="far fa-calendar-alt"></i> ' . date('M d, Y', strtotime($article->publish_on)) . '</button> ';
 	if ($article->featured == 1){
 		echo '<button type="button" class="btn btn-circle text-warning" title="Recommended"><i class="fas fa-star"></i></button> ';
 	}else
@@ -537,6 +550,7 @@ switch ($i++) {
 	echo '<div>';
 	echo '<button type="button" class="btn hits">' . $article->category->title . ' </button> ';
 	echo '<button type="button" class="btn hits"><i class="far fa-eye"></i> ' . h($article->hits) . '</button> ';
+	echo '<button type="button" class="btn hits"><i class="far fa-calendar-alt"></i> ' . date('M d, Y', strtotime($article->publish_on)) . '</button> ';
 	if ($article->featured == 1){
 		echo '<button type="button" class="btn btn-circle text-warning" title="Recommended"><i class="fas fa-star"></i></button> ';
 	}else
@@ -562,6 +576,7 @@ switch ($i++) {
 	echo '<div>';
 	echo '<button type="button" class="btn hits">' . $article->category->title . ' </button> ';
 	echo '<button type="button" class="btn hits"><i class="far fa-eye"></i> ' . h($article->hits) . '</button> ';
+	echo '<button type="button" class="btn hits"><i class="far fa-calendar-alt"></i> ' . date('M d, Y', strtotime($article->publish_on)) . '</button> ';
 	if ($article->featured == 1){
 		echo '<button type="button" class="btn btn-circle text-warning" title="Recommended"><i class="fas fa-star"></i></button> ';
 	}else
@@ -587,6 +602,7 @@ switch ($i++) {
 	echo '<div>';
 	echo '<button type="button" class="btn hits">' . $article->category->title . ' </button> ';
 	echo '<button type="button" class="btn hits"><i class="far fa-eye"></i> ' . h($article->hits) . '</button> ';
+	echo '<button type="button" class="btn hits"><i class="far fa-calendar-alt"></i> ' . date('M d, Y', strtotime($article->publish_on)) . '</button> ';
 	if ($article->featured == 1){
 		echo '<button type="button" class="btn btn-circle text-warning" title="Recommended"><i class="fas fa-star"></i></button> ';
 	}else
@@ -613,6 +629,7 @@ switch ($i++) {
 	echo '<div>';
 	echo '<button type="button" class="btn hits">' . $article->category->title . ' </button> ';
 	echo '<button type="button" class="btn hits"><i class="far fa-eye"></i> ' . h($article->hits) . '</button> ';
+	echo '<button type="button" class="btn hits"><i class="far fa-calendar-alt"></i> ' . date('M d, Y', strtotime($article->publish_on)) . '</button> ';
 	if ($article->featured == 1){
 		echo '<button type="button" class="btn btn-circle text-warning" title="Recommended"><i class="fas fa-star"></i></button> ';
 	}else
@@ -639,6 +656,7 @@ switch ($i++) {
 	echo '<div>';
 	echo '<button type="button" class="btn hits">' . $article->category->title . ' </button> ';
 	echo '<button type="button" class="btn hits"><i class="far fa-eye"></i> ' . h($article->hits) . '</button> ';
+	echo '<button type="button" class="btn hits"><i class="far fa-calendar-alt"></i> ' . date('M d, Y', strtotime($article->publish_on)) . '</button> ';
 	echo '</div></div></div></div>';
 	echo '</a>';
 	echo '</div></div>';
@@ -660,6 +678,7 @@ switch ($i++) {
 	echo '<div>';
 	echo '<button type="button" class="btn hits">' . $article->category->title . ' </button> ';
 	echo '<button type="button" class="btn hits"><i class="far fa-eye"></i> ' . h($article->hits) . '</button> ';
+	echo '<button type="button" class="btn hits"><i class="far fa-calendar-alt"></i> ' . date('M d, Y', strtotime($article->publish_on)) . '</button> ';
 	if ($article->featured == 1){
 		echo '<button type="button" class="btn btn-circle text-warning" title="Recommended"><i class="fas fa-star"></i></button> ';
 	}else
@@ -685,6 +704,7 @@ switch ($i++) {
 	echo '<div>';
 	echo '<button type="button" class="btn hits">' . $article->category->title . ' </button> ';
 	echo '<button type="button" class="btn hits"><i class="far fa-eye"></i> ' . h($article->hits) . '</button> ';
+	echo '<button type="button" class="btn hits"><i class="far fa-calendar-alt"></i> ' . date('M d, Y', strtotime($article->publish_on)) . '</button> ';
 	if ($article->featured == 1){
 		echo '<button type="button" class="btn btn-circle text-warning" title="Recommended"><i class="fas fa-star"></i></button> ';
 	}else
