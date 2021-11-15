@@ -37,6 +37,15 @@ $a_name = $this->request->getParam('action');
 	<?php echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js'); ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-126181298-1"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-126181298-1');
+	</script>
 </head>
 <body>
 <div class="col-auto">
