@@ -59,7 +59,7 @@ $a_name = $this->request->getParam('action');
             <div class="row pt-3 pb-3">
                 <div class="col-10">
 					<div class="site-name-bg">
-						<b class="gradient-animate">&lt;&#47;&gt; Code The Pixel</b>
+						<h1 class="gradient-animate">&lt;&#47;&gt; Code The Pixel</h1>
 					</div>
                 </div>
                 <div class="col-2 text-end">
