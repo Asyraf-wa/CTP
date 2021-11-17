@@ -187,7 +187,7 @@ switch ($i++) {
   case "1":
     echo '<div class="col-md-6">';
 	echo '<div class="big-feed-container">';
-	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'big-bg-cover', 'width' => '500px', 'height' => '500px']);
+	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'big-bg-cover', 'width' => '644px', 'height' => '300px', 'alt' => $article->title]);
 	echo '<a href="' . $combine . '" class="feed-title-light-link">';
 	echo '<div class="big-gradient-feed big-gradient-brown">';
 	echo '<div class="big-feed-title text-dark">';
@@ -213,7 +213,7 @@ switch ($i++) {
   case "2":
     echo '<div class="col-md-3">';
 	echo '<div class="small-feed-container">';
-	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '500px', 'height' => '500px']);
+	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '318px', 'height' => '300px', 'alt' => $article->title]);
 	echo '<a href="' . $combine . '" class="feed-title-light-link">';
 	echo '<div class="small-gradient-feed small-gradient-gray">';
 	echo '<div class="small-feed-title text-dark">';
@@ -239,7 +239,7 @@ switch ($i++) {
   case "3":
     echo '<div class="col-md-3">';
 	echo '<div class="small-feed-container">';
-	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '500px', 'height' => '500px']);
+	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '318px', 'height' => '300px', 'alt' => $article->title]);
 	echo '<a href="' . $combine . '" class="feed-title-light-link">';
 	echo '<div class="small-gradient-feed small-gradient-blue">';
 	echo '<div class="small-feed-title text-dark">';
@@ -266,7 +266,7 @@ switch ($i++) {
   case "4":
     echo '<div class="col-md-3">';
 	echo '<div class="small-feed-container">';
-	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '500px', 'height' => '500px']);
+	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '318px', 'height' => '300px', 'alt' => $article->title]);
 	echo '<a href="' . $combine . '" class="feed-title-light-link">';
 	echo '<div class="small-gradient-feed small-gradient-purple">';
 	echo '<div class="small-feed-title text-light">';
@@ -292,7 +292,7 @@ switch ($i++) {
   case "5":
     echo '<div class="col-md-3">';
 	echo '<div class="small-feed-container">';
-	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '500px', 'height' => '500px']);
+	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '318px', 'height' => '300px', 'alt' => $article->title]);
 	echo '<a href="' . $combine . '" class="feed-title-light-link">';
 	echo '<div class="small-gradient-feed small-gradient-green">';
 	echo '<div class="small-feed-title text-dark">';
@@ -324,7 +324,7 @@ switch ($i++) {
   case "6":
     echo '<div class="col-md-6">';
 	echo '<div class="big-feed-container">';
-	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'big-bg-cover', 'width' => '500px', 'height' => '500px']);
+	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'big-bg-cover', 'width' => '644px', 'height' => '300px', 'alt' => $article->title]);
 	echo '<a href="' . $combine . '" class="feed-title-light-link">';
 	echo '<div class="big-gradient-feed big-gradient-yellow">';
 	echo '<div class="big-feed-title text-dark">';
@@ -351,7 +351,7 @@ switch ($i++) {
   case "7":
     echo '<div class="col-md-3">';
 	echo '<div class="small-feed-container">';
-	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '500px', 'height' => '500px']);
+	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '318px', 'height' => '300px', 'alt' => $article->title]);
 	echo '<a href="' . $combine . '" class="feed-title-light-link">';
 	echo '<div class="small-gradient-feed small-gradient-gray">';
 	echo '<div class="small-feed-title text-dark">';
@@ -378,7 +378,7 @@ switch ($i++) {
   case "8":
     echo '<div class="col-md-3">';
 	echo '<div class="small-feed-container">';
-	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '500px', 'height' => '500px']);
+	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '318px', 'height' => '300px', 'alt' => $article->title]);
 	echo '<a href="' . $combine . '" class="feed-title-light-link">';
 	echo '<div class="small-gradient-feed small-gradient-orange">';
 	echo '<div class="small-feed-title text-dark">';
@@ -404,7 +404,7 @@ switch ($i++) {
   case "9":
     echo '<div class="col-md-3">';
 	echo '<div class="small-feed-container">';
-	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '500px', 'height' => '500px']);
+	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '318px', 'height' => '300px', 'alt' => $article->title]);
 	echo '<a href="' . $combine . '" class="feed-title-light-link">';
 	echo '<div class="small-gradient-feed small-gradient-pink">';
 	echo '<div class="small-feed-title text-dark">';
@@ -430,7 +430,7 @@ switch ($i++) {
   case "10":
     echo '<div class="col-md-3">';
 	echo '<div class="small-feed-container">';
-	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '500px', 'height' => '500px']);
+	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '318px', 'height' => '300px', 'alt' => $article->title]);
 	echo '<a href="' . $combine . '" class="feed-title-light-link">';
 	echo '<div class="small-gradient-feed small-gradient-navy">';
 	echo '<div class="small-feed-title text-light">';
@@ -457,7 +457,7 @@ switch ($i++) {
   case "11":
     echo '<div class="col-md-6">';
 	echo '<div class="big-feed-container">';
-	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'big-bg-cover', 'width' => '500px', 'height' => '500px']);
+	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'big-bg-cover', 'width' => '644px', 'height' => '300px', 'alt' => $article->title]);
 	echo '<a href="' . $combine . '" class="feed-title-light-link">';
 	echo '<div class="big-gradient-feed big-gradient-red">';
 	echo '<div class="big-feed-title text-light">';
@@ -483,7 +483,7 @@ switch ($i++) {
   case "12":
     echo '<div class="col-md-3">';
 	echo '<div class="small-feed-container">';
-	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '500px', 'height' => '500px']);
+	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '318px', 'height' => '300px', 'alt' => $article->title]);
 	echo '<a href="' . $combine . '" class="feed-title-light-link">';
 	echo '<div class="small-gradient-feed small-gradient-yellow">';
 	echo '<div class="small-feed-title text-dark">';
@@ -509,7 +509,7 @@ switch ($i++) {
   case "13":
     echo '<div class="col-md-3">';
 	echo '<div class="small-feed-container">';
-	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '500px', 'height' => '500px']);
+	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '318px', 'height' => '300px', 'alt' => $article->title]);
 	echo '<a href="' . $combine . '" class="feed-title-light-link">';
 	echo '<div class="small-gradient-feed small-gradient-yellow-green">';
 	echo '<div class="small-feed-title text-light">';
@@ -536,7 +536,7 @@ switch ($i++) {
   case "14":
     echo '<div class="col-md-3">';
 	echo '<div class="small-feed-container">';
-	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '500px', 'height' => '500px']);
+	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '318px', 'height' => '300px', 'alt' => $article->title]);
 	echo '<a href="' . $combine . '" class="feed-title-light-link">';
 	echo '<div class="small-gradient-feed small-gradient-purple">';
 	echo '<div class="small-feed-title text-light">';
@@ -562,7 +562,7 @@ switch ($i++) {
   case "15":
     echo '<div class="col-md-3">';
 	echo '<div class="small-feed-container">';
-	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '500px', 'height' => '500px']);
+	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '318px', 'height' => '300px', 'alt' => $article->title]);
 	echo '<a href="' . $combine . '" class="feed-title-light-link">';
 	echo '<div class="small-gradient-feed small-gradient-red">';
 	echo '<div class="small-feed-title text-light">';
@@ -588,7 +588,7 @@ switch ($i++) {
   case "16":
     echo '<div class="col-md-6">';
 	echo '<div class="big-feed-container">';
-	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'big-bg-cover', 'width' => '500px', 'height' => '500px']);
+	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'big-bg-cover', 'width' => '644px', 'height' => '300px', 'alt' => $article->title]);
 	echo '<a href="' . $combine . '" class="feed-title-light-link">';
 	echo '<div class="big-gradient-feed big-gradient-blue">';
 	echo '<div class="big-feed-title text-light">';
@@ -615,7 +615,7 @@ switch ($i++) {
   case "17":
     echo '<div class="col-md-3">';
 	echo '<div class="small-feed-container">';
-	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '500px', 'height' => '500px']);
+	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '318px', 'height' => '300px', 'alt' => $article->title]);
 	echo '<a href="' . $combine . '" class="feed-title-light-link">';
 	echo '<div class="small-gradient-feed small-gradient-green">';
 	echo '<div class="small-feed-title text-dark">';
@@ -642,7 +642,7 @@ switch ($i++) {
   case "18":
     echo '<div class="col-md-3">';
 	echo '<div class="small-feed-container">';
-	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '500px', 'height' => '500px']);
+	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '318px', 'height' => '300px', 'alt' => $article->title]);
 	echo '<a href="' . $combine . '" class="feed-title-light-link">';
 	echo '<div class="small-gradient-feed small-gradient-navy">';
 	echo '<div class="small-feed-title text-light">';
@@ -664,7 +664,7 @@ switch ($i++) {
   case "19":
     echo '<div class="col-md-3">';
 	echo '<div class="small-feed-container">';
-	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '500px', 'height' => '500px']);
+	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '318px', 'height' => '300px', 'alt' => $article->title]);
 	echo '<a href="' . $combine . '" class="feed-title-light-link">';
 	echo '<div class="small-gradient-feed small-gradient-orange">';
 	echo '<div class="small-feed-title text-dark">';
@@ -690,7 +690,7 @@ switch ($i++) {
   case "20":
     echo '<div class="col-md-3">';
 	echo '<div class="small-feed-container">';
-	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '500px', 'height' => '500px']);
+	echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'small-bg-cover', 'width' => '318px', 'height' => '300px', 'alt' => $article->title]);
 	echo '<a href="' . $combine . '" class="feed-title-light-link">';
 	echo '<div class="small-gradient-feed small-gradient-light-brown">';
 	echo '<div class="small-feed-title text-dark">';
