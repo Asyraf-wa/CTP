@@ -9,6 +9,7 @@ $a_name = $this->request->getParam('action');
 <head>
     <?= $this->Html->charset() ?>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv = "content-language" content = "en">
 	<title><?= $this->fetch('title'); ?></title>
 		<?php if ($c_name == 'Articles' && $a_name == 'view'){
 			echo $this->Html->meta('keywords', $article->meta_key, ['block' => true]);
