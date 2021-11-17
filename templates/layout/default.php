@@ -34,7 +34,7 @@ $a_name = $this->request->getParam('action');
 		<link href="https://fonts.googleapis.com/css2?family=Squada+One&family=Tourney:wght@100&display=swap" rel="stylesheet">
 	<?php echo $this->Html->script('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js', ['block' => 'scriptBottom']); ?>
 	<?php echo $this->Html->script('dark.js', ['block' => 'scriptBottom']); ?>
-	<?php echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js'); ?>
+	<?php echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'); ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
 	<!-- Global site tag (gtag.js) - Google Analytics -->
