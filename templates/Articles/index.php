@@ -6,7 +6,7 @@
 	echo $this->Html->script('jquery.datetimepicker.full.js');
 	$domain = Router::url("/", true);
 	$c_name = $this->request->getParam('controller');
-	$this->assign('title', 'Code The Pixel');
+	$this->assign('title', 'Code The Pixel - Sharing codes and experiences');
 ?>
 
 <div class="container"><!--Container Start-->
