@@ -7,6 +7,8 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Authentication\PasswordHasher\DefaultPasswordHasher;
+//use Cake\Auth\DefaultPasswordHasher;
 
 /**
  * Users Model
@@ -197,4 +199,11 @@ class UsersTable extends Table
 
         return $rules;
     }
+	
+	public function checkForSamePassword($value, $context) {
+		if(!empty($value) && $value != $context['data']['password']) {
+			return false;
+		}
+		return true;
+	}
 }

@@ -207,7 +207,7 @@ class UsersController extends AppController
 			
             if ($this->Users->save($user)) {
 				$this->Flash->success(__(''.$username. ' password has been updated'));
-                return $this->redirect(['action' => 'profile', $slug]);
+                return $this->redirect(['action' => 'profile', $this->getRequest()->getAttribute('identity')['slug'] ?? null]);
             }
 			$this->Flash->error(__(''.$username. ' password could not be update. Please, try again.'));
         }

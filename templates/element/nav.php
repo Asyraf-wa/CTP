@@ -79,7 +79,7 @@ if ($this->Identity->isLoggedIn()) { ?>
 		</a>
 	</div>
 	<div class="col text-center ps-1">
-		<a href="<?= $domain . $prefix; ?>users/password/<?php echo $this->Identity->get('slug'); ?>" class="kosong">
+		<a href="<?= $domain . $prefix; ?>users/change_password/<?php echo $this->Identity->get('slug'); ?>" class="kosong">
 			<div class="card my-1 px-1 py-1">
 				<div><i class="fas fa-unlock-alt fs-4"></i></div>
 					<div class="fw-bold">Password</div>
