@@ -26,15 +26,15 @@ $a_name = $this->request->getParam('action');
 		<?php echo $this->Html->meta('favicon.ico','/favicon.ico',['type' => 'icon']); ?>
 		<?= $this->fetch('meta') ?>
 	<?php echo $this->Html->css('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css') ?>
-	<?= $this->Html->css('dark.css') ?>
-	<?php echo $this->Html->css(['custom']) ?>
+	<?php echo $this->Html->css('dark.min.css') ?>
+	<?php echo $this->Html->css(['custom.min.css']) ?>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css2?family=Squada+One&family=Tourney:wght@100&display=swap" rel="stylesheet">
 	<?php echo $this->Html->script('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js', ['block' => 'scriptBottom']); ?>
-	<?php echo $this->Html->script('dark.js', ['block' => 'scriptBottom']); ?>
+	<?php echo $this->Html->script('dark.min.js', ['block' => 'scriptBottom']); ?>
 	<?php echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'); ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
