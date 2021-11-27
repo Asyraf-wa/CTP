@@ -87,8 +87,8 @@ tinymce.init({
 	image_dimensions: true,
 	convert_urls: false,
 	image_class_list: [
-        {title: 'Responsive', value: 'img-responsive'},
-        {title: 'Responsive + Thumbnail', value: 'img-responsive img-thumbnail'}
+        {title: 'Responsive', value: 'img-fluid'},
+        {title: 'Responsive + Thumbnail', value: 'img-fluid img-thumbnail rounded mx-auto d-block'}
     ],
 	image_list: [
 		{ title: 'My page 1', value: 'https://www.tiny.cloud' },
@@ -103,7 +103,7 @@ tinymce.init({
 
     /* Provide image and alt text for the image dialog */
     if (meta.filetype === 'image') {
-      callback('/ctp/webroot/tutorial/xxx/xxx.jpg', { alt: 'Tutorial' });
+      callback('../img/tutorial/xxx/xxx.jpg', { alt: 'Tutorial' });
     }
 
     /* Provide alternative source and posted for the media dialog */
