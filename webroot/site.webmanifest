@@ -16,4 +16,6 @@
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
     "display": "standalone"
+	"lang": "en-US",
+	"start_url": "https://codethepixel.com",
 }
