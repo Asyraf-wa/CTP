@@ -17,6 +17,6 @@
     "background_color": "#ffffff",
     "display": "standalone",
 	"lang": "en-US",
-	"scope": "/articles",
-	"start_url": "/articles"
+	"start_url": "https://codethepixel.com/articles",
+	"scope": "https://codethepixel.com/articles"
 }
