@@ -17,5 +17,5 @@
     "background_color": "#ffffff",
     "display": "standalone"
 	"lang": "en-US",
-	"start_url": "/article",
+	"start_url": "/articles",
 }
