@@ -28,7 +28,8 @@
 	<div class="accordion-item">
 		<div id="flush-search" class="accordion-collapse <?= (!empty($_isSearch)) == ''?'collapse':'' ?>" aria-labelledby="flush-headingOne" data-bs-parent="#search">
 		<div class="accordion-body bg-light">
-<?php echo $this->Form->create(null, ['valueSources' => 'query']); ?>
+<?php //echo $this->Form->create(null, ['valueSources' => 'query']); ?>
+<?php echo $this->Form->create($article, ['type' => 'file', 'novalidate' => true]); ?>
 
   <div class="row">
     <div class="col">
