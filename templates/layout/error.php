@@ -25,7 +25,9 @@
 
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
 
-    <?= $this->Html->css(['normalize.min', 'milligram.min', 'cake']) ?>
+    <?php //echo $this->Html->css(['normalize.min', 'milligram.min', 'cake']) ?>
+	<?php echo $this->Html->css('404/style') ?>
+	
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
@@ -35,7 +37,10 @@
     <div class="error-container">
         <?= $this->Flash->render() ?>
         <?= $this->fetch('content') ?>
-        <?= $this->Html->link(__('Back'), 'javascript:history.back()') ?>
+        
     </div>
 </body>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<?php echo $this->Html->script('404/script'); ?>
 </html>
