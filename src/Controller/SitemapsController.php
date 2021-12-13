@@ -17,15 +17,15 @@ class SitemapsController extends AppController
     {
         $this->viewBuilder()->setLayout('sitemap');
         $this->RequestHandler->respondAs('xml');
-        
+        //Articles Table
         $articleTbl = TableRegistry::getTableLocator()->get('Articles');
         $articles = $articleTbl->find()->select(['slug','modified']);
         $this->set('articles', $articles);
-		
+		//Blogs Table
 		$blogTbl = TableRegistry::getTableLocator()->get('Blogs');
         $blogs = $blogTbl->find()->select(['slug','modified']);
         $this->set('blogs', $blogs);
-		
+		//Projects Table
 		$projectTbl = TableRegistry::getTableLocator()->get('Projects');
         $projects = $projectTbl->find()->select(['slug','modified']);
         $this->set('projects', $projects);
@@ -40,5 +40,4 @@ class SitemapsController extends AppController
     }
 
 }
-
 ?>
