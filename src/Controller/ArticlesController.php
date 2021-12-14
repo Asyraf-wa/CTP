@@ -16,7 +16,7 @@ class ArticlesController extends AppController
 	public function beforeFilter(\Cake\Event\EventInterface $event)
 	{
 		parent::beforeFilter($event);
-		$this->Authentication->addUnauthenticatedActions(['index','view']);
+		$this->Authentication->addUnauthenticatedActions(['index','view','listing']);
 	}
 	
 	public function initialize(): void
@@ -24,7 +24,7 @@ class ArticlesController extends AppController
 		parent::initialize();
 
 		$this->loadComponent('Search.Search', [
-			'actions' => ['search'],
+			'actions' => ['search','listing'],
 		]);
 	}
     /**
@@ -32,7 +32,7 @@ class ArticlesController extends AppController
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index2()
+    public function index_asal()
     {
         $this->paginate = [
             'contain' => ['Users', 'Categories'],
@@ -48,52 +48,75 @@ class ArticlesController extends AppController
         $this->set(compact('articles'));
     }
 	
-public function index()
-{
-/* 	$this->paginate = [
-		'contain' => ['Users', 'Categories'],
-		'maxLimit' => 20,
-		'order' => ['publish_on' => 'DESC'],
-	];
-		
-    $query = $this->Articles
-        ->find('search', ['search' => $this->request->getQueryParams()])
-        ->contain(['Users', 'Categories'])
-        ->where(['published' => '1']);
+	public function index()
+	{
+	/* 	$this->paginate = [
+			'contain' => ['Users', 'Categories'],
+			'maxLimit' => 20,
+			'order' => ['publish_on' => 'DESC'],
+		];
+			
+		$query = $this->Articles
+			->find('search', ['search' => $this->request->getQueryParams()])
+			->contain(['Users', 'Categories'])
+			->where(['published' => '1']);
 
-	$categories = $this->Articles->Categories->find('list', ['limit' => 200]);
-	//debug($query);
-	//exit;
-    $this->set('articles', $this->paginate($query), 'categories');
-	//$this->set(compact('users', 'categories','tags'));
-	
-	 */
-	 
-	$this->paginate = [
-		'contain' => ['Users', 'Categories'],
-		'maxLimit' => 20,
-		'order' => ['publish_on' => 'DESC'],
-	];
+		$categories = $this->Articles->Categories->find('list', ['limit' => 200]);
+		//debug($query);
+		//exit;
+		$this->set('articles', $this->paginate($query), 'categories');
+		//$this->set(compact('users', 'categories','tags'));
 		
-/* 	$articles = $this->paginate($this->Articles
-		->find('search', ['search' => $this->request->getQuery()])
-		->where(['published' => '1'])
-	); */
-	
-	$query = $this->Articles
-		->find('search', ['search' => $this->request->getQuery()])->contain(['Tags'])
-		->where(['published' => '1']);
-	$articles = $this->paginate($query)->toArray();
+		 */
+		 
+		$this->paginate = [
+			'contain' => ['Users', 'Categories'],
+			'maxLimit' => 20,
+			'order' => ['publish_on' => 'DESC'],
+		];
+			
+	/* 	$articles = $this->paginate($this->Articles
+			->find('search', ['search' => $this->request->getQuery()])
+			->where(['published' => '1'])
+		); */
 		
-	//$articles = $this->paginate($this->Articles);
-	$categories = $this->Articles->Categories->find('list', ['limit' => 200]);
-	$tags = $this->Articles->Tagged->find()->distinct(['Tags.slug', 'Tags.label'])->contain(['Tags'])->toArray();
-	$tags = Hash::combine($tags, '{n}.tag.slug', '{n}.tag.label');
-	//$this->set(compact('articles','categories'));
-	$this->set(compact('articles','categories','tags'));
+		$query = $this->Articles
+			->find('search', ['search' => $this->request->getQuery()])->contain(['Tags'])
+			->where(['published' => '1']);
+		$articles = $this->paginate($query)->toArray();
+			
+		//$articles = $this->paginate($this->Articles);
+		$categories = $this->Articles->Categories->find('list', ['limit' => 200]);
+		$tags = $this->Articles->Tagged->find()->distinct(['Tags.slug', 'Tags.label'])->contain(['Tags'])->toArray();
+		$tags = Hash::combine($tags, '{n}.tag.slug', '{n}.tag.label');
+		//$this->set(compact('articles','categories'));
+		$this->set(compact('articles','categories','tags'));
+		
+		$this->set('_serialize', ['users']); 
+	}
 	
-	$this->set('_serialize', ['users']); 
-}
+	public function listing()
+	{
+		$this->paginate = [
+			'contain' => ['Users', 'Categories'],
+			'maxLimit' => 20,
+			'order' => ['publish_on' => 'DESC'],
+		];
+
+		$query = $this->Articles
+			->find('search', ['search' => $this->request->getQuery()])->contain(['Tags'])
+			->where(['published' => '1']);
+		$articles = $this->paginate($query)->toArray();
+			
+		//$articles = $this->paginate($this->Articles);
+		$categories = $this->Articles->Categories->find('list', ['limit' => 200]);
+		$tags = $this->Articles->Tagged->find()->distinct(['Tags.slug', 'Tags.label'])->contain(['Tags'])->toArray();
+		$tags = Hash::combine($tags, '{n}.tag.slug', '{n}.tag.label');
+		//$this->set(compact('articles','categories'));
+		$this->set(compact('articles','categories','tags'));
+		
+		$this->set('_serialize', ['users']); 
+	}
 
     /**
      * View method
