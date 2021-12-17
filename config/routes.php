@@ -65,6 +65,8 @@ $routes->scope('/', function (RouteBuilder $builder) {
 	
 	$builder->connect('/articles', ['controller' => 'Articles', 'action' => 'index']);
 	$builder->connect('/articles/*', ['controller' => 'Articles', 'action' => 'view']);
+	$builder->connect('/articles/pdf/*', ['controller' => 'Articles', 'action' => 'pdf']);
+	$builder->connect('/articles/like/*', ['controller' => 'Articles', 'action' => 'like']);
 	$builder->connect('/articles/listing', ['controller' => 'Articles', 'action' => 'listing']);
 	
 	

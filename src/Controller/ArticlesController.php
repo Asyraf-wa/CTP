@@ -16,7 +16,7 @@ class ArticlesController extends AppController
 	public function beforeFilter(\Cake\Event\EventInterface $event)
 	{
 		parent::beforeFilter($event);
-		$this->Authentication->addUnauthenticatedActions(['index','view','listing']);
+		$this->Authentication->addUnauthenticatedActions(['index','view','listing','pdf','like']);
 	}
 	
 	public function initialize(): void
@@ -182,17 +182,39 @@ class ArticlesController extends AppController
         $this->set(compact('article','popular','random','latest','tags'));
     }
 	
-    public function kudos($id = null)
+	public function pdf($slug = null)
+	{
+ 	$this->viewBuilder()->enableAutoLayout(false); 
+		$article = $this->Articles
+			->findBySlug($slug)
+			->contain(['Users', 'Categories'])
+			->firstOrFail();
+			
+		//$article = $this->Reports->get($slug);
+		$this->viewBuilder()->setClassName('CakePdf.Pdf');
+		$this->viewBuilder()->setOption(
+			'pdfConfig',
+			[
+				'orientation' => 'portrait',
+				'download' => true, // This can be omitted if "filename" is specified.
+				'filename' => $slug . '.pdf' //// This can be omitted if you want file name based on URL.
+			]
+		);
+		$this->set('article', $article);
+	} 
+	
+    public function like($slug = null)
     {
-        $article = $this->Articles->get($id, [
-            'contain' => [],
-        ]);
+        $article = $this->Articles
+			->findBySlug($slug)
+			->contain(['Users', 'Categories'])
+			->firstOrFail();
 		
 		$articles = TableRegistry::get('Articles');
 		$query = $articles->query();
 		$query->update()
 			->set($query->newExpr('kudos = kudos + 1'))
-			->where(['id' => $id])
+			->where(['slug' => $slug])
 			->execute();
 			
 		return $this->redirect($this->referer());

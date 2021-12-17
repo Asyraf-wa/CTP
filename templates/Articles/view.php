@@ -18,12 +18,13 @@ echo $this->Html->script('qr-code-styling-1-5-0.min.js');
 			  <hr>
 			  <button type="button" class="btn article-header-circle"><i class="far fa-folder"></i> <?= h($article->category->title) ?></button>
 			  <button type="button" class="btn article-header-circle"><i class="far fa-eye"></i> <?= h($article->hits) ?></button>
-			  <?= $this->Html->link(__('<i class="far fa-thumbs-up"></i> Like'), ['action' => 'kudos', $article->id], ['class' => 'btn hits article-header-circle', 'escape' => false]) ?>
+			  <?= $this->Html->link(__('<i class="far fa-thumbs-up"></i> Like'), ['action' => 'like', $article->slug], ['class' => 'btn hits article-header-circle', 'escape' => false, 'title' => 'Like']) ?>
 			  <?php if ($article->featured == 1){
 					echo '<button type="button" class="btn article-header-circle-star text-white" title="Recommended"><i class="fas fa-star"></i> </button> ';
 				}else
 					'';
 				?>
+				<?= $this->Html->link(__('<i class="far fa-file-pdf"></i> PDF'), ['action' => 'pdf', $article->slug], ['class' => 'btn hits article-header-circle', 'escape' => false, 'title' => 'Save as PDF']) ?>
 <?php
 if ($this->Identity->isLoggedIn()) { ?>
 <button class="btn btn-sm shadow-none bg-danger text-light btn-outline-secondary rounded-circle mt-3" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
