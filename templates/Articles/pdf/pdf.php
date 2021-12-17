@@ -36,7 +36,7 @@ body{
 </head>
 <body>
 <h1 class="logo">
-<?= $this->Html->image('logo-150x150.png', ['fullBase' => true]); ?><br>
+<?= $this->Html->image('logo-150x150.png', ['fullBase' => true, 'width'=>'50px', 'height'=>'50px']); ?><br>
 CODE THE PIXEL</h1>
 <table border="0" style="width:100%">
 	<tr>
