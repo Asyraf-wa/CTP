@@ -92,18 +92,14 @@
 	$result = $time->timeAgoInWords([
 		'accuracy' => 'hour']);
 	echo $result;
-?> (<?= date('d M Y h:m a', strtotime($user->last_login)); ?>)
-<br>
-Created: <?= date('d M Y, h:m a', strtotime($user->created)); ?>
-<br>
-Modified: <?= date('d M Y, h:m a', strtotime($user->modified)); ?>
+?> (<?= date('d M Y h:m:s', strtotime($user->last_login)); ?>)
 </p>
   </figcaption>
 </figure>
 	</div>
 	<div class="col-md-9">
 <div class="card mb-3 shadow module-blue-big border borderless">
-	<div class="pt-3 pb-3 px-3 py-3 icon-robot2 icon-robot-tangan mt-0 text-light">Latest 5 Articles
+	<div class="pt-3 pb-3 px-3 py-3 icon-robot2 icon-robot-tangan mt-0 text-light">Related Articles
 		<div class=" text-light panel_subs"><?php echo $system_name; ?></div>
 	</div>
 		<div class="card-body bg-light border borderless px-0">
@@ -111,51 +107,33 @@ Modified: <?= date('d M Y, h:m a', strtotime($user->modified)); ?>
 <?= $this->Html->link(__('View All Articles'), ['prefix' => 'Admin','controller' => 'Articles','action' => 'index'], ['class' => 'btn btn-outline-secondary btn-sm', 'escape' => false]) ?>		
 </div>
 
-<?php if (!empty($user->articles)) : ?>
+
                 <div class="table-responsive">
                     <table class="table table-striped table-hover table-sm px-1">
                         <tr>
                             <th class="px-3"><?= __('Category') ?></th>
                             <th><?= __('Title') ?></th>
-                            <th style="text-align: center;"><?= __('Hits') ?></th>
-                            <th style="text-align: center;"><?= __('Status') ?></th>
-                            <th style="text-align: center;"><?= __('Publish') ?></th>
+                            <th><?= __('Hits') ?></th>
+                            <th><?= __('Status') ?></th>
+                            <th><?= __('Publish') ?></th>
                             <th class="actions"></th>
                         </tr>
                         <?php foreach ($articles as $article): ?>	
                         <tr>
-                            <td class="px-3">
-<?php if ($article->category_id == 1){
-		echo 'CakePHP';
-	}elseif ($article->category_id == 2){
-		echo 'Joomla!';
-	}elseif ($article->category_id == 3){
-		echo 'Tools & Software';
-	}elseif ($article->category_id == 4){
-		echo 'Misc';
-	}else
-		echo $article->category_id;
-?>
-							</td>
+                            <td class="px-3"><?= h($article->category_id) ?></td>
                             <td><?= h($article->title) ?></td>
-                            <td style="text-align: center;"><?= h($article->hits) ?></td>
-                            <td style="text-align: center;">
-							<?php if ($article->published == 1){
-						echo '<i class="fas fa-circle text-success"></i>';
-					}else
-						echo '<i class="fas fa-circle text-danger"></i>';
-					?>
-							</td>
-                            <td style="text-align: center;"><?= date('d M Y', strtotime($article->publish_on)); ?></td>
+                            <td><?= h($article->hits) ?></td>
+                            <td><?= h($article->status) ?></td>
+                            <td><?= date('d M Y', strtotime($article->publish_on)); ?></td>
                             <td class="px-3">
 <div class="dropdown">
   <button class="btn p-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
     <i class="fas fa-bars text-primary"></i>
   </button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-	<?= $this->Html->link(__('<i class="far fa-folder-open"></i> View'), ['controller' => 'articles', 'action' => 'view', $article->slug, 'prefix' => false], ['class' => 'dropdown-item', 'escape' => false]) ?>
-	<?= $this->Html->link(__('<i class="far fa-edit"></i> Edit'), ['controller' => 'articles', 'action' => 'edit', $article->slug], ['class' => 'dropdown-item', 'escape' => false]) ?>
-	<?= $this->Form->postLink(__('<i class="far fa-trash-alt"></i> Delete'), ['controller' => 'articles', 'action' => 'delete', $article->slug], ['confirm' => __('Are you sure you want to delete # {0}?', $article->slug), 'class' => 'dropdown-item', 'escape' => false]) ?>
+	<?= $this->Html->link(__('<i class="fas fa-plus"></i> View'), ['action' => 'view', $article->id, 'prefix' => false], ['class' => 'dropdown-item', 'escape' => false]) ?>
+	<?= $this->Html->link(__('<i class="far fa-edit"></i> Edit'), ['action' => 'edit', $article->id], ['class' => 'dropdown-item', 'escape' => false]) ?>
+	<?= $this->Form->postLink(__('<i class="far fa-trash-alt"></i> Delete'), ['action' => 'delete', $article->id], ['confirm' => __('Are you sure you want to delete # {0}?', $article->id), 'class' => 'dropdown-item', 'escape' => false]) ?>
   </ul>
 </div>
                             </td>
@@ -163,11 +141,44 @@ Modified: <?= date('d M Y, h:m a', strtotime($user->modified)); ?>
                         <?php endforeach; ?>
                     </table>
                 </div>
-<?php endif; ?>
+
 
 					
-                
-                
+                <?php if (!empty($user->articles)) : ?>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover table-sm px-1">
+                        <tr>
+                            <th class="px-3"><?= __('Category') ?></th>
+                            <th><?= __('Title') ?></th>
+                            <th><?= __('Hits') ?></th>
+                            <th><?= __('Status') ?></th>
+                            <th><?= __('Publish') ?></th>
+                            <th class="actions"></th>
+                        </tr>
+                        <?php foreach ($user->articles as $articles) : ?>
+                        <tr>
+                            <td class="px-3"><?= h($articles->category_id) ?></td>
+                            <td><?= h($articles->title) ?></td>
+                            <td><?= h($articles->hits) ?></td>
+                            <td><?= h($articles->status) ?></td>
+                            <td><?= date('d M Y', strtotime($articles->publish_on)); ?></td>
+                            <td class="px-3">
+<div class="dropdown">
+  <button class="btn p-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+    <i class="fas fa-bars text-primary"></i>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+	<?= $this->Html->link(__('<i class="fas fa-plus"></i> View'), ['action' => 'view', $articles->id, 'prefix' => false], ['class' => 'dropdown-item', 'escape' => false]) ?>
+	<?= $this->Html->link(__('<i class="far fa-edit"></i> Edit'), ['action' => 'edit', $articles->id], ['class' => 'dropdown-item', 'escape' => false]) ?>
+	<?= $this->Form->postLink(__('<i class="far fa-trash-alt"></i> Delete'), ['action' => 'delete', $articles->id], ['confirm' => __('Are you sure you want to delete # {0}?', $articles->id), 'class' => 'dropdown-item', 'escape' => false]) ?>
+  </ul>
+</div>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </table>
+                </div>
+                <?php endif; ?>
 		</div>
 </div>
 	</div>

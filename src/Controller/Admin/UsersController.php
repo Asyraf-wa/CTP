@@ -96,8 +96,21 @@ class UsersController extends AppController
 			->contain(['UserGroups', 'Articles', 'Blogs', 'Contacts', 'Fitnesses', 'Pains', 'Projects'])
 			//'contain' => ['UserGroups', 'Articles', 'Blogs', 'Contacts', 'Emails', 'Fitnesses', 'Pains', 'Projects', 'Recipients', 'UserLogs'],
 			->firstOrFail();
+			
+		$this->loadModel('Articles');
+		$articles = $this->Articles->find('all')
+			->where([
+				'published' => 1,
+				'user_id' => $user->id,
+				//'user_id' => $this->Authentication->getIdentity('id')->getIdentifier('id'), //capture auth id
+				//'category_id' => '1',
+				])
+			->order(['publish_on' => 'DESC'])
+			->limit(5);
+			
+		
 
-        $this->set(compact('user'));
+        $this->set(compact('user','articles'));
     }
 
     /**
