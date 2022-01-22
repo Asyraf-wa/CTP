@@ -245,7 +245,7 @@ class ArticlesController extends AppController
 
 		//email with attachment
 		$mailer = new Mailer('default');
-		$mailer->setTransport('default'); //smtp
+		$mailer->setTransport('smtp'); //smtp
 		$mailer->setAttachments(['files' . DS . 'pdf' . DS . $slug . '.pdf']);
 		$mailer->setFrom(['noreply@codethepixel.com' => 'Code The Pixel'])
 			->setTo($email_address) //receiver email
