@@ -63,7 +63,7 @@ echo $this->Html->script('qr-code-styling-1-5-0.min.js');
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-		<?= $this->Form->create($article,['action' => '/ctp/articles/email/' . $article->slug]) ?>
+		<?= $this->Form->create($article,['action' => '/articles/email/' . $article->slug]) ?><!--local need /ctp/articles...-->
 		<?php echo $this->Form->control('email_address', ['class' => 'form-control','type'=>'email','required' => true]); ?>
       </div>
       <div class="modal-footer">
