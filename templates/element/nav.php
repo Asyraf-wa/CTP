@@ -26,7 +26,7 @@ if ($this->Identity->isLoggedIn()) { ?>
 <!--Mega menu-->
 <li class="nav-item dropdown has-megamenu">
 				<!--<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"> Mega menu  </a>-->
-	<a class="nav-link" href="#" data-bs-toggle="dropdown"><i class="fas fa-cog fa-spin text-warning"></i></a>
+	<a class="nav-link" href="#" data-bs-toggle="dropdown"><i class="fas fa-cog fa-spin text-warning"></i> Admin</a>
 				
 				<div class="dropdown-menu megamenu" role="menu">
 					<div class="container">
