@@ -7,6 +7,8 @@ use Cake\Mailer\Mailer;
 use Cake\Mailer\TransportFactory;
 use Cake\Routing\Router;
 use Cake\Http\ServerRequest;
+use Cake\Event\EventManager;
+use Cake\Utility\Security;
 /**
  * Contacts Controller
  *
@@ -127,7 +129,7 @@ class ContactsController extends AppController
             if ($this->Contacts->save($contact)) {
                 $mailer = new Mailer('default');
 				$mailer
-					->setTransport('default')
+					->setTransport('smtp')//smtp
 					->setViewVars([
 						'ticket' => $ticket,
 						'subject' => $subject,
@@ -144,6 +146,26 @@ class ContactsController extends AppController
 						->setTemplate('contact_new');
 				$mailer->deliver();
 				
+				//send notification to Telegram Bot - CodeThePixelBot				
+				$this->loadModel('Settings');
+				$setting = $this->Settings->find('all')->first();
+				$botToken =	$setting->get('telegram_bot_token');
+				$chatId = $setting->get('telegram_chatid');
+				$website = "https://api.telegram.org/bot".$botToken;
+				$emoji = "\xF0\x9F\x93\xA7"; //Email Emoji
+				$params = [
+				  'chat_id' => $chatId, 
+				  'parse_mode' => 'markdown', //parse_mode = markdown for telegram format, parse_mode = html for html format
+				  'text' => $emoji . ' *NEW CONTACT MESSAGE*'.PHP_EOL.'Subject: ' . $subject . ''.PHP_EOL.'From: ' . $name . ''.PHP_EOL.'Ticket: ' . $ticket . '',
+				];
+				$ch = curl_init($website . '/sendMessage');
+				curl_setopt($ch, CURLOPT_HEADER, false);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt($ch, CURLOPT_POST, 1);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, ($params));
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+				$result = curl_exec($ch);
+				curl_close($ch);
 				
 				$this->Flash->success(__('The contact has been submitted. CTP administrator will respond to your ticket ASAP. Thank you.'));
 
