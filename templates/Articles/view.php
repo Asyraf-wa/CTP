@@ -16,15 +16,66 @@ echo $this->Html->script('qr-code-styling-1-5-0.min.js');
 			  <h2 class="fw-bold text-light"><?= h($article->title) ?></h2>
 			  <?= h($article->user->fullname) ?> - <?= date('F d, Y', strtotime($article->publish_on)); ?>
 			  <hr>
+
+				<?php //echo $this->Html->link(__('<i class="far fa-file-pdf"></i> PDF'), ['action' => 'pdf', $article->slug], ['class' => 'btn hits article-header-circle', 'escape' => false, 'title' => 'Save as PDF']) ?>
+
+
+
+
+
+<div class="container">
+  <div class="row row-cols-auto">
+    <div class="col px-1">
 			  <button type="button" class="btn article-header-circle"><i class="far fa-folder"></i> <?= h($article->category->title) ?></button>
-			  <button type="button" class="btn article-header-circle"><i class="far fa-eye"></i> <?= h($article->hits) ?></button>
+	</div>
+    <div class="col px-1">
+			  <button type="button" class="btn article-header-circle"><i class="far fa-eye"></i> <?= h($article->hits) ?></button>	
+	</div>
+    <div class="col px-1">
 			  <?= $this->Html->link(__('<i class="far fa-thumbs-up"></i> Like'), ['action' => 'like', $article->slug], ['class' => 'btn hits article-header-circle', 'escape' => false, 'title' => 'Like']) ?>
 			  <?php if ($article->featured == 1){
 					echo '<button type="button" class="btn article-header-circle-star text-white" title="Recommended"><i class="fas fa-star"></i> </button> ';
 				}else
 					'';
-				?>
-				<?= $this->Html->link(__('<i class="far fa-file-pdf"></i> PDF'), ['action' => 'pdf', $article->slug], ['class' => 'btn hits article-header-circle', 'escape' => false, 'title' => 'Save as PDF']) ?>
+				?>		
+	</div>
+    <div class="col px-1">
+		<div class="dropdown">
+		  <button class="btn hits article-header-circle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+			<i class="fas fa-share-alt"></i> Share
+		  </button>
+		  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+			<li><?= $this->Html->link(__('<i class="far fa-file-pdf"></i> Download as PDF'), ['action' => 'pdf', $article->slug], ['class' => 'dropdown-item', 'escape' => false, 'title' => 'Save as PDF']) ?></li>
+			<li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#email"><i class="far fa-envelope"></i> Email This Article</a></li>
+		  </ul>
+		</div>	
+	</div>
+  </div>
+</div>
+
+
+<!-- Email Modal -->
+<div class="modal fade" id="email" tabindex="-1" aria-labelledby="emailLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="emailLabel">Email This Article</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+		<?= $this->Form->create($article,['action' => '/ctp/articles/email/' . $article->slug]) ?>
+		<?php echo $this->Form->control('email_address', ['class' => 'form-control','type'=>'email','required' => true]); ?>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary btn-flat btn-sm" data-bs-dismiss="modal">Close</button>
+		<?= $this->Form->button(__('Submit'),['type' => 'submit', 'class' => 'btn btn-outline-primary btn-flat btn-sm']) ?>
+		<?= $this->Form->end() ?>
+      </div>
+    </div>
+  </div>
+</div>
+
+				  
 <?php
 if ($this->Identity->isLoggedIn()) { ?>
 <button class="btn btn-sm shadow-none bg-danger text-light btn-outline-secondary rounded-circle mt-3" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -63,7 +114,7 @@ if ($this->Identity->isLoggedIn()) { ?>
 	<?= $this->fetch('postLink'); ?>
   </ul>
 <?php } ?>
-				<br><br>
+				<br>
 <small class="text-muted">
 Estimated reading time: 
 <?php
@@ -80,6 +131,20 @@ Estimated reading time:
     }
     echo $estimated_time;
 ?>
+
+</small>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="big-feed-container">
+			<?php echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'article-header-cover', 'width' => '500px', 'height' => '500px']); ?>
+			<div class="article-header-gradient">
+			</div>
+			</div>
+		</div>
+	  </div>
+    </section>
+	
 <!--Breadcrumbs-->
 <?php
     $this->Breadcrumbs->add([
@@ -101,30 +166,18 @@ Estimated reading time:
         ]
     ]);
 ?>
-<div class="breadcrumb-gradient ps-2 mt-2">
-	<?php
+<small>
+	<div class="mt-1 pb-1 shadow d-none d-lg-block">
+	  <?php
 		$this->Breadcrumbs->setTemplates([
 		  'wrapper' => '<div aria-label="breadcrumb" class="container"><ol class="breadcrumb" {{attrs}}>{{content}}</ol></div>',
 		  'item' => '<li {{attrs}}>{{icon}}<a href="{{url}}"{{innerAttrs}} class="breadcrumb">{{title}}</a></li>{{separator}}',
 		]);
 		echo $this->Breadcrumbs->render();
-	?>
-</div>
+	  ?>
+	</div>
 </small>
-			</div>
-		</div>
-		<div class="col-md-4">
-			<div class="big-feed-container">
-			<?php echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster,['class' =>'article-header-cover', 'width' => '500px', 'height' => '500px']); ?>
-			<div class="article-header-gradient">
-			</div>
-			</div>
-		</div>
-	  </div>
-    </section>
-	
-
-<!--
+<!--d-none d-lg-block
 <small>
 	<div class="mt-1 pb-1 shadow">
 
@@ -207,13 +260,25 @@ function myFunction() {
   /* Alert the copied text */
   alert("Reference copied: " + copyText.value);
 }
-</script>
-	  
-	  
-	  
+</script>	  
 	  
     </div>
     <div class="col-md-3">
+<?php //echo $this->Form->create($article,['action' => '/ctp/articles/?search=']) ?>
+<?php echo $this->Form->create(null, ['valueSources' => 'query', 'url' => ['controller' => 'articles','action' => 'index']]); ?>
+<?php //echo $this->Form->create($article,['type' => 'file', 'novalidate' => true]); ?>
+<?php echo $this->Form->control('search', ['class' =>'form-control',  'onkeypress' =>'handle', 'label' =>false, 'placeholder' =>'Looking for something?']); ?>
+<?php //echo $this->Form->button(__('Submit'),['type' => 'submit', 'class' => 'btn btn-outline-primary btn-flat btn-sm']) ?>
+<?= $this->Form->end() ?>
+<script>
+    function handle(e){
+        if(e.key === "Enter"){
+            alert("Enter was just pressed.");
+        }
+
+        return false;
+    }
+</script>
 <!--	
 	<div class="input-group mb-3 mt-2">
 	  <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="button-addon2">
@@ -239,7 +304,14 @@ function myFunction() {
 		</div>
 		<div class="col-md-8 col-9 px-1">
 
-	<div class="fw-bold fs-6 mx-1 text-secondary"><?= h($article->title) ?></div>
+	<div class="fw-bold fs-6 mx-1 text-secondary">
+	<?php echo $this->Text->truncate($article->title, 45	,
+		[
+			'ellipsis' => '...',
+			'exact' => false
+		]
+	); ?>
+	</div>
 	<div class="text-small mx-1 text-secondary"><?= date('F, d Y', strtotime($article->publish_on)); ?></div>
 
 		</div>

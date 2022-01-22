@@ -5,6 +5,7 @@
 /logs/*
 /tmp/*
 /vendor/*
+/webroot/pdf/*
 
 # OS generated files #
 ######################

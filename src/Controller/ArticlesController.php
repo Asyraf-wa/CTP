@@ -5,6 +5,9 @@ namespace App\Controller;
 use Cake\ORM\TableRegistry;
 use Cake\Event\EventInterface;
 use Cake\Utility\Hash;
+use Cake\Mailer\Email;
+use Cake\Mailer\Mailer;
+use Cake\Mailer\TransportFactory;
 /**
  * Articles Controller
  *
@@ -16,7 +19,7 @@ class ArticlesController extends AppController
 	public function beforeFilter(\Cake\Event\EventInterface $event)
 	{
 		parent::beforeFilter($event);
-		$this->Authentication->addUnauthenticatedActions(['index','view','listing','pdf','like']);
+		$this->Authentication->addUnauthenticatedActions(['index','view','listing','pdf','like','email']);
 	}
 	
 	public function initialize(): void
@@ -200,8 +203,66 @@ class ArticlesController extends AppController
 				'filename' => $slug . '.pdf' //// This can be omitted if you want file name based on URL.
 			]
 		);
-		$this->set('article', $article);
+		//Write and Save PDF to folder
+		$CakePdf = new \CakePdf\Pdf\CakePdf();
+		$CakePdf->template('article', 'default');
+		$CakePdf->viewVars([
+			'title' => $article->title,
+			'body' => $article->body,
+		]);
+		// Get the PDF string returned
+		$pdf = $CakePdf->output();
+		// Or write it to file directly
+		$pdf = $CakePdf->write('files' . DS . 'pdf' . DS . $slug . '.pdf');
+		
+		$this->set('article', $article, 'title', 'body');
 	} 
+	
+	public function email($slug = null)
+	{
+		$this->viewBuilder()->enableAutoLayout(false); 
+		$article = $this->Articles
+			->findBySlug($slug)
+			->contain(['Users', 'Categories'])
+			->firstOrFail();
+			
+		//Write and Save PDF to folder
+		$CakePdf = new \CakePdf\Pdf\CakePdf();
+		$CakePdf->template('article', 'default');
+		$CakePdf->viewVars([
+			'title' => $article->title,
+			'body' => $article->body,
+			'publish_on' => $article->publish_on,
+			'slug' => $article->slug,
+			'fullname' => $article->user->fullname
+		]);
+		// Get the PDF string returned
+		$pdf = $CakePdf->output();
+		// Or write it to file directly
+		$pdf = $CakePdf->write('files' . DS . 'pdf' . DS . $slug . '.pdf');
+		
+		$email_address = $this->request->getData('email_address');
+
+		//email with attachment
+		$mailer = new Mailer('default');
+		$mailer->setTransport('default'); //smtp
+		$mailer->setAttachments(['files' . DS . 'pdf' . DS . $slug . '.pdf']);
+		$mailer->setFrom(['noreply@codethepixel.com' => 'Code The Pixel'])
+			->setTo($email_address) //receiver email
+			->setEmailFormat('html')
+			->setSubject('CTP Share: ' . $article->title)
+			->deliver('Good day,<br><br>Article title <b>' . $article->title . '</b> has been share as PDF.<br><br>Original link:https://codethepixel.com/articles/' . $article->slug . '<br><br>Code The Pixel<br><a href="https://codethepixel.com">https://codethepixel.com</a>');
+		//$mailer->setAttachments(['files' . DS . 'pdf' . DS . $slug . '.pdf']);
+		//$mailer->setAttachments(['files' . DS. 'pdf' . DS . 'CakePHP-4-Audit-Trail-Using-AuditStash-Plugin.pdf']);
+		
+		
+		
+		$this->Flash->success(__('Share completed'));
+		
+		return $this->redirect($this->referer());
+		
+		$this->set('article', $article);
+	}
 	
     public function like($slug = null)
     {
