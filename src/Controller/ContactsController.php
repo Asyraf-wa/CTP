@@ -5,6 +5,8 @@ namespace App\Controller;
 use Cake\Mailer\Email;
 use Cake\Mailer\Mailer;
 use Cake\Mailer\TransportFactory;
+use Cake\Routing\Router;
+use Cake\Http\ServerRequest;
 /**
  * Contacts Controller
  *
@@ -111,27 +113,37 @@ class ContactsController extends AppController
         $contact = $this->Contacts->newEmptyEntity();
         if ($this->request->is('post')) {
             $contact = $this->Contacts->patchEntity($contact, $this->request->getData());
-			
+			//variables for email use
+			$ticket = $this->request->getData('ticket');
 			$subject = $this->request->getData('subject');
 			$name = $this->request->getData('name');
 			$email = $this->request->getData('email');
 			$notes = $this->request->getData('notes');
 			$ip = $this->request->clientIp();
+			
+			//save ip address to db
+			$contact->ip = $ip;	
 
             if ($this->Contacts->save($contact)) {
-				$contact->subject = $subject;
-				$contact->name = $name;
-				$contact->email = $email;
-				$contact->notes = $notes;	
-				$contact->ip = $ip;	
-			
                 $mailer = new Mailer('default');
-				$mailer->setTransport('smtp');
-				$mailer->setFrom(['noreply@codethepixel.com' => 'Code The Pixel'])
-			    ->setTo('asyraf.wahianuar@gmail.com') //your email
-			    ->setEmailFormat('html')
-			    ->setSubject('New Support Ticket')
-			    ->deliver('Hi Moderator/Administrator<br/><br/>New contact ticket has been submitted via contact us form. Please check and respond the to the ticket.<br/>Login to <a href="http://localhost/dev/users/verification/">Code The Pixel</a> to respond.<br/><br/>Thank you.');
+				$mailer
+					->setTransport('default')
+					->setViewVars([
+						'ticket' => $ticket,
+						'subject' => $subject,
+						'name' => $name,
+						'email' => $email,
+						'notes' => $notes,
+						'ip' => $ip,
+						])
+					->setFrom(['noreply@codethepixel.com' => 'Code The Pixel'])
+					->setTo('asyraf.wahianuar@gmail.com') //your email
+					->setEmailFormat('html')
+					->setSubject('New Support Ticket')
+					->viewBuilder()
+						->setTemplate('contact_new');
+				$mailer->deliver();
+				
 				
 				$this->Flash->success(__('The contact has been submitted. CTP administrator will respond to your ticket ASAP. Thank you.'));
 
@@ -143,7 +155,7 @@ class ContactsController extends AppController
         $this->set(compact('contact', 'users'));
 	}
 	
-    public function addx()
+/*     public function addx()
     {
         $contact = $this->Contacts->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -178,9 +190,9 @@ class ContactsController extends AppController
         }
         $users = $this->Contacts->Users->find('list', ['limit' => 200]);
         $this->set(compact('contact', 'users'));
-    }
+    } */
 	
-	public function add3()
+/* 	public function add3()
     {
 		$contact = $this->Contacts->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -218,9 +230,9 @@ class ContactsController extends AppController
         }
 		$users = $this->Contacts->Users->find('list', ['limit' => 200]);
         $this->set(compact('contact', 'users'));
-    }
+    } */
 	
-    public function add2()
+/*     public function add2()
     {
         $contact = $this->Contacts->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -255,7 +267,7 @@ class ContactsController extends AppController
         }
         $users = $this->Contacts->Users->find('list', ['limit' => 200]);
         $this->set(compact('contact', 'users'));
-    }
+    } */
 	
 	public function check()
 	{
