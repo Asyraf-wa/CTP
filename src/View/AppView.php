@@ -44,6 +44,6 @@ class AppView extends View
 		$this->loadHelper('SocialShare.SocialShare');
 		$this->loadHelper('Breadcrumbs');
 		$this->loadHelper('Authentication.Identity');
-		$this->loadHelper('Captcha.Captcha');
+		//$this->loadHelper('Captcha.Captcha');
     }
 }
