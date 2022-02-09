@@ -72,6 +72,8 @@ class Setting extends Entity
         'banned_username' => true,
         'telegram_bot_token' => true,
         'telegram_chatid' => true,
+        'hcaptcha_sitekey' => true,
+        'hcaptcha_secretkey' => true,
         'created' => true,
         'modified' => true,
     ];

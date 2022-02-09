@@ -129,6 +129,15 @@ use Cake\ORM\TableRegistry;
 	</div>
 </div>
 
+<div class="row">
+	<div class="col">
+	  <?php echo $this->Form->control('hcaptcha_sitekey'); ?>
+	</div>
+	<div class="col">
+	  <?php echo $this->Form->control('hcaptcha_secretkey'); ?>
+	</div>
+</div>
+
   <div class="row">
     <div class="col">
 		<?php echo $this->Form->checkbox('site_status', [

@@ -51,6 +51,7 @@ class AppController extends Controller
 		//$this->set('timezone', $config->get('timezone'));
 		$this->set('author', $config->get('author'));
 		$this->set('user_reg', $config->get('user_reg'));
+		$this->set('hcaptcha_sitekey', $config->get('hcaptcha_sitekey'));
 		//$this->set('config_2', $config->get('config_2'));
 		//$this->set('config_3', $config->get('config_3'));
 		//$this->set('version', $config->get('version'));
