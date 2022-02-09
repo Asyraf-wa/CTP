@@ -9,6 +9,8 @@ use Cake\Routing\Router;
 use Cake\Http\ServerRequest;
 use Cake\Event\EventManager;
 use Cake\Utility\Security;
+use Cake\Http\Client;
+//use Cake\ORM\TableRegistry;
 /**
  * Contacts Controller
  *
@@ -20,7 +22,8 @@ class ContactsController extends AppController
 	public function beforeFilter(\Cake\Event\EventInterface $event)
 	{
 		parent::beforeFilter($event);
-		$this->Authentication->addUnauthenticatedActions(['add','check']);
+		//$this->Authentication->addUnauthenticatedActions(['add','check','hCaptchaResult','hcaptcha']);
+		$this->Authentication->allowUnauthenticated(['add','check']);
 	}
 	public function initialize(): void
 	{
@@ -30,8 +33,8 @@ class ContactsController extends AppController
 			'actions' => ['search','check','index'],
 		]);
 		
-		$this->loadComponent('Captcha.Captcha', ['actions' => ['add']]);
-		$this->viewBuilder()->setHelpers(['Captcha.Captcha' => ['ext' => 'png']]);
+		//$this->loadComponent('Captcha.Captcha', ['actions' => ['add']]);
+		//$this->viewBuilder()->setHelpers(['Captcha.Captcha' => ['ext' => 'png']]);
 	}
     /**
      * Index method
@@ -111,7 +114,92 @@ class ContactsController extends AppController
         $users = $this->Contacts->Users->find('list', ['limit' => 200])->all();
         $this->set(compact('contact', 'users'));
     } */
-	public function add() {
+	public function add()
+	{
+		$this->loadModel('Settings');
+			$setting = $this->Settings->find('all')->first();
+			//$hcaptcha_sitekey =	$setting->get('hcaptcha_sitekey');
+			$hcaptcha_secretkey = $setting->get('hcaptcha_secretkey');				
+		$contact = $this->Contacts->newEmptyEntity();
+		if ($this->request->is('post')) {
+			// Get the hcaptcha from request data
+			$hcaptcha = $this->request->getData('h-captcha-response');
+			$name = $this->request->getData('name');
+			// create an httpClient and create a POST request for the API endpoint
+			$httpClient = new Client();
+			$response = $httpClient->post('https://hcaptcha.com/siteverify', [
+				'secret' => $hcaptcha_secretkey,
+				'response' => $hcaptcha,
+			]);
+			// Get the response data as JSON
+			$hCaptchaResult = $response->getJson();
+
+			// Check if the result is *success* and save your contact/go on wih your business logic
+			if ($hCaptchaResult['success']) {
+				$contact = $this->Contacts->patchEntity($contact, $this->request->getData());
+					//variables for email use
+					$ticket = $this->request->getData('ticket');
+					$subject = $this->request->getData('subject');
+					$name = $this->request->getData('name');
+					$email = $this->request->getData('email');
+					$notes = $this->request->getData('notes');
+					$ip = $this->request->clientIp();
+					//save ip address to db
+					$contact->ip = $ip;	
+				if ($this->Contacts->save($contact)) {
+					$mailer = new Mailer('default');
+						$mailer
+							->setTransport('smtp')//smtp
+							->setViewVars([
+								'ticket' => $ticket,
+								'subject' => $subject,
+								'name' => $name,
+								'email' => $email,
+								'notes' => $notes,
+								'ip' => $ip,
+								])
+							->setFrom(['noreply@codethepixel.com' => 'Code The Pixel'])
+							->setTo('asyraf.wahianuar@gmail.com') //your email
+							->setEmailFormat('html')
+							->setSubject('New Support Ticket')
+							->viewBuilder()
+								->setTemplate('contact_new');
+						$mailer->deliver();
+							
+						//send notification to Telegram Bot - CodeThePixelBot				
+						$this->loadModel('Settings');
+						$setting = $this->Settings->find('all')->first();
+						$botToken =	$setting->get('telegram_bot_token');
+						$chatId = $setting->get('telegram_chatid');
+						$website = "https://api.telegram.org/bot".$botToken;
+						$emoji = "\xF0\x9F\x93\xA7"; //Email Emoji
+						$params = [
+						  'chat_id' => $chatId, 
+						  'parse_mode' => 'markdown', //parse_mode = markdown for telegram format, parse_mode = html for html format
+						  'text' => $emoji . ' *NEW CONTACT MESSAGE*'.PHP_EOL.'Subject: ' . $subject . ''.PHP_EOL.'From: ' . $name . ''.PHP_EOL.'Ticket: ' . $ticket . '',
+						];
+						$ch = curl_init($website . '/sendMessage');
+						curl_setopt($ch, CURLOPT_HEADER, false);
+						curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+						curl_setopt($ch, CURLOPT_POST, 1);
+						curl_setopt($ch, CURLOPT_POSTFIELDS, ($params));
+						curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+						$result = curl_exec($ch);
+						curl_close($ch);
+						
+					$this->Flash->success(__('The contact has been submitted. CTP moderator will respond to your ticket. Thank you.'));
+
+                return $this->redirect(['action' => 'add']);
+				}
+			} else {
+			  $this->Flash->error(__('Captcha not fill'));
+			}
+			$this->Flash->error(__('The contact form could not be submit. Please, try again.'));
+		}
+		$users = $this->Contacts->Users->find('list', ['limit' => 200]);
+        $this->set(compact('contact', 'users'));
+	}
+/* 	public function add_betul() {
         $contact = $this->Contacts->newEmptyEntity();
         if ($this->request->is('post')) {
             $contact = $this->Contacts->patchEntity($contact, $this->request->getData());
@@ -122,7 +210,6 @@ class ContactsController extends AppController
 			$email = $this->request->getData('email');
 			$notes = $this->request->getData('notes');
 			$ip = $this->request->clientIp();
-			
 			//save ip address to db
 			$contact->ip = $ip;	
 
@@ -176,7 +263,7 @@ class ContactsController extends AppController
         $users = $this->Contacts->Users->find('list', ['limit' => 200]);
         $this->set(compact('contact', 'users'));
 	}
-	
+	 */
 /*     public function addx()
     {
         $contact = $this->Contacts->newEmptyEntity();

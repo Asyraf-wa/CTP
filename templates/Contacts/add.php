@@ -4,6 +4,8 @@
 	//echo $this->Html->script('tinymce/tinymce.min.js');
 	//echo $this->Html->script('ckeditor/ckeditor');
 ?>
+<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+
 <div class="card">
 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3984.2000131893815!2d101.61876301525233!3d3.0409885546548754!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc4bcd2e2268f9%3A0x18a6873c8e308d42!2sPuchong%2C%20Selangor%2C%20Malaysia!5e0!3m2!1sen!2smy!4v1632231729035!5m2!1sen!2smy" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
 </div>
@@ -39,7 +41,7 @@
           }
 ?>
 
-
+<?= $this->Form->create($contact) ?>
 
 <div class="row">
 	<div class="col-2">
@@ -52,15 +54,12 @@
 		</div>
 	</div>
 	<div class="col-10">
-<?= $this->Form->create($contact) ?>
 	<fieldset>
 		<?php echo $this->Form->hidden('ticket', ['class' => 'form-control','required' => false, 'value' => $str, 'label' => 'Ticket ID']); ?>
 		<?php echo $this->Form->control('subject', ['class' => 'form-control','required' => false]); ?>
 	</div>
 </div>
 
-		
-		
 	<div class="row">
 		<div class="col">
 		  <?php echo $this->Form->control('name', ['class' => 'form-control','required' => false]); ?>
@@ -77,7 +76,8 @@
 }else
 	echo $this->Captcha->render(['placeholder' => __('Please solve the riddle')]); */
 ?>
-<?php echo $this->Captcha->render(['placeholder' => __('Please solve the riddle')]); ?>
+<?php //echo $this->Captcha->render(['placeholder' => __('Please solve the riddle')]); ?>
+<div class="h-captcha" data-sitekey="<?php echo $hcaptcha_sitekey; ?>"></div>
 	</fieldset>
 		</div>
 		  <div class="card-footer text-end bg-light">
@@ -104,3 +104,4 @@ function myFunction() {
   alert("Reference copied: " + copyText.value);
 }
 </script>
+
