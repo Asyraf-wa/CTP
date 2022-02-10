@@ -68,11 +68,11 @@ if ('serviceWorker' in navigator) {
 </div>
 <!--Header-->
 <div class="header bg-picture">
-    <div class="container">
-            <div class="container fw-bold">
-            <div class="row pt-3 pb-3">
-                <div class="col-10">
-					<div class="site-name-bg">
+    <div class="container fw-bold">
+       
+            <div class="row row-cols-auto pt-3 pb-3">
+                <div class="col">
+					<div class="site-name-bg mx-1">
 						<h1 class="gradient-animate">&lt;&#47;&gt; Code The Pixel</h1>
 					</div>
                 </div>
@@ -80,7 +80,7 @@ if ('serviceWorker' in navigator) {
                 
                 </div>
             </div>
-            </div>
+  
     </div>
 </div>
 <!--Navigation bar-->
