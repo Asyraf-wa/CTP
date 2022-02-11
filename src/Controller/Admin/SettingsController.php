@@ -6,6 +6,7 @@ namespace App\Controller\Admin;
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
 use Cake\Event\EventInterface;
+use Cake\Cache\Cache;
 
 class SettingsController extends AppController
 {
@@ -118,5 +119,7 @@ class SettingsController extends AppController
 		//\Cake\Cache\Cache::clear(true);
 		//die('Cache cleared.');
 		Cache::clear();
+		$this->Flash->success(__('Cache Clear'));
+		return $this->redirect($this->referer());
 	}
 }

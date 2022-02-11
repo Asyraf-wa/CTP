@@ -8,6 +8,7 @@ use Cake\Utility\Hash;
 use Cake\Mailer\Email;
 use Cake\Mailer\Mailer;
 use Cake\Mailer\TransportFactory;
+use Cake\Cache\Cache;
 /**
  * Articles Controller
  *
@@ -25,7 +26,7 @@ class ArticlesController extends AppController
 	public function initialize(): void
 	{
 		parent::initialize();
-
+		Cache::clear();
 		$this->loadComponent('Search.Search', [
 			'actions' => ['search','listing'],
 		]);
@@ -71,13 +72,12 @@ class ArticlesController extends AppController
 		//$this->set(compact('users', 'categories','tags'));
 		
 		 */
-		 
+		 Cache::clear();
 		$this->paginate = [
 			'contain' => ['Users', 'Categories'],
 			'maxLimit' => 20,
 			'order' => ['publish_on' => 'DESC'],
 		];
-			
 	/* 	$articles = $this->paginate($this->Articles
 			->find('search', ['search' => $this->request->getQuery()])
 			->where(['published' => '1'])
