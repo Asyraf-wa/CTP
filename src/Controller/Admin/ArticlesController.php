@@ -2032,9 +2032,9 @@ $query = $this->Articles->find('list', [
 foreach ($query->all() as $row) {
 }
 $results = $query->all();
-$data = $results->toList();
-$data = $query->toArray();
-$this->set('data', $data);
+$hit_stats = $results->toList();
+$hit_stats = $query->toArray();
+$this->set('hit_stats', $hit_stats);
 	
 	$this->set(compact('monthly','yearly','sum_hits_jan','sum_hits_feb','sum_hits_mar','sum_hits_apr','sum_hits_may','sum_hits_jun','sum_hits_jul','sum_hits_aug','sum_hits_sep','sum_hits_oct','sum_hits_nov','sum_hits_dec'));	
 	}

@@ -587,7 +587,7 @@ var options = {
 	text: 'Treemap for Published Articles Hits/Views'
   },
   series: [{
-    data: <?php echo "[" . implode(", ", $data) . "]"; ?>
+    data: <?php echo "[" . implode(", ", $hit_stats) . "]"; ?>
   }],
 
 }
