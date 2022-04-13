@@ -43,7 +43,7 @@
     <div class="col-md-6">
 <?php echo $this->Form->control('category_id', [
 					'options' => $categories,
-					'empty' => 'Select Language',
+					'empty' => 'Select Category',
 					'class' => 'form-select',
 					'required' => false
 				]); ?>
