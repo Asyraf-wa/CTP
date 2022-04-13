@@ -17,6 +17,13 @@ use Cake\View\Helper;
  */
 class UsersController extends AppController
 {
+	public function initialize(): void
+	{
+		parent::initialize();
+		
+		$this->loadComponent('UserLogs');
+	}
+	
 	public function beforeFilter(\Cake\Event\EventInterface $event)
 	{
 		parent::beforeFilter($event);
@@ -28,6 +35,7 @@ class UsersController extends AppController
 		$this->request->allowMethod(['get', 'post']);
 		$result = $this->Authentication->getResult();
 		if ($result->isValid()) {
+			$this->UserLogs->userLoginActivity($this->Authentication->getIdentity('id')->getIdentifier('id'));
 			$redirect = $this->request->getQuery('redirect', [
 				'prefix' => 'Admin',
 				'controller' => 'Dashboards',
@@ -59,6 +67,7 @@ class UsersController extends AppController
 	{
 		$result = $this->Authentication->getResult();
 		if ($result->isValid()) {
+			$this->UserLogs->userLogoutActivity($this->Authentication->getIdentity('id')->getIdentifier('id'));
 			$this->Authentication->logout();
 			return $this->redirect(['prefix' => 'Admin', 'controller' => 'Users', 'action' => 'login']);
 		}

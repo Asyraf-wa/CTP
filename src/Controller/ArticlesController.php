@@ -393,4 +393,62 @@ class ArticlesController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+	
+	public function kira()
+	{
+		// $articles = $this->Articles->find('all')
+			// ->select(['count' => $query->func()->count('id'), 'month' => 'MONTH(created)'])
+			// ->where(['YEAR(created)' => date('Y')])
+			// ->group(['month' => 'MONTH(created)']);
+			//->order(['hits' => 'DESC'])
+			//->limit(5)
+			//->count();
+			
+		//Count Current Year Articles and Group by Month and Sort ASC
+		$query = $this->Articles->find();
+		$query
+			->select([
+				'month' => $query->func()->MONTHNAME(['created' => 'identifier']),
+				'view' => $query->func()->sum('Articles.hits'),
+				'total' => $query->func()->count('Articles.id')
+			])
+			->where(['YEAR(created)' => date('Y')])
+			->group(['month'])
+			->order(['created' => 'ASC']);
+		$monthly = $query;
+		
+		//Count Articles and Group by Year		
+		$query = $this->Articles->find();
+		$query
+			->select([
+				'year' => $query->func()->YEAR(['created' => 'identifier']),
+				'view' => $query->func()->sum('Articles.hits'),
+				'total' => $query->func()->count('Articles.id')
+			])
+			->group(['year'])
+			->order(['created' => 'ASC']);
+		$yearly = $query;
+			//debug($cicak->toArray());
+			//exit;
+		$this->set(compact('monthly','yearly'));
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

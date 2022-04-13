@@ -69,6 +69,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
 	$builder->connect('/articles/email/*', ['controller' => 'Articles', 'action' => 'email']);
 	$builder->connect('/articles/like/*', ['controller' => 'Articles', 'action' => 'like']);
 	$builder->connect('/articles/listing', ['controller' => 'Articles', 'action' => 'listing']);
+	$builder->connect('/articles/kira', ['controller' => 'Articles', 'action' => 'kira']);
 	
 	
 	$builder->connect('/blogs', ['controller' => 'Blogs', 'action' => 'index']);

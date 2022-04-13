@@ -7,6 +7,8 @@ use Cake\ORM\TableRegistry;
 use Cake\Event\EventInterface;
 //use Cake\Core\Configure;
 use Cake\Utility\Hash;
+use Cake\ORM\Query;
+use Cake\ORM\Locator\LocatorAwareTrait;
 /**
  * Articles Controller
  *
@@ -24,7 +26,7 @@ class ArticlesController extends AppController
 			'actions' => ['search'],
 		]);
 		
-		
+		$this->loadComponent('RequestHandler');
 	}
 	
     /**
@@ -1835,6 +1837,205 @@ public function index()
 	$this->set('october', $this->Articles->find()->where(['MONTH(created)' => date('10'), 'YEAR(created)' => date('Y')])->count());
 	$this->set('november', $this->Articles->find()->where(['MONTH(created)' => date('11'), 'YEAR(created)' => date('Y')])->count());
 	$this->set('december', $this->Articles->find()->where(['MONTH(created)' => date('12'), 'YEAR(created)' => date('Y')])->count());
-	}
+
+
 	
+	
+/**Count Current Year Articles and Group by Month and Sort ASC - Table View**/
+	$query = $this->Articles->find();
+	$query
+		->select([
+			'month' => $query->func()->MONTHNAME(['created' => 'identifier']),
+			'view' => $query->func()->sum('Articles.hits'),
+			'total' => $query->func()->count('Articles.id')
+		])
+		->where(['YEAR(created)' => date('Y')])
+		->group(['month'])
+		->order(['created' => 'ASC']);
+	$monthly = $query;
+	//debug($monthly);
+	//exit;
+//////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////
+/**Count Current Year Articles Views/Hits and Group by Month - Chart JSON View**/
+	$monthly_count_hits = $this->Articles->find('list', [
+				'keyField' => 'month',
+				'valueField' => 'hits',
+				'fields'=>[
+					'month' => 'MONTHNAME(created)',
+					'hits' => 'SUM(hits)'
+				],
+				'group' => ['month'],
+				'order'=>['MONTH(created)'=>'ASC'],
+			])
+			->where(['YEAR(created)' => date('Y')])
+			->toArray();
+	$months = json_encode(array_keys($monthly_count_hits));
+	$count_monthly = json_encode(array_values($monthly_count_hits));
+	$this->set('months', $months);
+	$this->set('count_monthly', $count_monthly);
+	
+/**Count Current Year Total Articles and Group by Month - Chart JSON View**/
+ 	$monthly_count_articles = $this->Articles->find('all', [
+				//'keyField' => 'month',
+				//'valueField' => 'id',
+				'fields'=>[
+					'month' => 'MONTHNAME(created)',
+					'total' => 'count(Articles.id)'
+				],
+				'group' => ['month'],
+				'order'=>['MONTH(created)'=>'ASC'],
+			])
+			->where(['YEAR(created)' => date('Y')])
+			->toArray();
+	
+	$monthly_articles = json_encode($monthly_count_articles);
+	//debug($monthly_articles);
+	//exit;	
+	$this->set('monthly_articles', $monthly_articles); 
+	
+
+//xxxxxxxxxxxxxxxxxxxxxxx
+		//Count Articles and Group by Year		
+		$query = $this->Articles->find();
+		$query
+			->select([
+				'year' => $query->func()->YEAR(['created' => 'identifier']),
+				'view' => $query->func()->sum('Articles.hits'),
+				'total' => $query->func()->count('Articles.id')
+			])
+			->group(['year'])
+			->order(['created' => 'ASC']);
+		$yearly = $query;
+			//debug($cicak->toArray());
+			//exit;
+			
+			
+//BELAJAR
+	$count_total_monthly = $this->Articles->find('list', [
+				'keyField' => 'month',
+				'valueField' => 'hits',
+				'fields'=>[
+					'month' => 'MONTHNAME(created)',
+					'hits' => 'SUM(hits)'
+				],
+				'group' => ['month'],
+				'order'=>['MONTH(created)'=>'ASC'],
+			])
+			->where(['YEAR(created)' => date('Y')])
+			->toArray();
+	$months = json_encode(array_keys($count_total_monthly));
+	$count_monthly = json_encode(array_values($count_total_monthly));
+	$this->set('print_month', $months);
+	$this->set('count_monthly', $count_monthly);	
+
+
+//count monthly hits
+	$monthly_hits = $this->Articles->find();
+		$count_hits_jan =$monthly_hits->select(['sum' => $monthly_hits->func()->sum('Articles.hits')])
+								->where(['MONTH(created)' => date('1'), 'YEAR(created)' => date('Y')])
+								->first();
+		$sum_hits_jan = $count_hits_jan->sum;
+		
+	$monthly_hits = $this->Articles->find();	
+		$count_hits_feb =$monthly_hits->select(['sum' => $monthly_hits->func()->sum('Articles.hits')])
+								->where(['MONTH(created)' => date('2'), 'YEAR(created)' => date('Y')])
+								->first();
+		$sum_hits_feb = $count_hits_feb->sum;
+
+	$monthly_hits = $this->Articles->find();	
+		$count_hits_mar =$monthly_hits->select(['sum' => $monthly_hits->func()->sum('Articles.hits')])
+								->where(['MONTH(created)' => date('3'), 'YEAR(created)' => date('Y')])
+								->first();
+		$sum_hits_mar = $count_hits_mar->sum;
+		
+	$monthly_hits = $this->Articles->find();	
+		$count_hits_apr =$monthly_hits->select(['sum' => $monthly_hits->func()->sum('Articles.hits')])
+								->where(['MONTH(created)' => date('4'), 'YEAR(created)' => date('Y')])
+								->first();
+		$sum_hits_apr = $count_hits_apr->sum;
+		
+	$monthly_hits = $this->Articles->find();	
+		$count_hits_may =$monthly_hits->select(['sum' => $monthly_hits->func()->sum('Articles.hits')])
+								->where(['MONTH(created)' => date('5'), 'YEAR(created)' => date('Y')])
+								->first();
+		$sum_hits_may = $count_hits_may->sum;
+		
+	$monthly_hits = $this->Articles->find();	
+		$count_hits_jun =$monthly_hits->select(['sum' => $monthly_hits->func()->sum('Articles.hits')])
+								->where(['MONTH(created)' => date('6'), 'YEAR(created)' => date('Y')])
+								->first();
+		$sum_hits_jun = $count_hits_jun->sum;
+		
+	$monthly_hits = $this->Articles->find();	
+		$count_hits_jul =$monthly_hits->select(['sum' => $monthly_hits->func()->sum('Articles.hits')])
+								->where(['MONTH(created)' => date('7'), 'YEAR(created)' => date('Y')])
+								->first();
+		$sum_hits_jul = $count_hits_jul->sum;
+		
+	$monthly_hits = $this->Articles->find();	
+		$count_hits_aug =$monthly_hits->select(['sum' => $monthly_hits->func()->sum('Articles.hits')])
+								->where(['MONTH(created)' => date('8'), 'YEAR(created)' => date('Y')])
+								->first();
+		$sum_hits_aug = $count_hits_aug->sum;
+		
+	$monthly_hits = $this->Articles->find();	
+		$count_hits_sep =$monthly_hits->select(['sum' => $monthly_hits->func()->sum('Articles.hits')])
+								->where(['MONTH(created)' => date('9'), 'YEAR(created)' => date('Y')])
+								->first();
+		$sum_hits_sep = $count_hits_sep->sum;
+		
+	$monthly_hits = $this->Articles->find();	
+		$count_hits_oct =$monthly_hits->select(['sum' => $monthly_hits->func()->sum('Articles.hits')])
+								->where(['MONTH(created)' => date('10'), 'YEAR(created)' => date('Y')])
+								->first();
+		$sum_hits_oct = $count_hits_oct->sum;
+		
+	$monthly_hits = $this->Articles->find();	
+		$count_hits_nov =$monthly_hits->select(['sum' => $monthly_hits->func()->sum('Articles.hits')])
+								->where(['MONTH(created)' => date('11'), 'YEAR(created)' => date('Y')])
+								->first();
+		$sum_hits_nov = $count_hits_nov->sum;
+		
+	$monthly_hits = $this->Articles->find();	
+		$count_hits_dec =$monthly_hits->select(['sum' => $monthly_hits->func()->sum('Articles.hits')])
+								->where(['MONTH(created)' => date('12'), 'YEAR(created)' => date('Y')])
+								->first();
+		$sum_hits_dec = $count_hits_dec->sum;
+		
+//view hits to array
+	$hits = $this->Articles->find('list', [
+		'keyField' => 'id',
+		'valueField' => 'hits'])	
+		->toArray();
+	$view_hits = json_encode(array_values($hits));
+	$this->set('view_hits', $view_hits);	
+
+//view article title to array
+	$title = $this->Articles->find('list', [
+		'keyField' => 'id',
+		'valueField' => 'title'])	
+		->toArray();
+	$title_hits = json_encode(array_values($title));
+	$this->set('title_hits', $title_hits);
+	
+		
+//Get article title and hits in array used in treemap
+$query = $this->Articles->find('list', [
+    //'keyField' => 'slug',
+    'valueField' => function ($row) {
+			return '{x:"' . $row->title . '",y:' . $row->hits  . '}';
+			//return $row->title . ',' . $row->hits;
+		}]);
+
+foreach ($query->all() as $row) {
+}
+$results = $query->all();
+$data = $results->toList();
+$data = $query->toArray();
+$this->set('data', $data);
+	
+	$this->set(compact('monthly','yearly','sum_hits_jan','sum_hits_feb','sum_hits_mar','sum_hits_apr','sum_hits_may','sum_hits_jun','sum_hits_jul','sum_hits_aug','sum_hits_sep','sum_hits_oct','sum_hits_nov','sum_hits_dec'));	
+	}
 }
