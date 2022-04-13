@@ -81,27 +81,20 @@ var monthYearChart = new Chart(ctx, {
             borderWidth: 1
         }]
     },
-    options: {
-		title: {
-			display: true,
-			text: 'Article Published (Monthly)'
-		},
-	legend: {
-		display: false,
-		position: 'top',
-			labels: {
-			  boxWidth: 40,
-			  fontColor: 'black'
-			}
-	},
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
+	options: {
+        plugins: {
+            title: {
+                display: true,
+                text: 'Article Published (Monthly)'
+            },
+		legend: {
+                display: false,
+                labels: {
+                    color: 'rgb(255, 99, 132)'
                 }
-            }]
+            },
         }
-    }
+    },
 });
 </script>	
 	</div>
@@ -119,58 +112,33 @@ var chart = new Chart(ctx, {
         backgroundColor: "rgba(54, 162, 235, 0.2)",
         borderColor: "rgba(54, 162, 235, 1)",
         borderWidth: 1,
-        label: "Articles",
+        label: "View",
         data: <?= $count_monthly; ?>
       },
       {
         type: "line",
         label: "View",
-        data: [25, 13, 30, 35, 25, 40],
+        data: <?= $count_monthly; ?>,
         lineTension: 0, 
         fill: true 
       }
     ]
-  }
-});
-/* var ctx = document.getElementById('monthly').getContext('2d');
-var monthly = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: <?= $months; ?>,
-        datasets: [{
-            label: '# of Month',
-            data: <?= $count_monthly; ?>,
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)','rgba(54, 162, 235, 0.2)','rgba(255, 206, 86, 0.2)','rgba(75, 192, 192, 0.2)','rgba(153, 102, 255, 0.2)','rgba(89, 233, 28, 0.2)','rgba(255, 5, 5, 0.2)','rgba(255, 128, 0, 0.2)','rgba(153, 153, 153, 0.2)','rgba(15, 207, 210, 0.2)','rgba(44, 13, 181, 0.2)','rgba(86, 172, 12, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)','rgba(54, 162, 235, 1)','rgba(255, 206, 86, 1)','rgba(75, 192, 192, 1)','rgba(153, 102, 255, 1)','rgba(89, 233, 28, 1)','rgba(255, 5, 5, 1)','rgba(255, 128, 0, 1)','rgba(153, 153, 153, 1)','rgba(15, 207, 210, 1)','rgba(44, 13, 181, 1)','rgba(86, 172, 12, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-		title: {
-			display: true,
-			text: 'Article Published (Monthly)'
-		},
-	legend: {
-		display: false,
-		position: 'top',
-			labels: {
-			  boxWidth: 40,
-			  fontColor: 'black'
-			}
-	},
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
+  },
+  options: {
+        plugins: {
+            title: {
+                display: true,
+                text: 'Article Views/Hits (Monthly)'
+            },
+		legend: {
+                display: false,
+                labels: {
+                    color: 'rgb(255, 99, 132)'
                 }
-            }]
+            },
         }
-    }
-}); */
+    },
+});
 </script>
 	</div>
 </div>
@@ -589,12 +557,15 @@ var options = {
   series: [{
     data: <?php echo "[" . implode(", ", $hit_stats) . "]"; ?>
   }],
-
+	dataLabels: {
+	  enabled: true,
+	},
 }
 
 var chart = new ApexCharts(document.querySelector("#single_hits"), options);
 chart.render();
 </script>
+
 
 
 	</div>
@@ -654,6 +625,6 @@ var cute = new Chart(ctx, {
 </div>
       
 
-
+<?php echo "[" . implode(", ", $hit_stats) . "]"; ?>
 	
 </div>

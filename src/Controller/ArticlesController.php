@@ -119,6 +119,17 @@ class ArticlesController extends AppController
 		$this->set(compact('articles','categories','tags'));
 		
 		$this->set('_serialize', ['users']); 
+		
+//Tags Picker
+		$this->loadModel('TagsTags');
+		$tagging = $this->TagsTags->find('all')
+			/* ->where([
+				'status' => 1,
+				'id' => '1',
+				]) */
+			->order(['label' => 'ASC']);
+			//->limit(10);
+		$this->set(compact('tagging'));
 	}
 
     /**

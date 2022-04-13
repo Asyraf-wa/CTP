@@ -161,6 +161,8 @@ $(document).ready(function() {
 </div>
 <!--Search Form End-->
 
+<div class="row">
+	<div class="col-md-9">
 <div class="card mb-3 shadow module-blue-big border borderless mt-3">
 
   <div class="card-body bg-light border borderless px-0">
@@ -223,7 +225,6 @@ jQuery(document).ready(function($) {
 
   </div>
 </div>
-
 	<div class="paginator text-end text-secondary">
 		<ul class="pagination pagination-sm justify-content-end">
 			<?= $this->Paginator->first('<< ' . __('First')) ?>
@@ -234,4 +235,22 @@ jQuery(document).ready(function($) {
 		</ul>
 		<p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} article(s) out of {{count}} total')) ?></p>
 	</div>
+	</div>
+	<div class="col-md-3 mt-3">
+<?php foreach ($tagging as $TagsTags): ?>	
+<?php
+echo $this->Html->link($TagsTags->label, ['controller' => 'Articles', 'action' => 'listing', '?' => ['tag' => $TagsTags->slug], '_full' => true],['class'=> 'btn btn-outline-primary btn-sm mb-1']
+);
+?>
+<?php endforeach; ?>	
+	</div>
+</div>
+
+
+
+
+	
+	
+
+	
 </div><!--Container End-->
