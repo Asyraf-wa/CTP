@@ -2028,7 +2028,6 @@ $query = $this->Articles->find('list', [
 			return '{x:"' . $row->title . '",y:' . $row->hits  . '}';
 			//return $row->title . ',' . $row->hits;
 		}]);
-
 foreach ($query->all() as $row) {
 }
 $results = $query->all();
