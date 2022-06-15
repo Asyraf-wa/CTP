@@ -624,6 +624,6 @@ var cute = new Chart(ctx, {
 </div>
       
 
-<?php echo $title_hits; ?>
+
 	
 </div>

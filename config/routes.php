@@ -77,6 +77,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
 	
 	$builder->connect('/projects', ['controller' => 'Projects', 'action' => 'index']);
 	$builder->connect('/projects/*', ['controller' => 'Projects', 'action' => 'view']);
+	
     /*
      * Connect catchall routes for all controllers.
      *
@@ -102,6 +103,7 @@ $routes->prefix('Admin', function (RouteBuilder $routes) {
 		$routes->connect('/users', ['controller' => 'Users', 'action' => 'index']);
 		//$routes->connect('/login', ['controller' => 'Users', 'action' => 'login']);
 		$routes->connect('/settings', ['prefix' => 'Admin', 'controller' => 'Settings', 'action' => 'update','1']);
+		$routes->connect('/todos', ['controller' => 'Todos', 'action' => 'index']);
     $routes->fallbacks(DashedRoute::class);
 });
 

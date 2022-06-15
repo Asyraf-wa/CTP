@@ -15,6 +15,7 @@ class DashboardsController extends AppController
 		$this->loadModel('Articles');
 		$this->loadModel('Blogs');
 		$this->loadModel('Users');
+		$this->loadModel('Todos');
 		
 		//$user = $this->Authentication->getIdentity();
 		//debug($user);
@@ -58,12 +59,20 @@ class DashboardsController extends AppController
 				])
 			->order(['created' => 'DESC'])
 			->limit(5);
+
+		$todos = $this->Todos->find('all')
+			->where([
+				//'published' => 1,
+				//'category_id' => '1',
+				])
+			->order(['status' => 'asc'])
+			->limit(5);
 			
 		$total_quantity = $this->Articles->find();
 		$count_quantity =$total_quantity->select(['sum' => $total_quantity->func()->sum('Articles.hits')])->first();
 		$sum_quantity = $count_quantity->sum;
 			
-		$this->set(compact('articles','blogs','article_last','blog_last','auth_user','sum_quantity'));
+		$this->set(compact('articles','blogs','article_last','blog_last','auth_user','sum_quantity','todos'));
 		
 	$this->set('article_count_all', $this->Articles->find()->count());
 	$this->set('article_active', $this->Articles->find()->where(['published' => '1'])->count());
@@ -71,6 +80,12 @@ class DashboardsController extends AppController
 	$this->set('article_archived', $this->Articles->find()->where(['published' => '3'])->count());
 	$this->set('article_featured', $this->Articles->find()->where(['featured' => '1'])->count());
 	$this->set('article_unpublish', $this->Articles->find()->where(['published' => '3'])->count());
+	
+//COUNT BY CATEGORIES
+	$this->set('cakephp', $this->Articles->find()->where(['category_id' => '1'])->count());
+	$this->set('joomla', $this->Articles->find()->where(['category_id' => '2'])->count());
+	$this->set('software', $this->Articles->find()->where(['category_id' => '3'])->count());
+	$this->set('misc', $this->Articles->find()->where(['category_id' => '4'])->count());
 	
 	$this->set('blog_count_all', $this->Blogs->find()->count());
 	$this->set('blog_active', $this->Blogs->find()->where(['published' => '1'])->count());

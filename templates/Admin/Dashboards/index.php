@@ -1,11 +1,288 @@
 <?php require_once(ROOT . DS . 'vendor' . DS  . 'simple_html_dom' . DS . 'simple_html_dom.php'); ?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<style>
+a.todo:link {
+    color:#fff;
+    text-decoration:none;
+}
+a.todo:visited {
+    color: #fff;
+    text-decoration:none;
+}
+a.todo:hover {
+    color: #fff;
+    text-decoration:underline;
+}
+a.todo:active {
+    color: #fff;
+    text-decoration:none;
+}
 
+
+</style>
 <div class="container pt-3 text-secondary">
 <h3 class="fw-bold">Dashboard</h3>
+		<div class="row">
+		  <div class="col">
+		  <?php echo $this->Html->link(
+		   '<div class="col kotak kotak-blue">
+			<div class="icon"><i class="fa fa-cog fa-3x" aria-hidden="true"></i></div>
+			<div class="nota">Setting</div>
+			</div>',
+			array('controller'=>'settings','action'=>'index','prefix'=>'Admin'),
+			array('escape' => false)); ?>
+			
+		<?php echo $this->Html->link(
+		   '<div class="col kotak kotak-green">
+			<div class="icon"><i class="fab fa-staylinked fa-3x"></i></div>
+			<div class="nota">Articles</div>
+			</div>',
+			array('controller'=>'articles','action'=>'index','prefix'=>'Admin'),
+			array('escape' => false)); ?>
+			
+		<?php echo $this->Html->link(
+		   '<div class="col kotak kotak-amber">
+			<div class="icon"><i class="fas fa-users fa-3x" aria-hidden="true"></i></div>
+			<div class="nota">User</div>
+			</div>',
+			array('controller'=>'users','action'=>'index','prefix'=>'Admin'),
+			array('escape' => false)); ?>
+			
+		<?php echo $this->Html->link(
+		   '<div class="col kotak kotak-orange">
+			<div class="icon"><i class="fab fa-uikit fa-3x" aria-hidden="true"></i></div>
+			<div class="nota">Category</div>
+			</div>',
+			array('controller'=>'categories','action'=>'index','prefix'=>'Admin'),
+			array('escape' => false)); ?>
+			
+		<?php echo $this->Html->link(
+		   '<div class="col kotak kotak-red">
+			<div class="icon"><i class="fas fa-ghost fa-3x" aria-hidden="true"></i></div>
+			<div class="nota">Blog</div>
+			</div>',
+			array('controller'=>'blogs','action'=>'index','prefix'=>'Admin'),
+			array('escape' => false)); ?>
+
+		<?php echo $this->Html->link(
+		   '<div class="col kotak kotak-purple">
+			<div class="icon"><i class="fas fa-dice-d20 fa-3x" aria-hidden="true"></i></div>
+			<div class="nota">Project</div>
+			</div>',
+			array('controller'=>'projects','action'=>'index','prefix'=>'Admin'),
+			array('escape' => false)); ?>
+			
+		<?php echo $this->Html->link(
+		   '<div class="col kotak kotak-darkblue">
+			<div class="icon"><i class="fas fa-heartbeat fa-3x"></i></div>
+			<div class="nota">Fitness</div>
+			</div>',
+			array('controller'=>'fitnesses','action'=>'index','prefix'=>'Admin'),
+			array('escape' => false)); ?>
+			
+		<?php echo $this->Html->link(
+		   '<div class="col kotak kotak-brown">
+			<div class="icon"><i class="fas fa-biohazard fa-3x"></i></div>
+			<div class="nota">Pain</div>
+			</div>',
+			array('controller'=>'pains','action'=>'index','prefix'=>'Admin'),
+			array('escape' => false)); ?>
+			
+		<?php echo $this->Html->link(
+		   '<div class="col kotak kotak-emerald">
+			<div class="icon"><i class="far fa-comment-alt fa-3x"></i></div>
+			<div class="nota">Contact</div>
+			</div>',
+			array('controller'=>'contacts','action'=>'index','prefix'=>'Admin'),
+			array('escape' => false)); ?>
+			
+		<?php echo $this->Html->link(
+		   '<div class="col kotak kotak-grey">
+			<div class="icon"><i class="fas fa-sitemap fa-3x" aria-hidden="true"></i></div>
+			<div class="nota">Sitemap</div>
+			</div>',
+			array('controller'=>'users','action'=>'index','prefix'=>'Admin'),
+			array('escape' => false)); ?>
+			
+		<?php echo $this->Html->link(
+		   '<div class="col kotak kotak-pink">
+			<div class="icon"><i class="fas fa-gamepad fa-3x" aria-hidden="true"></i></div>
+			<div class="nota">CPanel</div>
+			</div>',
+			array('controller'=>'users','action'=>'index','prefix'=>'Admin'),
+			array('escape' => false)); ?>
+			
+		<?php echo $this->Html->link(
+		   '<div class="col kotak kotak-lightpurple">
+			<div class="icon"><i class="fa fa-sign-out-alt fa-3x" aria-hidden="true"></i></div>
+			<div class="nota">Logout</div>
+			</div>',
+			['controller'=>'users','action'=>'logout','prefix'=>'Admin'],
+			['escape' => false]); ?>
+			
+		  </div>
+		</div>
+<hr>
+<div class="row">
+	<div class="col">
+<i class="far fa-bookmark text-blue"></i> <?php echo $this->Html->link('Re-CRUD Repository','https://github.com/Asyraf-wa', ['target'=>'_blank', 'class' => 'reference']); ?><br>
+<i class="far fa-bookmark text-indigo"></i> <?php echo $this->Html->link('Code The Pixel - tutorial','https://codethepixel.com', ['target'=>'_blank', 'class' => 'reference']); ?><br>
+<i class="far fa-bookmark text-purple"></i> <?php echo $this->Html->link('GetBootstrap - Theme components','https://getbootstrap.com', ['target'=>'_blank', 'class' => 'reference']); ?><br>
+	</div>
+	<div class="col">
+<i class="far fa-bookmark text-pink"></i> <?php echo $this->Html->link('Font Awesome Icon - Icon collection','https://fontawesome.com', ['target'=>'_blank', 'class' => 'reference']); ?><br>
+<i class="far fa-bookmark text-red"></i> <?php echo $this->Html->link('Feather Icon - Icon collection','https://feathericons.com', ['target'=>'_blank', 'class' => 'reference']); ?><br>
+<i class="far fa-bookmark text-orange"></i> <?php echo $this->Html->link('Github - Codes repository','https://github.com', ['target'=>'_blank', 'class' => 'reference']); ?><br>
+	</div>
+	<div class="col">
+<i class="far fa-bookmark text-yellow"></i> <?php echo $this->Html->link('Composer - Dependecy manager','https://getcomposer.org/', ['target'=>'_blank', 'class' => 'reference']); ?><br>
+<i class="far fa-bookmark text-green"></i> <?php echo $this->Html->link('ChartJS - Charting library','https://www.chartjs.org/', ['target'=>'_blank', 'class' => 'reference']); ?><br>
+<i class="far fa-bookmark text-teal"></i> <?php echo $this->Html->link('DataTables - Table enhancement','https://datatables.net/', ['target'=>'_blank', 'class' => 'reference']); ?><br>
+	</div>
+	<div class="col">
+<i class="far fa-bookmark text-cyan"></i> <?php echo $this->Html->link('Google Fonts - Font library','https://fonts.google.com/', ['target'=>'_blank', 'class' => 'reference']); ?><br>
+<i class="far fa-bookmark text-gray"></i> <?php echo $this->Html->link('Optimizilla - Image optimizer','https://imagecompressor.com/', ['target'=>'_blank', 'class' => 'reference']); ?><br>
+<i class="far fa-bookmark text-primary"></i> <?php echo $this->Html->link('PHP - PHP references','https://www.php.net/manual/en/', ['target'=>'_blank', 'class' => 'reference']); ?><br>
+<i class="far fa-bookmark text-secondary"></i> <?php echo $this->Html->link('CakePHP  Framework','https://cakephp.org/', ['target'=>'_blank', 'class' => 'reference']); ?>
+	</div>
+</div>	
+<hr>	
+
+<div class="row">
+	<div class="col-md-9">
+		Column
+	</div>
+	<div class="col-md-3">
+	
+      <div class="bg-blue2 tile ripple-effect pt-3 px-3">
+		  <div class="row">
+			<div class="col">
+			  <div class="dashboard-title fw-bold">To-Do-List</div>
+			  <div class="pb-3 text-small"><?php echo $system_name; ?></div>
+			</div>
+			<div class="col-3 text-end">
+			  <?= $this->Html->image('icon/2728212.png', ['alt' => 'virus', 'class' => '', 'style' => 'opacity: .9', 'width' => '48px', 'height' => '48px']); ?>
+			</div>
+		  </div>
+		<table class="table table-sm table-borderless">
+		<?php foreach ($todos as $todo): ?>	
+			<tr>
+				<td>
+<i class="fas fa-caret-right text-light"></i> 
+<?php if($todo->status == 1){
+	echo '<del>';
+	echo $this->Html->link(__($todo->task), ['controller' => 'Todos','action' => 'view', $todo->id, 'prefix' => 'Admin'], ['class' => 'todo', 'escape' => false]);
+	echo '</del>';
+}else
+	echo $this->Html->link(__($todo->task), ['controller' => 'Todos','action' => 'view', $todo->id, 'prefix' => 'Admin'], ['class' => 'todo', 'escape' => false]);
+?>			
+				</td>
+			</tr>
+		<?php endforeach; ?>
+		</table>
+
+<div class="text-small pt-4">Data source from <a href="https://covid-19.dataflowkit.com/v1" target="blank">Dataflow Kit</a> #stayHome #staySafe <?php echo $this->Html->link(__('Task'), ['controller' => 'Todos','action' => 'index', 'prefix' => 'Admin'], ['class' => 'todo', 'escape' => false]) ?></div>
+  
+	  </div>
+		
+
+		
+	</div>
+</div>
 
 
 
+
+<div class="row">
+	<div class="col-4">
+	  <div id="chart"></div>
+	  <script>
+        var options = {
+          chart: {
+          type: 'donut',
+		  height: '400px',
+        },
+		labels: ['CakePHP', 'Joomla', 'Software', 'Misc'],
+		series: [<?= $cakephp; ?>, <?= $joomla; ?>, <?= $software; ?>, <?= $misc; ?>],
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }]
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+		
+
+</script>
+	</div>
+	<div class="col">
+	  Column
+	</div>
+	<div class="col">
+	  Column
+	</div>
+</div>
+
+
+
+		<br><br>
+<div class="row">
+	<div class="col-md-9">
+	  Column
+	</div>
+	<div class="col-md-3">
+<table class="table table-sm table-borderless">
+	<tr>
+		<td><i class="far fa-bookmark text-blue"></i> <?php echo $this->Html->link('Re-CRUD Repository','https://github.com/Asyraf-wa', ['target'=>'_blank', 'class' => 'reference']); ?></td>
+	</tr>
+	<tr>
+		<td><i class="far fa-bookmark text-indigo"></i> <?php echo $this->Html->link('Code The Pixel - Re-CRUD tutorial','https://codethepixel.com', ['target'=>'_blank', 'class' => 'reference']); ?></td>
+	</tr>
+	<tr>
+		<td><i class="far fa-bookmark text-purple"></i> <?php echo $this->Html->link('GetBootstrap - Theme components','https://getbootstrap.com', ['target'=>'_blank', 'class' => 'reference']); ?></td>
+	</tr>
+	<tr>
+		<td><i class="far fa-bookmark text-pink"></i> <?php echo $this->Html->link('Font Awesome Icon - Icon collection','https://fontawesome.com', ['target'=>'_blank', 'class' => 'reference']); ?></td>
+	</tr>
+	<tr>
+		<td><i class="far fa-bookmark text-red"></i> <?php echo $this->Html->link('Feather Icon - Icon collection','https://feathericons.com', ['target'=>'_blank', 'class' => 'reference']); ?></td>
+	</tr>
+	<tr>
+		<td><i class="far fa-bookmark text-orange"></i> <?php echo $this->Html->link('Github - Codes repository','https://github.com', ['target'=>'_blank', 'class' => 'reference']); ?></td>
+	</tr>
+	<tr>
+		<td><i class="far fa-bookmark text-yellow"></i> <?php echo $this->Html->link('Composer - Dependecy manager','https://getcomposer.org/', ['target'=>'_blank', 'class' => 'reference']); ?></td>
+	</tr>
+	<tr>
+		<td><i class="far fa-bookmark text-green"></i> <?php echo $this->Html->link('ChartJS - Flexible charting library','https://www.chartjs.org/', ['target'=>'_blank', 'class' => 'reference']); ?></td>
+	</tr>
+	<tr>
+		<td><i class="far fa-bookmark text-teal"></i> <?php echo $this->Html->link('DataTables - Table enhancement','https://datatables.net/', ['target'=>'_blank', 'class' => 'reference']); ?></td>
+	</tr>
+	<tr>
+		<td><i class="far fa-bookmark text-cyan"></i> <?php echo $this->Html->link('Google Fonts - Font library','https://fonts.google.com/', ['target'=>'_blank', 'class' => 'reference']); ?></td>
+	</tr>
+	<tr>
+		<td><i class="far fa-bookmark text-gray"></i> <?php echo $this->Html->link('Optimizilla - Image optimizer','https://imagecompressor.com/', ['target'=>'_blank', 'class' => 'reference']); ?></td>
+	</tr>
+	<tr>
+		<td><i class="far fa-bookmark text-primary"></i> <?php echo $this->Html->link('PHP - PHP references','https://www.php.net/manual/en/', ['target'=>'_blank', 'class' => 'reference']); ?></td>
+	</tr>
+	<tr>
+		<td><i class="far fa-bookmark text-secondary"></i> <?php echo $this->Html->link('CakePHP Framework','https://cakephp.org/', ['target'=>'_blank', 'class' => 'reference']); ?></td>
+	</tr>
+</table>
+	</div>
+</div>
 
 
 <?php
