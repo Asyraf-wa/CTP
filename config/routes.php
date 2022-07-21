@@ -63,6 +63,13 @@ $routes->scope('/', function (RouteBuilder $builder) {
 	
 	$builder->connect('/contact/*', ['controller' => 'Contacts', 'action' => 'add']);
 	
+	//untuk buat url jadi codethepixel.com/articleTitle
+	/* $builder->connect(
+		'/*',
+		['controller' => 'Articles', 'action' => 'view'],
+		['_name' => 'upgrade']
+	); */
+	
 	$builder->connect('/articles', ['controller' => 'Articles', 'action' => 'index']);
 	$builder->connect('/articles/*', ['controller' => 'Articles', 'action' => 'view']);
 	$builder->connect('/articles/pdf/*', ['controller' => 'Articles', 'action' => 'pdf']);
@@ -77,6 +84,8 @@ $routes->scope('/', function (RouteBuilder $builder) {
 	
 	$builder->connect('/projects', ['controller' => 'Projects', 'action' => 'index']);
 	$builder->connect('/projects/*', ['controller' => 'Projects', 'action' => 'view']);
+
+    $builder->connect('/publications', ['controller' => 'Publications', 'action' => 'index']);
 	
     /*
      * Connect catchall routes for all controllers.
@@ -104,6 +113,7 @@ $routes->prefix('Admin', function (RouteBuilder $routes) {
 		//$routes->connect('/login', ['controller' => 'Users', 'action' => 'login']);
 		$routes->connect('/settings', ['prefix' => 'Admin', 'controller' => 'Settings', 'action' => 'update','1']);
 		$routes->connect('/todos', ['controller' => 'Todos', 'action' => 'index']);
+		$routes->connect('/publications', ['controller' => 'Publications', 'action' => 'index']);
     $routes->fallbacks(DashedRoute::class);
 });
 

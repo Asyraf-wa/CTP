@@ -9,7 +9,7 @@
             <h6>About</h6>			
 			<p class="justify">CodeThePixel.com <i>(CTP) </i> is an initiative  to help the upcoming programmers with the code. CTP focuses on providing the most efficient code or snippets as the code wants to be simple. The idea is to help code explorer build up concepts using web-framework that include PHP, Java, HTML, CSS, Bootstrap, JavaScript, SQL and Algorithm.</p>
 			<div class="badge bg-primary text-wrap">© Copyright <?= date('Y'); ?> <?php echo $system_name; ?></div>
-<div class="badge bg-danger text-wrap">Powered by CakePHP</div>
+<div class="badge bg-danger text-wrap">Powered by Re-CRUD</div>
           </div>
 
           <div class="col-xs-6 col-md-3">

@@ -102,6 +102,9 @@ class UsersTable extends Table
         $this->hasMany('Projects', [
             'foreignKey' => 'user_id',
         ]);
+        $this->hasMany('Publications', [
+            'foreignKey' => 'user_id',
+        ]);
     }
 
     /**

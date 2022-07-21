@@ -18,6 +18,22 @@ return [
 	'nestingLabel' => '{{hidden}}{{input}}<label{{attrs}} class="btn-check">{{text}}</label>',
 	'radio' => '<input type="radio" name="{{name}}" class="btn-check" value="{{value}}" {{attrs}}>',  //letak ni kalau tak nak radio 'required' attributes: <?php echo $this->Form->create($article, ['type' => 'file', 'novalidate' => true]);
 
+	// Used for checkboxes in checkbox() and multiCheckbox().
+	'checkbox' => '<input type="checkbox" name="{{name}}" value="{{value}}"{{attrs}}>',
+	// Input group wrapper for checkboxes created via control().
+	'checkboxFormGroup' => '{{label}}',
+	// Wrapper container for checkboxes.
+	//'checkboxWrapper' => '<div class="checkbox">{{label}}</div>',
+    'checkboxWrapper' => '<div class="form-check form-check-inline">{{label}}</div>', //inline style
+	
+	// Label element used for radio and multi-checkbox inputs.
+	'nestingLabel' => '{{hidden}}<label{{attrs}}>{{input}}{{text}}</label>',
+	// Legends created by allControls()
+	'legend' => '<legend>{{text}}</legend>',
+	// Multi-Checkbox input set title element.
+	'multicheckboxTitle' => '<legend>{{text}}</legend>',
+	// Multi-Checkbox wrapping container.
+	'multicheckboxWrapper' => '<fieldset{{attrs}}>{{content}}</fieldset>',
 ];
 
 ?>
