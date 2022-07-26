@@ -28,7 +28,8 @@ class PublicationsController extends AppController
     {
         $query = $this->Publications
         ->find('search', ['search' => $this->request->getQuery()])
-        ->where(['status' => '1']);
+        ->where(['status' => '1'])
+        ->order(['year' => 'DESC', 'created' => 'DESC']);
         $publications = $this->paginate($query)->toArray();
 
         $this->paginate = [
