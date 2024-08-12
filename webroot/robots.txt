@@ -1,6 +1,0 @@
-User-agent: *
-Disallow: 
-Disallow: /cgi-bin/
-Disallow: /admin/
-Disallow: /webroot/
-Sitemap: https://codethepixel.com/sitemap.xml
