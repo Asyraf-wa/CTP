@@ -1,0 +1,590 @@
+<div class="card shadow rounded-0 mb-3">
+	<div class="card-body text-body-secondary">
+		<div class="card-title mb-0">Title</div>
+		<div class="card-subtitle mb-0"><?php echo $system_name; ?></div>
+		<div class="line mb-4"></div>
+		xxx
+	</div>
+</div>
+=========================================
+<div class="card shadow rounded-0 mb-3">
+	<div class="card-body text-body-secondary">
+		xxx
+	</div>
+</div>
+=========================================
+<div class="row">
+	<div class="col-md-9">
+	  Column
+	</div>
+	<div class="col-md-3">
+	  Column
+	</div>
+</div>
+
+=========================================
+<div class="card rounded-0 mb-3 bg-body-tertiary border-0 shadow">
+	<div class="card-body text-body-secondary px-0">
+
+	</div>
+</div>
+
+===========================================
+
+ <?php foreach ($popular as $article) : ?>
+                <?php
+                $domain = Router::url("/", true);
+                $sub = 'articles/';
+                $identifier = $article->slug;
+                $combine = $domain . $sub . $identifier;
+                ?>
+                <a href="<?= $combine; ?>" class="nostyle_link">
+
+                    <div class="card bg-body-tertiary border-0 shadow mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-2 mt-1">
+                                    <div class="svg-container-37">
+                                        <?php if ($article->icon != NULL) {
+                                            echo $article->icon;
+                                        } else {
+                                            echo '<svg viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 16C12 13.7909 13.7909 12 16 12H32C34.2091 12 36 13.7909 36 16V32C36 34.2091 34.2091 36 32 36H16C13.7909 36 12 34.2091 12 32V16Z" stroke="#C2CCDE" stroke-linecap="round" />
+                                    <path d="M44 16C44 13.7909 45.7909 12 48 12H64C66.2091 12 68 13.7909 68 16V32C68 34.2091 66.2091 36 64 36H48C45.7909 36 44 34.2091 44 32V16Z" stroke="#C2CCDE" stroke-linecap="round" />
+                                    <path d="M12 48C12 45.7909 13.7909 44 16 44H32C34.2091 44 36 45.7909 36 48V64C36 66.2091 34.2091 68 32 68H16C13.7909 68 12 66.2091 12 64V48Z" stroke="#C2CCDE" stroke-linecap="round" />
+                                    <path d="M44 48C44 45.7909 45.7909 44 48 44H64C66.2091 44 68 45.7909 68 48V64C68 66.2091 66.2091 68 64 68H48C45.7909 68 44 66.2091 44 64V48Z" stroke="#C2CCDE" stroke-linecap="round" />
+                                </svg>';
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+                                <div class="col-10">
+                                    <div class="article-title mt-1">
+                                        <?php echo $this->Text->truncate(
+                                            $article->title,
+                                            45,
+                                            [
+                                                'ellipsis' => '...',
+                                                'exact' => false
+                                            ]
+                                        ); ?>
+                                    </div>
+                                    <?= date('F, d Y', strtotime($article->publish_on)); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+            <?php endforeach; ?>
+
+==================================================
+
+<div class="row g-0 my-4">
+		<div class="col-md-8">
+			<div class="card bg-body-tertiary border border-0 rounded-0 gap_0_box">
+				<div id="carouselExampleIndicators" class="carousel slide">
+					<div class="carousel-indicators">
+						<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+						<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+						<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+					</div>
+					<div class="carousel-inner">
+						<div class="carousel-item active">
+							<?php echo $this->Html->image('test1.jpg', ['class' => 'd-block w-100', 'alt' => '']); ?>
+						</div>
+						<div class="carousel-item">
+							<?php echo $this->Html->image('test2.jpg', ['class' => 'd-block w-100', 'alt' => '']); ?>
+						</div>
+					</div>
+					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Next</span>
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="row g-0">
+				<div class="col-6">
+					<div class="card bg-body-tertiary border border-0 rounded-0 gap_0_box_small">
+						<div class="card-body dusty_pink">xxx</div>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="card bg-body-tertiary border border-0 rounded-0 gap_0_box_small">
+						<div class="card-body dusty_purple">xxx</div>
+					</div>
+				</div>
+			</div>
+			<div class="row g-0">
+				<div class="col-6">
+					<div class="card bg-body-tertiary border border-0 rounded-0 gap_0_box_small">
+						<div class="card-body dusty_yellow">xxx</div>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="card bg-body-tertiary border border-0 rounded-0 gap_0_box_small">
+						<div class="card-body dusty_blue">xxx</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+
+
+	<div class="row g-0 my-4">
+		<div class="col-md-2">
+			<div class="card bg-body-tertiary border border-0 rounded-0 gap_0_box_small">
+				<div class="card-body dusty_pink">xxx</div>
+			</div>
+		</div>
+		<div class="col-md-2">
+			<div class="card bg-body-tertiary border border-0 rounded-0 gap_0_box_small">
+				<div class="card-body dusty_purple">xxx</div>
+			</div>
+		</div>
+		<div class="col-md-2">
+			<div class="card bg-body-tertiary border border-0 rounded-0 gap_0_box_small">
+				<div class="card-body dusty_yellow">xxx</div>
+			</div>
+		</div>
+		<div class="col-md-2">
+			<div class="card bg-body-tertiary border border-0 rounded-0 gap_0_box_small">
+				<div class="card-body dusty_blue">xxx</div>
+			</div>
+		</div>
+		<div class="col-md-2">
+			<div class="card bg-body-tertiary border border-0 rounded-0 gap_0_box_small">
+				<div class="card-body dusty_pink">xxx</div>
+			</div>
+		</div>
+		<div class="col-md-2">
+			<div class="card bg-body-tertiary border border-0 rounded-0 gap_0_box_small">
+				<div class="card-body dusty_purple">xxx</div>
+			</div>
+		</div>
+		<div class="col-md-2">
+			<div class="card bg-body-tertiary border border-0 rounded-0 gap_0_box_small">
+				<div class="card-body dusty_yellow">xxx</div>
+			</div>
+		</div>
+		<div class="col-md-2">
+			<div class="card bg-body-tertiary border border-0 rounded-0 gap_0_box_small">
+				<div class="card-body dusty_blue">xxx</div>
+			</div>
+		</div>
+		<div class="col-md-2">
+			<div class="card bg-body-tertiary border border-0 rounded-0 gap_0_box_small">
+				<div class="card-body dusty_pink">xxx</div>
+			</div>
+		</div>
+		<div class="col-md-2">
+			<div class="card bg-body-tertiary border border-0 rounded-0 gap_0_box_small">
+				<div class="card-body dusty_purple">xxx</div>
+			</div>
+		</div>
+		<div class="col-md-2">
+			<div class="card bg-body-tertiary border border-0 rounded-0 gap_0_box_small">
+				<div class="card-body dusty_yellow">xxx</div>
+			</div>
+		</div>
+		<div class="col-md-2">
+			<div class="card bg-body-tertiary border border-0 rounded-0 gap_0_box_small">
+				<div class="card-body dusty_blue">xxx</div>
+			</div>
+		</div>
+	</div>
+
+========================================
+GRID VIEW PETAK2
+
+<div class="row grid mt-4">
+		<?php foreach ($articles as $article) : ?>
+			<?php
+			$domain = Router::url("/", true);
+			$sub = 'articles/';
+			$identifier = $article->slug;
+			$combine = $domain . $sub . $identifier;
+			?>
+			<div class="col-md-3">
+				<a href=<?= $combine ?> class="nostyle_link">
+					<?php if ($article->featured == 0) : ?>
+						<div class="card bg-body-tertiary border-0 shadow mb-4 box">
+							<div class="card-body">
+								<div class="svg-container-70">
+									<?php if ($article->icon != NULL) {
+										echo $article->icon;
+									} else {
+										echo '<svg viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M12 16C12 13.7909 13.7909 12 16 12H32C34.2091 12 36 13.7909 36 16V32C36 34.2091 34.2091 36 32 36H16C13.7909 36 12 34.2091 12 32V16Z" stroke="#C2CCDE" stroke-linecap="round" />
+								<path d="M44 16C44 13.7909 45.7909 12 48 12H64C66.2091 12 68 13.7909 68 16V32C68 34.2091 66.2091 36 64 36H48C45.7909 36 44 34.2091 44 32V16Z" stroke="#C2CCDE" stroke-linecap="round" />
+								<path d="M12 48C12 45.7909 13.7909 44 16 44H32C34.2091 44 36 45.7909 36 48V64C36 66.2091 34.2091 68 32 68H16C13.7909 68 12 66.2091 12 64V48Z" stroke="#C2CCDE" stroke-linecap="round" />
+								<path d="M44 48C44 45.7909 45.7909 44 48 44H64C66.2091 44 68 45.7909 68 48V64C68 66.2091 66.2091 68 64 68H48C45.7909 68 44 66.2091 44 64V48Z" stroke="#C2CCDE" stroke-linecap="round" />
+							</svg>';
+									}
+									?>
+								</div>
+
+
+
+								<div class="article-title mt-1"><?= h($article->title) ?></div>
+								<div><?php echo strip_tags($this->Text->truncate(
+											$article->body,
+											200,
+											[
+												'ellipsis' => '...',
+												'exact' => false
+											]
+										)); ?>
+								</div>
+							</div>
+						</div>
+					<?php endif; ?>
+					<?php if ($article->featured == 1) : ?>
+						<div class="card bg-body-tertiary border-0 shadow mb-4 gradient-border box">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-7">
+										<svg width="70" height="70" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<path d="M12 16C12 13.7909 13.7909 12 16 12H32C34.2091 12 36 13.7909 36 16V32C36 34.2091 34.2091 36 32 36H16C13.7909 36 12 34.2091 12 32V16Z" stroke="#C2CCDE" stroke-linecap="round" />
+											<path d="M44 16C44 13.7909 45.7909 12 48 12H64C66.2091 12 68 13.7909 68 16V32C68 34.2091 66.2091 36 64 36H48C45.7909 36 44 34.2091 44 32V16Z" stroke="#C2CCDE" stroke-linecap="round" />
+											<path d="M12 48C12 45.7909 13.7909 44 16 44H32C34.2091 44 36 45.7909 36 48V64C36 66.2091 34.2091 68 32 68H16C13.7909 68 12 66.2091 12 64V48Z" stroke="#C2CCDE" stroke-linecap="round" />
+											<path d="M44 48C44 45.7909 45.7909 44 48 44H64C66.2091 44 68 45.7909 68 48V64C68 66.2091 66.2091 68 64 68H48C45.7909 68 44 66.2091 44 64V48Z" stroke="#C2CCDE" stroke-linecap="round" />
+										</svg>
+									</div>
+									<div class="col-5 text-end">
+										<svg width="30" height="30" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<path d="M38.1441 12.6217C38.8159 10.9488 41.1841 10.9488 41.8559 12.6217L47.8081 27.4439C48.0942 28.1563 48.7628 28.642 49.5288 28.694L65.4648 29.7745C67.2635 29.8965 67.9953 32.1489 66.6118 33.3047L54.3544 43.5459C53.7653 44.0381 53.5099 44.8241 53.6972 45.5686L57.5941 61.0586C58.0339 62.8069 56.1179 64.199 54.5911 63.2404L41.0634 54.7476C40.4132 54.3394 39.5868 54.3394 38.9366 54.7476L25.4089 63.2404C23.8821 64.199 21.9661 62.8069 22.4059 61.0586L26.3028 45.5686C26.4901 44.8241 26.2347 44.0381 25.6456 43.5459L13.3882 33.3047C12.0047 32.1489 12.7365 29.8965 14.5352 29.7745L30.4712 28.694C31.2372 28.642 31.9058 28.1563 32.1919 27.4439L38.1441 12.6217Z" fill="#F2994A" />
+											<path d="M39.0515 26.3108C39.3874 25.4744 40.5716 25.4744 40.9075 26.3108L43.8835 33.7219C44.0266 34.0781 44.3609 34.321 44.7439 34.347L52.7119 34.8873C53.6112 34.9482 53.9771 36.0744 53.2854 36.6524L47.1567 41.7729C46.8621 42.0191 46.7344 42.4121 46.8281 42.7843L48.7765 50.5293C48.9964 51.4035 48.0384 52.0995 47.275 51.6202L40.5112 47.3738C40.1861 47.1697 39.7729 47.1697 39.4478 47.3738L32.684 51.6202C31.9205 52.0995 30.9626 51.4035 31.1825 50.5293L33.1309 42.7843C33.2245 42.4121 33.0968 42.0191 32.8023 41.7729L26.6736 36.6524C25.9818 36.0744 26.3478 34.9482 27.2471 34.8873L35.2151 34.347C35.5981 34.321 35.9324 34.0781 36.0754 33.7219L39.0515 26.3108Z" fill="#F2C94C" />
+										</svg>
+									</div>
+								</div>
+								<div class="article-title mt-1"><?= h($article->title) ?></div>
+								<div><?php echo strip_tags($this->Text->truncate(
+											$article->body,
+											200,
+											[
+												'ellipsis' => '...',
+												'exact' => false
+											]
+										)); ?>
+
+
+								</div>
+							</div>
+						</div>
+					<?php endif; ?>
+				</a>
+			</div>
+		<?php endforeach; ?>
+	</div>
+
+=============================================
+
+FOOTER animation:
+
+<style>
+        .ctp_footer {
+            padding: 120px 0px 270px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .new_footer_area .footer_bottom {
+            padding-top: 5px;
+            padding-bottom: 50px;
+        }
+
+        .footer_bottom {
+            font-size: 14px;
+            font-weight: 300;
+            line-height: 20px;
+            color: #7f88a6;
+            padding: 27px 0px;
+        }
+
+        .ctp_footer .company_widget p {
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 28px;
+            color: #6a7695;
+            margin-bottom: 20px;
+        }
+
+        .ctp_footer .company_widget .f_subscribe_two .btn_get {
+            border-width: 1px;
+            margin-top: 20px;
+        }
+
+        .btn_get_two:hover {
+            background: transparent;
+            color: #5e2ced;
+        }
+
+        .btn_get:hover {
+            color: #fff;
+            background: #6754e2;
+            border-color: #6754e2;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+
+        a:hover,
+        a:focus,
+        .btn:hover,
+        .btn:focus,
+        button:hover,
+        button:focus {
+            text-decoration: none;
+            outline: none;
+        }
+
+
+
+        .ctp_footer .f_widget.about-widget .f_list li a:hover {
+            color: #5e2ced;
+        }
+
+        .ctp_footer .f_widget.about-widget .f_list li {
+            margin-bottom: 11px;
+        }
+
+        .f_widget.about-widget .f_list li:last-child {
+            margin-bottom: 0px;
+        }
+
+        .f_widget.about-widget .f_list li {
+            margin-bottom: 15px;
+        }
+
+        .f_widget.about-widget .f_list {
+            margin-bottom: 0px;
+        }
+
+        .ctp_footer .f_social_icon a {
+            width: 44px;
+            height: 44px;
+            line-height: 43px;
+            background: transparent;
+            border: 1px solid #e2e2eb;
+            font-size: 24px;
+        }
+
+        .f_social_icon a {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            font-size: 14px;
+            line-height: 45px;
+            color: #858da8;
+            display: inline-block;
+            background: #ebeef5;
+            text-align: center;
+            -webkit-transition: all 0.2s linear;
+            -o-transition: all 0.2s linear;
+            transition: all 0.2s linear;
+        }
+
+        .ti-facebook:before {
+            content: "\e741";
+        }
+
+        .ti-twitter-alt:before {
+            content: "\e74b";
+        }
+
+        .ti-vimeo-alt:before {
+            content: "\e74a";
+        }
+
+        .ti-pinterest:before {
+            content: "\e731";
+        }
+
+        .btn_get_two {
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            background: #5e2ced;
+            border-color: #5e2ced;
+            color: #fff;
+        }
+
+        .btn_get_two:hover {
+            background: transparent;
+            color: #5e2ced;
+        }
+
+        .ctp_footer .f_social_icon a:hover {
+            background: #5e2ced;
+            border-color: #5e2ced;
+            color: white;
+        }
+
+        .ctp_footer .f_social_icon a+a {
+            margin-left: 4px;
+        }
+
+        .ctp_footer .f-title {
+            margin-bottom: 30px;
+            color: #263b5e;
+        }
+
+        .f_600 {
+            font-weight: 600;
+        }
+
+        .f_size_18 {
+            font-size: 18px;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            color: #4b505e;
+        }
+
+        .ctp_footer .f_widget.about-widget .f_list li a {
+            color: #6a7695;
+        }
+
+
+        .ctp_footer .footer_bg {
+            position: absolute;
+            bottom: 0px;
+            background: url("../img/footer1600.png") no-repeat scroll center 0 !important;
+            width: 100%;
+            height: 300px;
+        }
+
+        .ctp_footer .footer_bg .footer_bg_one {
+            background: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEia0PYPxwT5ifToyP3SNZeQWfJEWrUENYA5IXM6sN5vLwAKvaJS1pQVu8mOFFUa_ET4JuHNTFAxKURFerJYHDUWXLXl1vDofYXuij45JZelYOjEFoCOn7E6Vxu0fwV7ACPzArcno1rYuVxGB7JY6G7__e4_KZW4lTYIaHSLVaVLzklZBLZnQw047oq5-Q/s16000/volks.gif") no-repeat center center;
+            width: 330px;
+            height: 105px;
+            background-size: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 30%;
+            -webkit-animation: myfirst 22s linear infinite;
+            animation: myfirst 22s linear infinite;
+        }
+
+        .ctp_footer .footer_bg .footer_bg_two {
+            background: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhyLGwEUVwPK6Vi8xXMymsc-ZXVwLWyXhogZxbcXQYSY55REw_0D4VTQnsVzCrL7nsyjd0P7RVOI5NKJbQ75koZIalD8mqbMquP20fL3DxsWngKkOLOzoOf9sMuxlbyfkIBTsDw5WFUj-YJiI50yzgVjF8cZPHhEjkOP_PRTQXDHEq8AyWpBiJdN9SfQA/s16000/cyclist.gif") no-repeat center center;
+            width: 88px;
+            height: 100px;
+            background-size: 100%;
+            bottom: 0;
+            left: 38%;
+            position: absolute;
+            -webkit-animation: myfirst 30s linear infinite;
+            animation: myfirst 30s linear infinite;
+        }
+
+
+
+        @-moz-keyframes myfirst {
+            0% {
+                left: -25%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        @-webkit-keyframes myfirst {
+            0% {
+                left: -25%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        @keyframes myfirst {
+            0% {
+                left: -25%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        /*************footer End*****************/
+    </style>
+
+    <footer class="container-fluid bd-footer px-5 bg-body-tertiary">
+        <div class="ctp_footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 justify">
+                        <h1 class="gradient-animate"><b class="logo">&lt;/&gt;</b> Code The Pixel</h1>
+                        CodeThePixel.com (CTP) is a project aimed at assisting aspiring programmers with coding. CTP prioritises delivering highly optimised code or snippets, with a focus on simplicity. The objective is to assist code explorers in developing their understanding of subjects related to web frameworks, encompassing PHP, Java, HTML, CSS, Bootstrap, JavaScript, SQL, and Algorithm.
+                        <div class="mt-3">admin@codethepixel.com</div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="f_widget about-widget pl_70 wow fadeInLeft" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInLeft;">
+                            <h3 class="f-title f_600 t_color f_size_18">Download</h3>
+                            <ul class="list-unstyled f_list">
+                                <li><a href="#">Company</a></li>
+                                <li><a href="#">Android App</a></li>
+                                <li><a href="#">ios App</a></li>
+                                <li><a href="#">Desktop</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="f_widget about-widget pl_70 wow fadeInLeft" data-wow-delay="0.6s" style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInLeft;">
+                            <h3 class="f-title f_600 t_color f_size_18">Help</h3>
+                            <ul class="list-unstyled f_list">
+                                <li><a href="#">FAQ</a></li>
+                                <li><a href="#">Term &amp; conditions</a></li>
+                                <li><a href="#">Reporting</a></li>
+                                <li><a href="#">Documentation</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="f_widget social-widget pl_70 wow fadeInLeft" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeInLeft;">
+                            <h3 class="f-title f_600 t_color f_size_18">Team Solutions</h3>
+                            <div class="f_social_icon">
+                                <a href="#" class="fab fa-facebook"></a>
+                                <a href="#" class="fab fa-twitter"></a>
+                                <a href="#" class="fab fa-linkedin"></a>
+                                <a href="#" class="fab fa-pinterest"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer_bg">
+                <div class="footer_bg_one"></div>
+                <div class="footer_bg_two"></div>
+            </div>
+        </div>
+        <div class="footer_bottom">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-sm-7">
+                        <p>© <?php echo date('Y'); ?> <?php echo $system_name; ?>. <i class="fa-solid fa-code"></i> with ❤️ by
+                            <a href="https://codethepixel.com" target="_blank" class="footer-link fw-bolder">Code The Pixel</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
