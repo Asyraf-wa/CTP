@@ -44,6 +44,8 @@ Code The Pixel CMS
 
 ## Screenshots
 
+![App Screenshot](https://github.com/Asyraf-wa/CTP/blob/v2/webroot/img/ctp_ss.png)
+
 ![App Screenshot](https://github.com/Asyraf-wa/recrud/blob/2.x/webroot/img/ss/ReCRUD_Dashboard.png)
 
 ![App Screenshot](https://github.com/Asyraf-wa/recrud/blob/2.x/webroot/img/ss/ReCRUD_Setting.png)
