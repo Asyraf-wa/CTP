@@ -1157,7 +1157,7 @@ a.mod_td:active {
 
 /*Scrolling text in dashboard*/
 .marquee-container {
-    max-width: 860px;
+    /* max-width: 860px; */
     overflow: hidden;
 }
 .Marquee {

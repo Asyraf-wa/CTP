@@ -1,9 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
+use Cake\Utility\Hash;
 
 /**
  * Articles Controller
@@ -12,62 +14,62 @@ use App\Controller\AppController;
  */
 class ArticlesController extends AppController
 {
-	public function initialize(): void
-	{
-		parent::initialize();
+    public function initialize(): void
+    {
+        parent::initialize();
 
-		$this->loadComponent('Search.Search', [
-			'actions' => ['index'],
-		]);
-	}
-	
-	public function beforeFilter(\Cake\Event\EventInterface $event)
-	{
-		parent::beforeFilter($event);
-	}
+        $this->loadComponent('Search.Search', [
+            'actions' => ['index'],
+        ]);
+    }
 
-	/*public function viewClasses(): array
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+    }
+
+    /*public function viewClasses(): array
     {
         return [JsonView::class];
 		return [JsonView::class, XmlView::class];
     }*/
-	
-	public function json()
+
+    public function json()
     {
-		$this->viewBuilder()->setLayout('json');
+        $this->viewBuilder()->setLayout('json');
         $this->set('articles', $this->paginate());
         $this->viewBuilder()->setOption('serialize', 'articles');
     }
-	
-	public function csv()
-	{
-		$this->response = $this->response->withDownload('articles.csv');
-		$articles = $this->Articles->find();
-		$_serialize = 'articles';
 
-		$this->viewBuilder()->setClassName('CsvView.Csv');
-		$this->set(compact('articles', '_serialize'));
-	}
-	
-	public function pdfList()
-	{
-		$this->viewBuilder()->enableAutoLayout(false); 
+    public function csv()
+    {
+        $this->response = $this->response->withDownload('articles.csv');
+        $articles = $this->Articles->find();
+        $_serialize = 'articles';
+
+        $this->viewBuilder()->setClassName('CsvView.Csv');
+        $this->set(compact('articles', '_serialize'));
+    }
+
+    public function pdfList()
+    {
+        $this->viewBuilder()->enableAutoLayout(false);
         $this->paginate = [
             'contain' => ['Users'],
-			'maxLimit' => 10,
+            'maxLimit' => 10,
         ];
-		$articles = $this->paginate($this->Articles);
-		$this->viewBuilder()->setClassName('CakePdf.Pdf');
-		$this->viewBuilder()->setOption(
-			'pdfConfig',
-			[
-				'orientation' => 'portrait',
-				'download' => true, 
-				'filename' => 'articles_List.pdf' 
-			]
-		);
-		$this->set(compact('articles'));
-	}
+        $articles = $this->paginate($this->Articles);
+        $this->viewBuilder()->setClassName('CakePdf.Pdf');
+        $this->viewBuilder()->setOption(
+            'pdfConfig',
+            [
+                'orientation' => 'portrait',
+                'download' => true,
+                'filename' => 'articles_List.pdf'
+            ]
+        );
+        $this->set(compact('articles'));
+    }
     /**
      * Index method
      *
@@ -75,36 +77,37 @@ class ArticlesController extends AppController
      */
     public function index()
     {
-		$this->set('title', 'Articles List');
-		$this->paginate = [
-			'maxLimit' => 10,
+        $this->set('title', 'Articles List');
+        $this->paginate = [
+            'maxLimit' => 20,
+            'order' => ['publish_on' => 'DESC']
         ];
         $query = $this->Articles->find('search', search: $this->request->getQueryParams())
-            ->contain(['Users']);
-			//->where(['title IS NOT' => null])
+            ->contain(['Users', 'Categories', 'Tags']);
+        //->where(['title IS NOT' => null])
         $articles = $this->paginate($query);
-		
-		//count
-		$this->set('total_articles', $this->Articles->find()->count());
-		$this->set('total_articles_archived', $this->Articles->find()->where(['status' => 2])->count());
-		$this->set('total_articles_active', $this->Articles->find()->where(['status' => 1])->count());
-		$this->set('total_articles_disabled', $this->Articles->find()->where(['status' => 0])->count());
-		
-		//Count By Month
-		$this->set('january', $this->Articles->find()->where(['MONTH(created)' => date('1'), 'YEAR(created)' => date('Y')])->count());
-		$this->set('february', $this->Articles->find()->where(['MONTH(created)' => date('2'), 'YEAR(created)' => date('Y')])->count());
-		$this->set('march', $this->Articles->find()->where(['MONTH(created)' => date('3'), 'YEAR(created)' => date('Y')])->count());
-		$this->set('april', $this->Articles->find()->where(['MONTH(created)' => date('4'), 'YEAR(created)' => date('Y')])->count());
-		$this->set('may', $this->Articles->find()->where(['MONTH(created)' => date('5'), 'YEAR(created)' => date('Y')])->count());
-		$this->set('jun', $this->Articles->find()->where(['MONTH(created)' => date('6'), 'YEAR(created)' => date('Y')])->count());
-		$this->set('july', $this->Articles->find()->where(['MONTH(created)' => date('7'), 'YEAR(created)' => date('Y')])->count());
-		$this->set('august', $this->Articles->find()->where(['MONTH(created)' => date('8'), 'YEAR(created)' => date('Y')])->count());
-		$this->set('september', $this->Articles->find()->where(['MONTH(created)' => date('9'), 'YEAR(created)' => date('Y')])->count());
-		$this->set('october', $this->Articles->find()->where(['MONTH(created)' => date('10'), 'YEAR(created)' => date('Y')])->count());
-		$this->set('november', $this->Articles->find()->where(['MONTH(created)' => date('11'), 'YEAR(created)' => date('Y')])->count());
-		$this->set('december', $this->Articles->find()->where(['MONTH(created)' => date('12'), 'YEAR(created)' => date('Y')])->count());
 
-		$query = $this->Articles->find();
+        //count
+        $this->set('total_articles', $this->Articles->find()->count());
+        $this->set('total_articles_archived', $this->Articles->find()->where(['status' => 2])->count());
+        $this->set('total_articles_active', $this->Articles->find()->where(['status' => 1])->count());
+        $this->set('total_articles_disabled', $this->Articles->find()->where(['status' => 0])->count());
+
+        //Count By Month
+        $this->set('january', $this->Articles->find()->where(['MONTH(created)' => date('1'), 'YEAR(created)' => date('Y')])->count());
+        $this->set('february', $this->Articles->find()->where(['MONTH(created)' => date('2'), 'YEAR(created)' => date('Y')])->count());
+        $this->set('march', $this->Articles->find()->where(['MONTH(created)' => date('3'), 'YEAR(created)' => date('Y')])->count());
+        $this->set('april', $this->Articles->find()->where(['MONTH(created)' => date('4'), 'YEAR(created)' => date('Y')])->count());
+        $this->set('may', $this->Articles->find()->where(['MONTH(created)' => date('5'), 'YEAR(created)' => date('Y')])->count());
+        $this->set('jun', $this->Articles->find()->where(['MONTH(created)' => date('6'), 'YEAR(created)' => date('Y')])->count());
+        $this->set('july', $this->Articles->find()->where(['MONTH(created)' => date('7'), 'YEAR(created)' => date('Y')])->count());
+        $this->set('august', $this->Articles->find()->where(['MONTH(created)' => date('8'), 'YEAR(created)' => date('Y')])->count());
+        $this->set('september', $this->Articles->find()->where(['MONTH(created)' => date('9'), 'YEAR(created)' => date('Y')])->count());
+        $this->set('october', $this->Articles->find()->where(['MONTH(created)' => date('10'), 'YEAR(created)' => date('Y')])->count());
+        $this->set('november', $this->Articles->find()->where(['MONTH(created)' => date('11'), 'YEAR(created)' => date('Y')])->count());
+        $this->set('december', $this->Articles->find()->where(['MONTH(created)' => date('12'), 'YEAR(created)' => date('Y')])->count());
+
+        $query = $this->Articles->find();
 
         $expectedMonths = [];
         for ($i = 11; $i >= 0; $i--) {
@@ -160,7 +163,12 @@ class ArticlesController extends AppController
             $countArray[] = $data['count'];
         }
 
-        $this->set(compact('articles', 'monthArray', 'countArray'));
+        $tags = $this->Articles->Tagged->find()->distinct(['Tags.slug', 'Tags.label'])->contain(['Tags'])->toArray();
+        $tags = Hash::combine($tags, '{n}.tag.slug', '{n}.tag.label');
+
+        $categories = $this->Articles->Categories->find('list', ['limit' => 200]);
+
+        $this->set(compact('articles', 'monthArray', 'countArray', 'tags', 'categories'));
     }
 
     /**
@@ -172,7 +180,7 @@ class ArticlesController extends AppController
      */
     public function view($id = null)
     {
-		$this->set('title', 'Articles Details');
+        $this->set('title', 'Articles Details');
         $article = $this->Articles->get($id, contain: ['Users']);
         $this->set(compact('article'));
 
@@ -186,8 +194,8 @@ class ArticlesController extends AppController
      */
     public function add()
     {
-		$this->set('title', 'New Articles');
-		/*EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
+        $this->set('title', 'New Articles');
+        /*EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
 			foreach ($logs as $log) {
 				$log->setMetaInfo($log->getMetaInfo() + ['a_name' => 'Add']);
 				$log->setMetaInfo($log->getMetaInfo() + ['c_name' => 'Articles']);
@@ -207,7 +215,10 @@ class ArticlesController extends AppController
             $this->Flash->error(__('The article could not be saved. Please, try again.'));
         }
         $users = $this->Articles->Users->find('list', ['limit' => 200])->all();
-        $this->set(compact('article', 'users'));
+        $tags = $this->Articles->Tagged->find()->distinct(['Tags.slug', 'Tags.label'])->contain(['Tags'])->toArray();
+        $tags = Hash::combine($tags, '{n}.tag.slug', '{n}.tag.label');
+        $categories = $this->Articles->Categories->find('list', ['limit' => 200]);
+        $this->set(compact('article', 'users', 'tags', 'categories'));
     }
 
     /**
@@ -219,8 +230,8 @@ class ArticlesController extends AppController
      */
     public function edit($id = null)
     {
-		$this->set('title', 'Articles Edit');
-		/*EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
+        $this->set('title', 'Articles Edit');
+        /*EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
 			foreach ($logs as $log) {
 				$log->setMetaInfo($log->getMetaInfo() + ['a_name' => 'Edit']);
 				$log->setMetaInfo($log->getMetaInfo() + ['c_name' => 'Articles']);
@@ -230,7 +241,7 @@ class ArticlesController extends AppController
 			}
 		});*/
         $article = $this->Articles->get($id, [
-            'contain' => [],
+            'contain' => ['Tags'],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $article = $this->Articles->patchEntity($article, $this->request->getData());
@@ -241,8 +252,13 @@ class ArticlesController extends AppController
             }
             $this->Flash->error(__('The article could not be saved. Please, try again.'));
         }
-		$users = $this->Articles->Users->find('list', limit: 200)->all();
-        $this->set(compact('article', 'users'));
+        $users = $this->Articles->Users->find('list', ['limit' => 200])->all();
+
+        $tags = $this->Articles->Tags->find('list', ['keyField' => 'slug']);
+        $tag_cloud = $this->Articles->Tagged->find('cloud')->toArray();
+
+        $categories = $this->Articles->Categories->find('list', ['limit' => 200]);
+        $this->set(compact('article', 'users', 'tags', 'categories', 'tag_cloud'));
     }
 
     /**
@@ -254,15 +270,15 @@ class ArticlesController extends AppController
      */
     public function delete($id = null)
     {
-		EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
-			foreach ($logs as $log) {
-				$log->setMetaInfo($log->getMetaInfo() + ['a_name' => 'Delete']);
-				$log->setMetaInfo($log->getMetaInfo() + ['c_name' => 'Articles']);
-				$log->setMetaInfo($log->getMetaInfo() + ['ip' => $this->request->clientIp()]);
-				$log->setMetaInfo($log->getMetaInfo() + ['url' => Router::url(null, true)]);
-				$log->setMetaInfo($log->getMetaInfo() + ['slug' => $this->Authentication->getIdentity('slug')->getIdentifier('slug')]);
-			}
-		});
+        EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
+            foreach ($logs as $log) {
+                $log->setMetaInfo($log->getMetaInfo() + ['a_name' => 'Delete']);
+                $log->setMetaInfo($log->getMetaInfo() + ['c_name' => 'Articles']);
+                $log->setMetaInfo($log->getMetaInfo() + ['ip' => $this->request->clientIp()]);
+                $log->setMetaInfo($log->getMetaInfo() + ['url' => Router::url(null, true)]);
+                $log->setMetaInfo($log->getMetaInfo() + ['slug' => $this->Authentication->getIdentity('slug')->getIdentifier('slug')]);
+            }
+        });
         $this->request->allowMethod(['post', 'delete']);
         $article = $this->Articles->get($id);
         if ($this->Articles->delete($article)) {
@@ -273,29 +289,29 @@ class ArticlesController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
-	
-	public function archived($id = null)
+
+    public function archived($id = null)
     {
-		$this->set('title', 'Articles Edit');
-		EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
-			foreach ($logs as $log) {
-				$log->setMetaInfo($log->getMetaInfo() + ['a_name' => 'Archived']);
-				$log->setMetaInfo($log->getMetaInfo() + ['c_name' => 'Articles']);
-				$log->setMetaInfo($log->getMetaInfo() + ['ip' => $this->request->clientIp()]);
-				$log->setMetaInfo($log->getMetaInfo() + ['url' => Router::url(null, true)]);
-				$log->setMetaInfo($log->getMetaInfo() + ['slug' => $this->Authentication->getIdentity('slug')->getIdentifier('slug')]);
-			}
-		});
+        $this->set('title', 'Articles Edit');
+        EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
+            foreach ($logs as $log) {
+                $log->setMetaInfo($log->getMetaInfo() + ['a_name' => 'Archived']);
+                $log->setMetaInfo($log->getMetaInfo() + ['c_name' => 'Articles']);
+                $log->setMetaInfo($log->getMetaInfo() + ['ip' => $this->request->clientIp()]);
+                $log->setMetaInfo($log->getMetaInfo() + ['url' => Router::url(null, true)]);
+                $log->setMetaInfo($log->getMetaInfo() + ['slug' => $this->Authentication->getIdentity('slug')->getIdentifier('slug')]);
+            }
+        });
         $article = $this->Articles->get($id, [
             'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $article = $this->Articles->patchEntity($article, $this->request->getData());
-			$article->status = 2; //archived
+            $article->status = 2; //archived
             if ($this->Articles->save($article)) {
                 $this->Flash->success(__('The article has been archived.'));
 
-				return $this->redirect($this->referer());
+                return $this->redirect($this->referer());
             }
             $this->Flash->error(__('The article could not be archived. Please, try again.'));
         }

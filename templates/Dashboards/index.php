@@ -208,7 +208,7 @@ echo $this->Html->script('https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/
 
 		<div class="row py-3">
 			<div class="col-8 fs-5 fw-medium text-body-secondary">
-				Report
+				Article Report
 			</div>
 			<div class="col-4 text-end">
 				<button class="btn btn-xs btn-outline-warning me-2" data-bs-toggle="collapse" href="#chartCollapse" role="button" aria-expanded="true" aria-controls="chartCollapse">
@@ -218,22 +218,24 @@ echo $this->Html->script('https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/
 
 			</div>
 		</div>
+
+
 		<div class="row px-2 mb-4">
 			<div class="col-md-3 border rounded-start pt-3 pb-3 bg-body-tertiary">
-				<span class="fs-3"><?php echo $total_user; ?> <i class="fa-solid fa-caret-up text-primary"></i></span><br />
-				Total Registered Users
+				<span class="fs-3"><?php echo $article_count_all; ?> <i class="fa-solid fa-caret-up text-primary"></i></span><br />
+				Total Published Articles
 			</div>
 			<div class="col-md-3 border pt-3 pb-3 bg-body-tertiary">
-				<span class="fs-3"><?php echo $total_contact; ?> <i class="fa-solid fa-caret-up text-primary"></i></span><br />
-				Total Contacts
+				<span class="fs-3"><?php echo $article_active; ?> <i class="fa-solid fa-caret-up text-primary"></i></span><br />
+				Total Active Articles
 			</div>
 			<div class="col-md-3 border pt-3 pb-3 bg-body-tertiary">
-				<span class="fs-3"><?php echo $total_auditlog; ?> <i class="fa-solid fa-caret-up text-primary"></i></span><br />
-				Total Logged Audit
+				<span class="fs-3"><?php echo $article_archived; ?> <i class="fa-solid fa-caret-up text-primary"></i></span><br />
+				Total Archived Articles
 			</div>
 			<div class="col-md-3 border rounded-end pt-3 pb-3 bg-body-tertiary">
-				<span class="fs-3"><?php echo $total_todo; ?> <i class="fa-solid fa-caret-up text-primary"></i></span><br />
-				Total To Do Task
+				<span class="fs-3"><?php echo $this->Number->format($sum_quantity); ?> <i class="fa-solid fa-caret-up text-primary"></i></span><br />
+				Total Articles View
 			</div>
 		</div>
 
@@ -876,7 +878,32 @@ echo $this->Html->script('https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/
 		</div>
 
 
-
+		<div class="card kotak-purple mb-4 border-0 tile ripple-effect pt-3 px-3">
+			<div class="row">
+				<div class="col">
+					<div class="card-title mb-0">Article</div>
+				</div>
+				<div class="col-3 text-end">
+					<?= $this->Html->image('icon/862536.png', ['alt' => 'virus', 'class' => '', 'style' => 'opacity: .9', 'width' => '48px', 'height' => '48px']); ?>
+				</div>
+			</div>
+			<table class="table table-sm table-borderless table_transparent table-hover">
+				<?php foreach ($todo_list as $todos) : ?>
+					<tr>
+						<td>
+							<?php if ($todos->status == 'Pending') {
+								echo '<span class="badge rounded-pill text-bg-warning">' . $todos->status . '</span>';
+							} else
+								echo '<span class="badge rounded-pill text-bg-primary">' . $todos->status . '</span>';
+							?>
+						</td>
+						<td>
+							<?php echo $this->Html->link(__($todos->task), ['controller' => 'Todos', 'action' => 'view', $todos->id, 'prefix' => 'Admin'], ['class' => 'mod_td', 'escape' => false]); ?>
+						</td>
+					</tr>
+				<?php endforeach; ?>
+			</table>
+		</div>
 
 
 		<div class="bg-purple tile ripple-effect pt-3 mb-4">

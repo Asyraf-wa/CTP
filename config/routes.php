@@ -115,6 +115,8 @@ return function (RouteBuilder $routes): void {
         //$routes->connect('/', ['controller' => 'Pages', 'action' => 'index']);
         $routes->connect('/dashboards', ['controller' => 'Dashboards', 'action' => 'index']);
         $routes->connect('/users', ['controller' => 'Users', 'action' => 'index']);
+        $routes->connect('/articles', ['controller' => 'Articles', 'action' => 'index']);
+        $routes->connect('/categories', ['controller' => 'Categories', 'action' => 'index']);
         $routes->connect('/settings', ['prefix' => 'admin', 'controller' => 'Settings', 'action' => 'update']);
         $routes->fallbacks(DashedRoute::class);
     });

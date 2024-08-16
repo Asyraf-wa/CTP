@@ -43,6 +43,12 @@ $a_name = $this->request->getParam('action');
                     <li class="menu-item <?= $c_name == 'Settings' && $a_name == 'update' ? 'active' : '' ?>">
                         <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-gear"></i> Site Configuration'), ['prefix' => 'Admin', 'controller' => 'Settings', 'action' => 'update', 'recrud'], ['class' => 'menu-link', 'escape' => false]) ?>
                     </li>
+                    <li class="menu-item <?= $c_name == 'Articles' && $a_name == 'index' ? 'active' : '' ?>">
+                        <?= $this->Html->link(__('<i class="menu-icon fa-regular fa-folder"></i> Article'), ['prefix' => 'Admin', 'controller' => 'Articles', 'action' => 'index'], ['class' => 'menu-link', 'escape' => false]) ?>
+                    </li>
+                    <li class="menu-item <?= $c_name == 'Categories' && $a_name == 'index' ? 'active' : '' ?>">
+                        <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-layer-group"></i> Categories'), ['prefix' => 'Admin', 'controller' => 'Categories', 'action' => 'index'], ['class' => 'menu-link', 'escape' => false]) ?>
+                    </li>
                     <li class="menu-item <?= $c_name == 'Users' && $a_name == 'index' ? 'active' : '' ?>">
                         <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-users-viewfinder"></i> User Management'), ['prefix' => 'Admin', 'controller' => 'Users', 'action' => 'index'], ['class' => 'menu-link', 'escape' => false]) ?>
                     </li>
@@ -53,9 +59,11 @@ $a_name = $this->request->getParam('action');
                         <?= $this->Html->link(__('<i class="menu-icon fa-regular fa-message"></i> Contacts'), ['prefix' => 'Admin', 'controller' => 'Contacts', 'action' => 'index'], ['class' => 'menu-link', 'escape' => false]) ?>
                     </li>
                     <li class="menu-item <?= $c_name == 'AuditLogs' && $a_name == 'index' ? 'active' : '' ?>">
-                        <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-timeline"></i> Audit Trail'), ['prefix' => 'Admin', 
-                        'controller' => 'auditLogs', 'action' => 'index', 
-                        //'?' => ['limit' => '25', 'status' => '1']
+                        <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-timeline"></i> Audit Trail'), [
+                            'prefix' => 'Admin',
+                            'controller' => 'auditLogs',
+                            'action' => 'index',
+                            //'?' => ['limit' => '25', 'status' => '1']
                         ], ['class' => 'menu-link', 'escape' => false]) ?>
                     </li>
                     <li class="menu-item <?= $c_name == 'Faqs' && $a_name == 'index' ? 'active' : '' ?>">
