@@ -720,6 +720,17 @@ $counter = ($page * $limit) - $limit + 1; */
 			}
 			?>
 		<?php endforeach; ?>
+
+		<div aria-label="Page navigation" class="mt-3 px-2">
+			<ul class="pagination justify-content-end flex-wrap">
+				<?= $this->Paginator->first('<< ' . __('First')) ?>
+				<?= $this->Paginator->prev('< ' . __('Previous')) ?>
+				<?= $this->Paginator->numbers(['before' => '', 'after' => '']) ?>
+				<?= $this->Paginator->next(__('Next') . ' >') ?>
+				<?= $this->Paginator->last(__('Last') . ' >>') ?>
+			</ul>
+			<div class="text-end"><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></div>
+		</div>
 	</div>
 
 

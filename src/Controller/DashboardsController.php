@@ -119,6 +119,28 @@ class DashboardsController extends AppController
 			'_serialize' => ['results']
 		]);
 
-		$this->set(compact('total_user', 'total_contact', 'total_auditlog', 'total_todo', 'user_percent', 'pending_todo_percent', 'pending_faq_percent', 'pending_contact_percent', 'userLogs', 'formattedResults', 'totalActivityByMonth', 'todo_list'));
+
+		//article table loaded
+		$articles = $this->fetchTable('Articles');
+		$article_count_all = $articles->find()->all()->count();
+		$article_active = $articles->find()->where(['published' => 1])->count();
+		$article_disabled = $articles->find()->where(['published' => 3])->count();
+		$article_archived = $articles->find()->where(['published' => 3])->count();
+		$article_featured = $articles->find()->where(['featured' => 1])->count();
+		$article_unpublish = $articles->find()->where(['published' => 3])->count();
+
+		$total_quantity = $articles->find();
+		$count_quantity = $total_quantity->select(['sum' => $total_quantity->func()->sum('Articles.hits')])->first();
+		$sum_quantity = $count_quantity->sum;
+
+		$article_last = $articles->find('all')
+			->where([
+				//'published' => 1,
+				//'category_id' => '1',
+			])
+			->order(['created' => 'DESC'])
+			->limit(5);
+
+		$this->set(compact('total_user', 'total_contact', 'total_auditlog', 'total_todo', 'user_percent', 'pending_todo_percent', 'pending_faq_percent', 'pending_contact_percent', 'userLogs', 'formattedResults', 'totalActivityByMonth', 'todo_list', 'article_count_all', 'article_active', 'article_disabled', 'article_archived', 'article_featured', 'article_unpublish', 'article_last', 'sum_quantity'));
 	}
 }

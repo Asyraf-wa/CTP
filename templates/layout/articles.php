@@ -135,7 +135,7 @@ $a_name = $this->request->getParam('action');
     </div>
 
     <!-- Footer -->
-    <div class="container-fluid bd-footer px-5 bg-body-tertiary">
+    <div class="container-fluid bd-footer px-5 mt-5 bg-body-tertiary">
         <div class="container">
             <footer class="pt-5">
                 <div class="row">

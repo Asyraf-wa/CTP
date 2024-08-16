@@ -37,7 +37,8 @@ echo $this->Html->script('https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/
 	<?= $this->Html->link(__('Contacts'), ['prefix' => 'Admin', 'controller' => 'Contacts', 'action' => 'index'], ['class' => 'topMenu', 'escape' => false]) ?>
 	<?= $this->Html->link(__('Audit Trail'), [
 		'prefix' => 'Admin',
-		'controller' => 'auditLogs', 'action' => 'index',
+		'controller' => 'auditLogs',
+		'action' => 'index',
 		//'?' => ['limit' => '25', 'status' => '1']
 	], ['class' => 'topMenu', 'escape' => false]) ?>
 	<?= $this->Html->link(__('FAQ'), ['prefix' => 'Admin', 'controller' => 'Faqs', 'action' => 'index'], ['class' => 'topMenu', 'escape' => false]) ?>
@@ -195,7 +196,15 @@ echo $this->Html->script('https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/
 			</div>
 		</div>
 
-
+		<div class="marquee-container"><!--Scrolling start-->
+			<div class="Marquee">
+				<div class="Marquee-content">
+					<?php foreach ($article_last as $article): ?>
+						<div class="Marquee-tag"><?= h($article->title) ?> (<?= date('d M Y', strtotime($article->created)); ?>)</div>
+					<?php endforeach; ?>
+				</div>
+			</div>
+		</div><!--Scrolling end-->
 
 		<div class="row py-3">
 			<div class="col-8 fs-5 fw-medium text-body-secondary">
@@ -834,12 +843,65 @@ echo $this->Html->script('https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/
 						<?php endforeach; ?>
 					</table>
 				</div>
-
-
-
-
 			</div>
 		</div>
+
+
+
+		<div class="card kotak-blue mb-4 border-0 tile ripple-effect pt-3 px-3">
+			<div class="row">
+				<div class="col">
+					<div class="card-title mb-0">To Do Task</div>
+				</div>
+				<div class="col-3 text-end">
+					<?= $this->Html->image('icon/2728212.png', ['alt' => 'virus', 'class' => '', 'style' => 'opacity: .9', 'width' => '48px', 'height' => '48px']); ?>
+				</div>
+			</div>
+			<table class="table table-sm table-borderless table_transparent table-hover">
+				<?php foreach ($todo_list as $todos) : ?>
+					<tr>
+						<td>
+							<?php if ($todos->status == 'Pending') {
+								echo '<span class="badge rounded-pill text-bg-warning">' . $todos->status . '</span>';
+							} else
+								echo '<span class="badge rounded-pill text-bg-primary">' . $todos->status . '</span>';
+							?>
+						</td>
+						<td>
+							<?php echo $this->Html->link(__($todos->task), ['controller' => 'Todos', 'action' => 'view', $todos->id, 'prefix' => 'Admin'], ['class' => 'mod_td', 'escape' => false]); ?>
+						</td>
+					</tr>
+				<?php endforeach; ?>
+			</table>
+		</div>
+
+
+
+
+
+		<div class="bg-purple tile ripple-effect pt-3 mb-4">
+			<div class="card-title mb-0">Article</div>
+			<div class="loader counter-big fw-bold text-center pb-3 pt-3 px-3"><span class="count"><?php echo $article_count_all; ?></span></div>
+			<div class="text-center px-3">
+				<span class="badge rounded-pill bg-light text-secondary">Total : <span class="count"><?php echo $article_count_all; ?></span></span>
+				<span class="badge rounded-pill bg-light text-secondary">Active : <span class="count"><?php echo $article_active; ?></span></span>
+				<span class="badge rounded-pill bg-light text-secondary">Archived : <span class="count"><?php echo $article_archived; ?></span></span>
+				<span class="badge rounded-pill bg-light text-secondary">Featured : <span class="count"><?php echo $article_featured; ?></span></span>
+				<span class="badge rounded-pill bg-light text-secondary">Unpublish : <span class="count"><?php echo $article_unpublish; ?></span></span>
+				<span class="badge rounded-pill bg-light text-secondary">Views : <span class="count"><?php echo $sum_quantity; ?></span></span>
+			</div>
+			<div class="marquee-container"><!--Scrolling start-->
+				<div class="Marquee">
+					<div class="Marquee-content">
+						<?php foreach ($article_last as $article): ?>
+							<div class="Marquee-tag"><?= h($article->title) ?> (<?= date('d M Y', strtotime($article->created)); ?>)</div>
+						<?php endforeach; ?>
+					</div>
+				</div>
+			</div><!--Scrolling end-->
+		</div>
+
+
 
 		<div class="row text-center">
 			<div class="col-6 pe-1 pb-2">
@@ -1051,3 +1113,42 @@ echo $this->Html->script('https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/
 
 	</div>
 </div>
+
+
+
+<script>
+	(function($) {
+		$(".ripple-effect").click(function(e) {
+			var rippler = $(this);
+
+			// create .ink element if it doesn't exist
+			if (rippler.find(".ink").length == 0) {
+				rippler.append("<span class='ink'></span>");
+			}
+
+			var ink = rippler.find(".ink");
+
+			// prevent quick double clicks
+			ink.removeClass("animate");
+
+			// set .ink diametr
+			if (!ink.height() && !ink.width()) {
+				var d = Math.max(rippler.outerWidth(), rippler.outerHeight());
+				ink.css({
+					height: d,
+					width: d
+				});
+			}
+
+			// get click coordinates
+			var x = e.pageX - rippler.offset().left - ink.width() / 2;
+			var y = e.pageY - rippler.offset().top - ink.height() / 2;
+
+			// set .ink position and add class .animate
+			ink.css({
+				top: y + 'px',
+				left: x + 'px'
+			}).addClass("animate");
+		})
+	})(jQuery);
+</script>
