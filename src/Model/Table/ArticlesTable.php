@@ -122,7 +122,7 @@ class ArticlesTable extends Table
      */
     public function validationDefault(Validator $validator): Validator
     {
-        $validator
+        /* $validator
             ->integer('user_id')
             ->notEmptyString('user_id');
 
@@ -195,7 +195,7 @@ class ArticlesTable extends Table
         $validator
             ->date('publish_on')
             ->requirePresence('publish_on', 'create')
-            ->notEmptyDate('publish_on');
+            ->notEmptyDate('publish_on'); */
 
         return $validator;
     }

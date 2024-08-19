@@ -92,6 +92,7 @@ class ArticlesController extends AppController
             //->contain(['Tags'])
             ->contain(['Users', 'Categories', 'Tags'])
             ->where(['Articles.status' => 1])
+            ->where(['category_id' => '1', '2', '3', '4'])
             ->orderBy(['Articles.publish_on' => 'DESC']);
         $articles = $this->paginate($query);
         //$articles = $this->paginate($query)->toArray();
@@ -193,6 +194,95 @@ class ArticlesController extends AppController
         $this->set(compact('articles', 'categories', 'tags', 'monthArray', 'countArray', 'tags', 'tagging'));
     }
 
+    public function blog()
+    {
+        $this->set('title', 'Blog');
+        $this->paginate = [
+            'maxLimit' => 20,
+        ];
+        $query = $this->Articles
+            ->find('search', search: $this->request->getQueryParams())
+            //->contain(['Tags'])
+            ->contain(['Users', 'Categories', 'Tags'])
+            ->where(['Articles.status' => 1])
+            ->where(['category_id' => '1', '2', '3', '4'])
+            ->orderBy(['Articles.publish_on' => 'DESC']);
+        $blogs = $this->paginate($query);
+        //$articles = $this->paginate($query)->toArray();
+
+        $categories = $this->Articles->Categories->find('list', ['limit' => 200]);
+        $tags = $this->Articles->Tagged->find()->distinct(['Tags.slug', 'Tags.label'])->contain(['Tags'])->toArray();
+        $tags = Hash::combine($tags, '{n}.tag.slug', '{n}.tag.label');
+
+        //count
+        $this->set('total_articles', $this->Articles->find()->count());
+        $this->set('total_articles_archived', $this->Articles->find()->where(['status' => 2])->count());
+        $this->set('total_articles_active', $this->Articles->find()->where(['status' => 1])->count());
+        $this->set('total_articles_disabled', $this->Articles->find()->where(['status' => 0])->count());
+
+
+        $query = $this->Articles->find();
+
+        $expectedMonths = [];
+        for ($i = 11; $i >= 0; $i--) {
+            $expectedMonths[] = date('M-Y', strtotime("-$i months"));
+        }
+
+        $query->select([
+            'count' => $query->func()->count('*'),
+            'date' => $query->func()->date_format(['created' => 'identifier', "%b-%Y"]),
+            'month' => 'MONTH(created)',
+            'year' => 'YEAR(created)'
+        ])
+            ->where([
+                'created >=' => date('Y-m-01', strtotime('-11 months')),
+                'created <=' => date('Y-m-t')
+            ])
+            ->groupBy(['year', 'month'])
+            ->orderBy(['year' => 'ASC', 'month' => 'ASC']);
+
+        $results = $query->all()->toArray();
+
+        $totalByMonth = [];
+        foreach ($expectedMonths as $expectedMonth) {
+            $found = false;
+            $count = 0;
+
+            foreach ($results as $result) {
+                if ($expectedMonth === $result->date) {
+                    $found = true;
+                    $count = $result->count;
+                    break;
+                }
+            }
+
+            $totalByMonth[] = [
+                'month' => $expectedMonth,
+                'count' => $count
+            ];
+        }
+
+        $this->set([
+            'results' => $totalByMonth,
+            '_serialize' => ['results']
+        ]);
+
+        //data as JSON arrays for report chart
+        $totalByMonth = json_encode($totalByMonth);
+        $dataArray = json_decode($totalByMonth, true);
+        $monthArray = [];
+        $countArray = [];
+        foreach ($dataArray as $data) {
+            $monthArray[] = $data['month'];
+            $countArray[] = $data['count'];
+        }
+
+        $allTags = $this->fetchTable('TagsTags');
+        $tagging = $allTags->find('all')->orderBy(['label' => 'ASC']);
+        $tags = $this->Articles->Tagged->find('cloud')->toArray();
+
+        $this->set(compact('blogs', 'categories', 'tags', 'monthArray', 'countArray', 'tags', 'tagging'));
+    }
     /**
      * View method
      *

@@ -138,7 +138,7 @@ class DashboardsController extends AppController
 				//'published' => 1,
 				//'category_id' => '1',
 			])
-			->order(['created' => 'DESC'])
+			->orderBy(['created' => 'DESC'])
 			->limit(5);
 
 		$this->set(compact('total_user', 'total_contact', 'total_auditlog', 'total_todo', 'user_percent', 'pending_todo_percent', 'pending_faq_percent', 'pending_contact_percent', 'userLogs', 'formattedResults', 'totalActivityByMonth', 'todo_list', 'article_count_all', 'article_active', 'article_disabled', 'article_archived', 'article_featured', 'article_unpublish', 'article_last', 'sum_quantity'));

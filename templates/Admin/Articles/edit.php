@@ -83,7 +83,7 @@ echo $this->Html->script('https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle
                     //selector: 'textarea',
                     mode: 'specific_textareas',
                     editor_selector: 'tinymce',
-                    plugins: 'print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons tinydrive',
+                    plugins: 'print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons tinydrive responsivefilemanager',
                     menubar: 'file edit view insert format tools table help',
                     toolbar1: 'code bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | numlist bullist | insertfile image media template link anchor codesample | forecolor backcolor removeformat | fontselect fontsizeselect formatselect | outdent indent | pagebreak | charmap emoticons | fullscreen  preview save print | ltr rtl | undo redo',
                     //toolbar2: 'outdent indent | pagebreak | charmap emoticons | fullscreen  preview save print | ltr rtl | undo redo',

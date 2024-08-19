@@ -81,6 +81,7 @@ return function (RouteBuilder $routes): void {
         $builder->connect('/dashboards', ['controller' => 'Dashboards', 'action' => 'index']);
         $builder->connect('/faqs', ['controller' => 'Faqs', 'action' => 'index']);
         $builder->connect('/quotes', ['controller' => 'Quotes', 'action' => 'index']);
+        $builder->connect('/blogs', ['controller' => 'Articles', 'action' => 'blog']);
 
         /*
          * Connect catchall routes for all controllers.
