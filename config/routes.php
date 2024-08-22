@@ -99,6 +99,7 @@ return function (RouteBuilder $routes): void {
         $builder->fallbacks();
     });
 
+    $routes->connect('/sitemap.xml', ['controller' => 'Sitemap', 'action' => 'index']);
 
 
     /* $routes->prefix('Admin', function (RouteBuilder $routes) {
