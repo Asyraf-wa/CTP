@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -49,6 +50,7 @@ class Project extends Entity
         'body' => true,
         'poster' => true,
         'poster_dir' => true,
+        'height' => true,
         'hits' => true,
         'published' => true,
         'progress' => true,

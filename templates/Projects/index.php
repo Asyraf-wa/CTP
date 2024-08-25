@@ -1,388 +1,373 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var iterable<\App\Model\Entity\Project> $projects
  */
-	use Cake\Routing\Router;
-	echo $this->Html->css('select2/css/select2.css');
-	echo $this->Html->script('select2/js/select2.full.min.js');
-	echo $this->Html->css('jquery.datetimepicker.min.css');
-	echo $this->Html->script('jquery.datetimepicker.full.js');
-	echo $this->Html->script('https://cdn.jsdelivr.net/npm/apexcharts');
-	echo $this->Html->script('https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js');
-	$c_name = $this->request->getParam('controller');
-	echo $this->Html->script('bootstrapModal', ['block' => 'scriptBottom']);
+
+use Cake\Routing\Router;
+
+echo $this->Html->css('select2/css/select2.css');
+echo $this->Html->script('select2/js/select2.full.min.js');
+echo $this->Html->css('jquery.datetimepicker.min.css');
+echo $this->Html->script('jquery.datetimepicker.full.js');
+echo $this->Html->script('https://cdn.jsdelivr.net/npm/apexcharts');
+echo $this->Html->script('https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js');
+$c_name = $this->request->getParam('controller');
+echo $this->Html->script('bootstrapModal', ['block' => 'scriptBottom']);
 ?>
-<!--Header-->
-<div class="row text-body-secondary">
-	<div class="col-10">
-		<h1 class="my-0 page_title"><?php echo $title; ?></h1>
-		<h6 class="sub_title text-body-secondary"><?php echo $system_name; ?></h6>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+
+<div class="container pt-4 pb-0">
+	<div class="row mb-2">
+		<div class="col-md-6">
+			Asyraf-wa / <span class="fw-bold">Projects</span>
+		</div>
+		<div class="col-md-6 text-end">
+			<button type="button" class="btn btn-secondary border me-2" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .75rem;"><i class="fa-regular fa-bell me-2"></i> Notifications</button>
+			<button type="button" class="btn btn-secondary border me-2" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .75rem;"><i class="fa-solid fa-code-fork me-2"></i> Fork</button>
+			<button type="button" class="btn btn-secondary border" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .75rem;"><i class="fa-regular fa-star me-2"></i> Star</button>
+		</div>
 	</div>
-	<div class="col-2 text-end">
-		<div class="dropdown mx-3 mt-2">
-			<button class="btn p-0 border-0" type="button" id="orederStatistics" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			<i class="fa-solid fa-bars text-primary"></i>
-			</button>
-				<div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
-							<li><?= $this->Html->link(__('<i class="fa-solid fa-plus"></i> New Project'), ['action' => 'add'], ['class' => 'dropdown-item', 'escapeTitle' => false]) ?></li>
+
+	<div class="horizontal-tabs border-bottom">
+		<?= $this->Html->link(__('<i class="fa-solid fa-code me-2"></i> Code'), ['controller' => '#'], ['class' => 'topMenu', 'escape' => false]) ?>
+		<?= $this->Html->link(__('<i class="fa-solid fa-triangle-exclamation me-2"></i> Issues'), ['controller' => '#'], ['class' => 'topMenu', 'escape' => false]) ?>
+		<?= $this->Html->link(__('<i class="fa-solid fa-code-pull-request me-2"></i> Pull requests'), ['controller' => '#'], ['class' => 'topMenu', 'escape' => false]) ?>
+		<?= $this->Html->link(__('<i class="fa-regular fa-circle-play me-2"></i> Actions'), ['controller' => '#'], ['class' => 'topMenu', 'escape' => false]) ?>
+		<?= $this->Html->link(__('<i class="fa-regular fa-folder-closed me-2"></i> Projects'), ['controller' => '#'], ['class' => 'topMenu active', 'escape' => false]) ?>
+		<?= $this->Html->link(__('<i class="fa-solid fa-book-open me-2"></i> Wiki'), ['controller' => '#'], ['class' => 'topMenu', 'escape' => false]) ?>
+		<?= $this->Html->link(__('<i class="fa-solid fa-shield-halved me-2"></i> Security'), ['controller' => '#'], ['class' => 'topMenu', 'escape' => false]) ?>
+		<?= $this->Html->link(__('<i class="fa-solid fa-chart-line me-2"></i> Insights'), ['controller' => '#'], ['class' => 'topMenu', 'escape' => false]) ?>
+		<?= $this->Html->link(__('<i class="fa-solid fa-gear me-2"></i> Settings'), ['controller' => '#'], ['class' => 'topMenu', 'escape' => false]) ?>
+	</div>
+
+	<div class="row mt-4">
+		<div class="col-md-9">
+			<div class="row mt-3">
+				<div class="col-md-6">
+					<button type="button" class="btn btn-secondary me-3 pe-3"><i class="fa-solid fa-code-branch me-2 ms-2"></i> 2.x <i class="fa-solid fa-caret-down ms-2"></i></button>
+					<button type="button" class="btn bg-body"><i class="fa-solid fa-code-branch me-2 ms-2"></i> 4 Branches</button>
+					<button type="button" class="btn bg-body"><i class="fa-solid fa-tag me-2 ms-2"></i></i> 11 Tags</button>
+				</div>
+				<div class="col-md-6 text-end">
+					<button id="toggleAll" type="button" class="btn btn-secondary border">
+						<i id="toggleIcon" class="fa-folder-open fa-regular"></i> Expand All
+					</button>
+					<button class="btn btn-success dropdown-toggle border" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+						<i class="fa-solid fa-code"></i> Code
+					</button>
+					<div class="dropdown-menu">
+						<div class="card border-0" style="width: 400px;">
+							<div class="card-body border-0">
+								<div class="mb-3 fw-bold"><i class="fa-regular fa-file-code me-3"></i>Clone</div>
+								<div class="row">
+									<div class="col-11 pe-0"><input type="text" class="form-control" id="copyInput" value="https://github.com/Asyraf-wa/recrud.git"></div>
+									<div class="col-1 ps-0"><button class="btn btn-outline-secondary border-0" type="button" id="copyButton"><i class="fa-regular fa-copy"></i></button></div>
+								</div>
+
+
+								<script>
+									document.getElementById('copyButton').addEventListener('click', function() {
+										var copyText = document.getElementById('copyInput');
+										copyText.select();
+										copyText.setSelectionRange(0, 99999); // For mobile devices
+										document.execCommand('copy');
+										alert('Copied the text: ' + copyText.value);
+									});
+								</script>
+								<hr />
+								Clone using the web URL.
+								<hr />
+								Open with GitHub Desktop
+								<hr />
+								Download ZIP
 							</div>
-		</div>
-</div>
-</div>
-<div class="line mb-4"></div>
-<!--/Header-->
-<div class="row">
-	<div class="col-md-9">
-		<!-- Nav tabs -->
-		<div class="nav-align-top mb-4">
-			<ul class="nav nav-tabs nav-fill border-bottom mb-4" role="tablist">
-				<li class="nav-item">
-					<a class="nav-link active" data-bs-toggle="tab" href="#list"><i class="fa-solid fa-bars-staggered"></i> List</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" data-bs-toggle="tab" href="#report"><i class="fa-solid fa-chart-line"></i> Report</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" data-bs-toggle="tab" href="#export"><i class="fa-solid fa-download"></i> Export</a>
-				</li>
-			</ul>
-		</div>
-		
-		
-		<div class="tab-content px-0">
-		<div class="tab-pane fade active show" id="list">
-    <div class="card bg-body-tertiary border-0 shadow mb-4">
-	<div class="card-body text-body-secondary">
-	<!-- Tab panes -->
-	<div class="table-responsive">
-        <table class="table table-sm table-border mb-4 table_transparent table-hover">
-            <thead>
-		<?php
-			$page = $this->Paginator->counter('{{page}}');
-			$limit = 10; 
-			$counter = ($page * $limit) - $limit + 1;
-		?>
-                <tr>
-					<th>#</th>
-                    <th><?= $this->Paginator->sort('id') ?></th>
-                    <th><?= $this->Paginator->sort('user_id') ?></th>
-                    <th><?= $this->Paginator->sort('category') ?></th>
-                    <th><?= $this->Paginator->sort('title') ?></th>
-                    <th><?= $this->Paginator->sort('year') ?></th>
-                    <th><?= $this->Paginator->sort('slug') ?></th>
-                    <th><?= $this->Paginator->sort('poster') ?></th>
-                    <th><?= $this->Paginator->sort('poster_dir') ?></th>
-                    <th><?= $this->Paginator->sort('hits') ?></th>
-                    <th><?= $this->Paginator->sort('published') ?></th>
-                    <th><?= $this->Paginator->sort('progress') ?></th>
-                    <th><?= $this->Paginator->sort('meta_key') ?></th>
-                    <th><?= $this->Paginator->sort('publish_on') ?></th>
-                    <th><?= $this->Paginator->sort('status') ?></th>
-                    <th><?= $this->Paginator->sort('created') ?></th>
-                    <th><?= $this->Paginator->sort('modified') ?></th>
-                    <th class="actions"><?= __('Actions') ?></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($projects as $project): ?>
-                <tr>
-				<td><?php echo $counter++ ?></td>
-                    <td><?= $this->Number->format($project->id) ?></td>
-                    <td><?= $project->hasValue('user') ? $this->Html->link($project->user->id, ['controller' => 'Users', 'action' => 'view', $project->user->id]) : '' ?></td>
-                    <td><?= h($project->category) ?></td>
-                    <td><?= h($project->title) ?></td>
-                    <td><?= $this->Number->format($project->year) ?></td>
-                    <td><?= h($project->slug) ?></td>
-                    <td><?= h($project->poster) ?></td>
-                    <td><?= h($project->poster_dir) ?></td>
-                    <td><?= $this->Number->format($project->hits) ?></td>
-                    <td><?= h($project->published) ?></td>
-                    <td><?= h($project->progress) ?></td>
-                    <td><?= h($project->meta_key) ?></td>
-                    <td><?= h($project->publish_on) ?></td>
-                    <td><?= $this->Number->format($project->status) ?></td>
-                    <td><?= h($project->created) ?></td>
-                    <td><?= h($project->modified) ?></td>
-					<td class="actions text-center">
-						<div class="btn-group shadow" role="group" aria-label="Basic example">
-							<?= $this->Html->link(__('<i class="far fa-folder-open"></i>'), ['action' => 'view', $project->id], ['class' => 'btn btn-outline-primary btn-xs', 'escapeTitle' => false]) ?>
-							<?= $this->Html->link(__('<i class="fa-regular fa-pen-to-square"></i>'), ['action' => 'edit', $project->id], ['class' => 'btn btn-outline-warning btn-xs', 'escapeTitle' => false]) ?>
-							<?php $this->Form->setTemplates([
-								'confirmJs' => 'addToModal("{{formName}}"); return false;'
-							]); ?>
-							<?= $this->Form->postLink(
-								__('<i class="fa-regular fa-trash-can"></i>'),
-								['action' => 'delete', $project->id],
-								[
-									'confirm' => __('Are you sure you want to delete Projects: "{0}"?', $project->id),
-									'title' => __('Delete'),
-									'class' => 'btn btn-outline-danger btn-xs',
-									'escapeTitle' => false,
-									'data-bs-toggle' => "modal",
-									'data-bs-target' => "#bootstrapModal"
-								]
-							) ?>
 						</div>
-					</td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
-<div aria-label="Page navigation" class="mt-3 px-2">
-    <ul class="pagination justify-content-end flex-wrap">
-        <?= $this->Paginator->first('<< ' . __('First')) ?>
-        <?= $this->Paginator->prev('< ' . __('Previous')) ?>
-        <?= $this->Paginator->numbers(['before' => '', 'after' => '']) ?>
-        <?= $this->Paginator->next(__('Next') . ' >') ?>
-        <?= $this->Paginator->last(__('Last') . ' >>') ?>
-    </ul>
-    <div class="text-end"><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></div>
-</div>
-	</div>
-</div>
-		</div>
-		<div class="tab-pane container fade px-0" id="report">
-			<div class="row pb-3">
-				<div class="col-md-4">
-				  <div class="stat_card card-1 bg-body-tertiary">
-					<h3><?php echo $total_projects; ?></h3>
-					<p>Total Projects</p>
-				  </div>
-				</div>
-				<div class="col-md-4">
-				  <div class="stat_card card-2 bg-body-tertiary">
-					<h3><?php echo $total_projects_active; ?></h3>
-					<p>Active Projects</p>
-				  </div>
-				</div>
-				<div class="col-md-4">
-				  <div class="stat_card card-3 bg-body-tertiary">
-					<h3><?php echo $total_projects_archived; ?></h3>
-					<p>Archived Projects</p>
-				  </div>
+					</div>
 				</div>
 			</div>
-			
-<div class="row">
-	<div class="col-md-6">
-	<div class="card bg-body-tertiary border-0 shadow mb-4">
-		<div class="card-body">
-			<div class="card-title mb-0">Projects (Monthly)</div>
-			<div class="tricolor_line mb-3"></div>
-				<div class="chart-container" style="position: relative;">
-					<canvas id="monthly"></canvas>
-				</div>
-<script>
-const ctx = document.getElementById('monthly');
-const monthly = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: <?php echo json_encode($monthArray); ?>,
-        datasets: [{
-            label: '# of Projects(s)',
-			data: <?php echo json_encode($countArray); ?>,
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)','rgba(54, 162, 235, 0.2)','rgba(255, 206, 86, 0.2)','rgba(75, 192, 192, 0.2)','rgba(153, 102, 255, 0.2)','rgba(89, 233, 28, 0.2)','rgba(255, 5, 5, 0.2)','rgba(255, 128, 0, 0.2)','rgba(153, 153, 153, 0.2)','rgba(15, 207, 210, 0.2)','rgba(44, 13, 181, 0.2)','rgba(86, 172, 12, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)','rgba(54, 162, 235, 1)','rgba(255, 206, 86, 1)','rgba(75, 192, 192, 1)','rgba(153, 102, 255, 1)','rgba(89, 233, 28, 1)','rgba(255, 5, 5, 1)','rgba(255, 128, 0, 1)','rgba(153, 153, 153, 1)','rgba(15, 207, 210, 1)','rgba(44, 13, 181, 1)','rgba(86, 172, 12, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        },
-		plugins: {
-            title: {
-                display: false,
-                text: 'Projects (Monthly)',
-				font: {
-				  size: 15
-					}
-				},
-			subtitle: {
-                display: false,
-                text: '<?php echo $system_name; ?>'
-				},
-			legend: {
-					display: false,
-					labels: {
-						color: 'rgb(255, 99, 132)'
-					}
-				},
-        }
-    }
-});
-</script>
-		</div>
-	</div>
-	</div>
-	<div class="col-md-6">
-	<div class="card bg-body-tertiary border-0 shadow mb-4">
-		<div class="card-body">
-		<div class="card-title mb-0">Projects by Status</div>
-			<div class="tricolor_line mb-3"></div>
-		<div class="chart-container" style="position: relative;">
-    <canvas id="status"></canvas>
-</div>
-<script>
-const ctx_2 = document.getElementById('status');
-const status = new Chart(ctx_2, {
-    type: 'bar',
-    data: {
-        labels: ['Active', 'Disabled', 'Archived'],
-        datasets: [{
-            label: '# of Projects(s)',
-			data: [<?= json_encode($total_projects_active); ?>, <?= json_encode($total_projects_disabled); ?>, <?= json_encode($total_projects_archived); ?>],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)','rgba(54, 162, 235, 0.2)','rgba(255, 206, 86, 0.2)',
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)','rgba(54, 162, 235, 1)','rgba(255, 206, 86, 1)',
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        },
-		plugins: {
-            title: {
-                display: false,
-                text: 'Projects by Status',
-				font: {
-				  size: 15
-					}
-				},
-			subtitle: {
-                display: false,
-                text: '<?php echo $system_name; ?>'
-				},
-			legend: {
-					display: false,
-					labels: {
-						color: 'rgb(255, 99, 132)'
-					}
-				},
-        }
-    }
-});
-</script>
-		</div>
-	</div>
-	</div>
-</div>
-		</div>
 
-			
-		<div class="tab-pane container fade px-0" id="export">
-			<?php
-				$domain = Router::url("/", true);
-				$sub = 'projects';
-				$combine = $domain . $sub;
-			?>
-			<div class="row pb-3">
-				<div class="col-md-3 mb-2">
-				<a href='<?php echo $combine; ?>/csv' class="kosong">
-					<div class="card bg-body-tertiary border-0 shadow">
-							<div class="card-body">
-						<div class="row mx-0">
-							<div class="col-5 text-center mt-3 mb-3"><i class="fa-solid fa-file-csv fa-2x text-primary"></i></div>
-							<div class="col-7 text-end m-auto">
-								<div class="fs-4 fw-bold">CSV</div>
-								<div class="small-text"><i class="fa-solid fa-angles-down fa-flip"></i> Download</div>
-							</div>
-						</div>
-					</div>
-						</div>
-				</a>
-				</div>
-				<div class="col-md-3 mb-2">
-					<a href='<?php echo $combine; ?>/json' class="kosong" target="_blank">
-					<div class="card bg-body-tertiary border-0 shadow">
-							<div class="card-body">
-						<div class="row mx-0">
-							<div class="col-5 text-center mt-3 mb-3"><i class="fa-solid fa-braille fa-2x text-warning"></i></div>
-							<div class="col-7 text-end m-auto">
-								<div class="fs-4 fw-bold">JSON</div>
-								<div class="small-text"><i class="fa-solid fa-angles-down fa-flip"></i> Download</div>
-							</div>
-						</div>
-						</div>
-					</div>
-					</a>
-				</div>
-				<div class="col-md-3 mb-2">
-					<a href='<?php echo $combine; ?>/pdfList' class="kosong">
-					<div class="card bg-body-tertiary border-0 shadow">
-							<div class="card-body">
-						<div class="row mx-0">
-							<div class="col-5 text-center mt-3 mb-3"><i class="fa-regular fa-file-pdf fa-2x text-danger"></i></div>
-							<div class="col-7 text-end m-auto">
-								<div class="fs-4 fw-bold">PDF</div>
-								<div class="small-text"><i class="fa-solid fa-angles-down fa-flip"></i> Download</div>
-							</div>
-						</div>
-						</div>
-					</div>
-					</a>
-				</div>
-			</div>	
-		</div>
-	</div>
-		
-		
 
-	</div>
-	<div class="col-md-3">
-<div class="card bg-body-tertiary border-0 shadow mb-4">
-	<div class="card-body">
-		<div class="card-title mb-0">Search</div>
-			<div class="tricolor_line mb-3"></div>
-			<?php echo $this->Form->create(null, ['valueSources' => 'query', 'url' => ['controller' => 'Projects','action' => 'index']]); ?>
-				<fieldset>
-					<div class="mb-1"><?php echo $this->Form->control('id',['required' => false]); ?></div>
-				</fieldset>
-		<div class="text-end">
-			<?php 
-				if (!empty($_isSearch)) {
-					echo ' ';
-					echo $this->Html->link(__('Reset'), ['action' => 'index', '?' => array_intersect_key($this->request->getQuery(), array_flip(['sort', 'direction']))], ['class' => 'btn btn-outline-warning btn-sm']);
+
+
+			<div class="table-responsive mt-4">
+				<table class="table table-hover">
+					<tr class="table-secondary">
+						<td colspan="4" class="py-3 px-3">
+							<div class="row">
+								<div class="col-md-6"><i class="fa-solid fa-ghost mx-3"></i> <span class="fw-bold">Asyraf-wa</span> Update index.php</div>
+								<div class="col-md-6 text-end">Latest commit 8008l355 2 hours ago</div>
+							</div>
+
+						</td>
+					</tr>
+					<?php foreach ($projects as $project): ?>
+						<tr data-bs-toggle="collapse" data-bs-target="#row<?= h($project->id) ?>" class="table-row">
+							<td width="20%"><i class="fa-solid fa-folder mx-3"></i> <?= h($project->title) ?></td>
+							<td width="60%">
+								<?php echo strip_tags($this->Text->truncate(
+									$project->body,
+									100,
+									[
+										'ellipsis' => '...',
+										'exact' => false
+									]
+								)); ?>
+							</td>
+							<td width="10%" class="text-end"><?= h($project->year) ?></td>
+							<td width="10%" class="text-end"><?= h($project->progress) ?></td>
+						</tr>
+						<tr id="row<?= h($project->id) ?>" class="collapse table-collapse">
+							<td colspan="4">
+								<div class="row mb-5">
+									<div class="col-md-6">
+										<?php echo $this->Html->image('../files/Projects/poster/' . $project->slug . '/' . $project->poster, ['class' => 'card-img-top', 'width' => '100%',  'alt' => $project->title]); ?>
+									</div>
+									<div class="col-md-6">
+										<div class="card-title mt-3"><?= h($project->title) ?></div>
+										<div class="tricolor_line mb-3"></div>
+
+										<div class="table-responsive">
+											<table class="table table-borderless table_transparent table-hover">
+												<tr>
+													<td>Year</td>
+													<td>:</td>
+													<td><?= ($project->year) ?></td>
+												</tr>
+												<tr>
+													<td>Category</td>
+													<td>:</td>
+													<td><?= ($project->category) ?></td>
+												</tr>
+												<tr>
+													<td>Status</td>
+													<td>:</td>
+													<td><?= ($project->progress) ?></td>
+												</tr>
+												<tr>
+													<td>About</td>
+													<td>:</td>
+													<td class="text-justify"><?= ($project->body) ?></td>
+												</tr>
+											</table>
+										</div>
+									</div>
+								</div>
+
+
+
+							</td>
+						</tr>
+
+					<?php endforeach; ?>
+
+				</table>
+			</div>
+
+			<script>
+				$(document).ready(function() {
+					var isExpanded = false;
+
+					$('#toggleAll').click(function() {
+						if (isExpanded) {
+							// Collapse all
+							$('.table-collapse').collapse('hide');
+							$('#toggleIcon').removeClass('fa-folder').addClass('fa-folder-open');
+							$(this).html('<i id="toggleIcon" class="fa-regular fa-folder-open"></i> Expand All');
+						} else {
+							// Expand all
+							$('.table-collapse').collapse('show');
+							$('#toggleIcon').removeClass('fa-folder-open').addClass('fa-folder');
+							$(this).html('<i id="toggleIcon" class="fa-solid fa-folder"></i> Collapse All');
+						}
+						isExpanded = !isExpanded;
+					});
+
+					$('.table-row').click(function() {
+						var icon = $(this).find('i');
+						if ($(this).next('.table-collapse').hasClass('show')) {
+							icon.removeClass('fa-folder-open').addClass('fa-folder');
+						} else {
+							icon.removeClass('fa-folder').addClass('fa-folder-open');
+						}
+					});
+
+					$('.table-collapse').on('hidden.bs.collapse', function() {
+						$(this).prev('.table-row').find('i').removeClass('fa-folder-open').addClass('fa-folder');
+					});
+
+					$('.table-collapse').on('shown.bs.collapse', function() {
+						$(this).prev('.table-row').find('i').removeClass('fa-folder').addClass('fa-folder-open');
+					});
+				});
+			</script>
+
+			<div aria-label="Page navigation" class="mt-3 px-2">
+				<ul class="pagination justify-content-end flex-wrap">
+					<?= $this->Paginator->first('<< ' . __('First')) ?>
+					<?= $this->Paginator->prev('< ' . __('Previous')) ?>
+					<?= $this->Paginator->numbers(['before' => '', 'after' => '']) ?>
+					<?= $this->Paginator->next(__('Next') . ' >') ?>
+					<?= $this->Paginator->last(__('Last') . ' >>') ?>
+				</ul>
+				<div class="text-end"><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></div>
+			</div>
+
+			<style>
+				.project_box1 {
+					background-image: linear-gradient(135deg, #7bbef5 10%, #c9e6ab);
+					color: #000000;
 				}
-				echo '&nbsp;&nbsp;';
-				echo $this->Form->button(__('Search'), ['class' => 'btn btn-outline-primary btn-sm']);
-			?>
-			<?= $this->Form->end() ?>
+
+				.project_box2 {
+					background-image: linear-gradient(135deg, #b0affa 10%, #f6d2da);
+					color: #000000;
+				}
+
+				.project_box3 {
+					background-image: linear-gradient(135deg, #f690af 10%, #f6e05f);
+					color: #000000;
+				}
+
+				.dev_icon {
+					font-size: 2.25rem;
+				}
+			</style>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="card project_box1 border-0">
+						<div class='ribbon-featured'>Featured</div>
+						<div class="card-body mx-3 my-3">
+							<h4 class="fw-bold">Re-CRUD</h4>
+							<div class="justify">Re-CRUD allows developers to construct complete Create Read Update Delete Search and Report CRUD components using the Re-CRUD generator.</div>
+							<div class="my-4">Developed by Asyraf Wahi Anuar</div>
+							<div class="dev_icon">
+								<i class="devicon-cakephp-plain mx-1 my-1"></i>
+								<i class="devicon-php-plain mx-1 my-1"></i>
+								<i class="devicon-mysql-original mx-1 my-1"></i>
+								<i class="devicon-apache-plain mx-1 my-1"></i>
+								<i class="devicon-bootstrap-plain mx-1 my-1"></i>
+								<i class="devicon-javascript-plain mx-1 my-1"></i>
+								<i class="devicon-html5-plain mx-1 my-1"></i>
+								<i class="devicon-css3-plain mx-1 my-1"></i>
+								<i class="devicon-github-original mx-1 my-1"></i>
+								<i class="devicon-composer-line mx-1 my-1"></i>
+								<i class="devicon-androidstudio-plain mx-1 my-1"></i>
+								<i class="devicon-powershell-plain mx-1 my-1"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="card project_box2 border-0">
+						<div class="card-body mx-3 my-3">
+							<h4 class="fw-bold">Re-CRUD</h4>
+							<div class="justify">Re-CRUD allows developers to construct complete Create Read Update Delete Search and Report CRUD components using the Re-CRUD generator.</div>
+							<div class="my-4">Developed by Asyraf Wahi Anuar</div>
+							<div class="dev_icon">
+								<i class="devicon-cakephp-plain mx-1 my-1"></i>
+								<i class="devicon-php-plain mx-1 my-1"></i>
+								<i class="devicon-mysql-original mx-1 my-1"></i>
+								<i class="devicon-apache-plain mx-1 my-1"></i>
+								<i class="devicon-bootstrap-plain mx-1 my-1"></i>
+								<i class="devicon-javascript-plain mx-1 my-1"></i>
+								<i class="devicon-html5-plain mx-1 my-1"></i>
+								<i class="devicon-css3-plain mx-1 my-1"></i>
+								<i class="devicon-github-original mx-1 my-1"></i>
+								<i class="devicon-composer-line mx-1 my-1"></i>
+								<i class="devicon-androidstudio-plain mx-1 my-1"></i>
+								<i class="devicon-powershell-plain mx-1 my-1"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="card project_box3 border-0">
+						<div class="card-body mx-3 my-3">
+							<h4 class="fw-bold">Re-CRUD</h4>
+							<div class="justify">Re-CRUD allows developers to construct complete Create Read Update Delete Search and Report CRUD components using the Re-CRUD generator.</div>
+							<div class="my-4">Developed by Asyraf Wahi Anuar</div>
+							<div class="dev_icon">
+								<i class="devicon-cakephp-plain mx-1 my-1"></i>
+								<i class="devicon-php-plain mx-1 my-1"></i>
+								<i class="devicon-mysql-original mx-1 my-1"></i>
+								<i class="devicon-apache-plain mx-1 my-1"></i>
+								<i class="devicon-bootstrap-plain mx-1 my-1"></i>
+								<i class="devicon-javascript-plain mx-1 my-1"></i>
+								<i class="devicon-html5-plain mx-1 my-1"></i>
+								<i class="devicon-css3-plain mx-1 my-1"></i>
+								<i class="devicon-github-original mx-1 my-1"></i>
+								<i class="devicon-composer-line mx-1 my-1"></i>
+								<i class="devicon-androidstudio-plain mx-1 my-1"></i>
+								<i class="devicon-powershell-plain mx-1 my-1"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
 		</div>
-</div>
+		<div class="col-md-3">
+			<div class="mb-3 fw-bold fs-5">About</div>
+			<div class="text-justify">Welcome to my project portfolio! This page showcases a collection of my completed and ongoing projects. Here, you’ll find detailed descriptions, progress updates, and outcomes of each project, highlighting my skills and expertise in various domains. Whether you’re interested in my past achievements or current endeavors, this portfolio provides a comprehensive view of my work and dedication. Explore the projects to learn more about my journey and the impact of my contributions.
+			</div>
+			<div class="mt-2 mb-4">
+				<span class="badge text-bg-primary px-2 me-1">application</span>
+				<span class="badge text-bg-primary px-2 me-1">web</span>
+				<span class="badge text-bg-primary px-2 me-1">framework</span>
+				<span class="badge text-bg-primary px-2 me-1">codethepixel</span>
+				<span class="badge text-bg-primary px-2 me-1">recrud</span>
+				<span class="badge text-bg-primary px-2 me-1">rapid-development</span>
+				<span class="badge text-bg-primary px-2 me-1">mvc</span>
+			</div>
+
+			<div class="mt-2"><a href="#" class="project"><i class="fa-solid fa-book-open me-2"></i> Readme</a></div>
+			<div class="mt-2"><a href="#" class="project"><i class="fa-solid fa-wave-square me-2"></i> Activity</a></div>
+			<div class="mt-2"><a href="#" class="project"><i class="fa-regular fa-star me-2"></i> 20 stars</a></div>
+			<div class="mt-2"><a href="#" class="project"><i class="fa-regular fa-eye me-2"></i> 10 watching</a></div>
+			<div class="mt-2"><a href="#" class="project"><i class="fa-solid fa-code-fork me-2"></i> 5 forks</a></div>
+			<div class="mt-3"><a href="#" class="project">Report Repository</a></div>
+
+			<hr />
+
+
+			<div class="mb-3 fw-bold fs-5">Releases <span class="badge text-bg-secondary">11</span></div>
+
+			<div class="mt-4"><i class="fa-solid fa-tag text-success me-2"></i> Re-CRUD 2.0.0 released <span class="badge rounded-pill text-bg-success">Latest</span></div>
+
+			<div class="mt-3">+ 10 releases</div>
+
+			<hr />
+
+			<div class="mb-3 fw-bold fs-5">Packages</div>
+			<div class="mt-4">No packages published </div>
+			<hr />
+
+			<div class="mb-3 fw-bold fs-5">Languages</div>
+			<div class="multicolor-line mt-4 mb-3"></div>
+			<span style="font-size: 1em; color: #4f5d95;"><i class="fas fa-circle"></i></span><a href="#" class="project"> PHP 51%</a>
+
+		</div>
 	</div>
-</div>
+
+
 </div>
 
-<div class="modal" id="bootstrapModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Confirm</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-			<i class="fa-regular fa-circle-xmark fa-6x text-danger mb-3"></i>
-                <p id="confirmMessage"></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="ok">OK</button>
-            </div>
-        </div>
-    </div>
+<div class="container mt-4">
+	TailHub is what happens when I have way too much time on my hands. http://bensomething.com
+
+	<h5><span class="badge text-bg-primary me-3">New</span><span class="badge text-bg-primary me-3">New</span><span class="badge text-bg-primary me-3">New</span><span class="badge text-bg-primary me-3">New</span></h5>
+
+	<div class="row text-center bg-body-tertiary ms-1 me-1">
+		<div class="col-md-3 border rounded-top pt-3 pb-3">123 Commits</div>
+		<div class="col-md-3 border pt-3 pb-3">456 Branches</div>
+		<div class="col-md-3 border pt-3 pb-3">789 Releases</div>
+		<div class="col-md-3 border rounded-top pt-3 pb-3">123 Contributors</div>
+	</div>
+	<div class="multicolor-line"></div>
+
+
 </div>

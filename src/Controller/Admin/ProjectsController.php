@@ -200,7 +200,7 @@ class ProjectsController extends AppController
         $project = $this->Projects->newEmptyEntity();
         if ($this->request->is('post')) {
             $project = $this->Projects->patchEntity($project, $this->request->getData());
-            $article->user_id = $this->Authentication->getIdentity('id')->getIdentifier('id'); //capture auth id
+            $project->user_id = $this->Authentication->getIdentity('id')->getIdentifier('id'); //capture auth id
             if ($this->Projects->save($project)) {
                 $this->Flash->success(__('The project has been saved.'));
 

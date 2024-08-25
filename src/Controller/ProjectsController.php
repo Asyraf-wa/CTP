@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -10,62 +11,63 @@ namespace App\Controller;
  */
 class ProjectsController extends AppController
 {
-	public function initialize(): void
-	{
-		parent::initialize();
+    public function initialize(): void
+    {
+        parent::initialize();
 
-		$this->loadComponent('Search.Search', [
-			'actions' => ['index'],
-		]);
-	}
-	
-	public function beforeFilter(\Cake\Event\EventInterface $event)
-	{
-		parent::beforeFilter($event);
-	}
+        $this->viewBuilder()->setLayout('articles');
+        $this->loadComponent('Search.Search', [
+            'actions' => ['index'],
+        ]);
+    }
 
-	/*public function viewClasses(): array
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+    }
+
+    /*public function viewClasses(): array
     {
         return [JsonView::class];
 		return [JsonView::class, XmlView::class];
     }*/
-	
-	public function json()
+
+    public function json()
     {
-		$this->viewBuilder()->setLayout('json');
+        $this->viewBuilder()->setLayout('json');
         $this->set('projects', $this->paginate());
         $this->viewBuilder()->setOption('serialize', 'projects');
     }
-	
-	public function csv()
-	{
-		$this->response = $this->response->withDownload('projects.csv');
-		$projects = $this->Projects->find();
-		$_serialize = 'projects';
 
-		$this->viewBuilder()->setClassName('CsvView.Csv');
-		$this->set(compact('projects', '_serialize'));
-	}
-	
-	public function pdfList()
-	{
-		$this->viewBuilder()->enableAutoLayout(false); 
+    public function csv()
+    {
+        $this->response = $this->response->withDownload('projects.csv');
+        $projects = $this->Projects->find();
+        $_serialize = 'projects';
+
+        $this->viewBuilder()->setClassName('CsvView.Csv');
+        $this->set(compact('projects', '_serialize'));
+    }
+
+    public function pdfList()
+    {
+        $this->viewBuilder()->enableAutoLayout(false);
         $this->paginate = [
             'contain' => ['Users'],
-			'maxLimit' => 10,
+            'maxLimit' => 10,
         ];
-		$projects = $this->paginate($this->Projects);
-		$this->viewBuilder()->setClassName('CakePdf.Pdf');
-		$this->viewBuilder()->setOption(
-			'pdfConfig',
-			[
-				'orientation' => 'portrait',
-				'download' => true, 
-				'filename' => 'projects_List.pdf' 
-			]
-		);
-		$this->set(compact('projects'));
-	}
+        $projects = $this->paginate($this->Projects);
+        $this->viewBuilder()->setClassName('CakePdf.Pdf');
+        $this->viewBuilder()->setOption(
+            'pdfConfig',
+            [
+                'orientation' => 'portrait',
+                'download' => true,
+                'filename' => 'projects_List.pdf'
+            ]
+        );
+        $this->set(compact('projects'));
+    }
     /**
      * Index method
      *
@@ -73,36 +75,36 @@ class ProjectsController extends AppController
      */
     public function index()
     {
-		$this->set('title', 'Projects List');
-		$this->paginate = [
-			'maxLimit' => 10,
+        $this->set('title', 'Projects List');
+        $this->paginate = [
+            'maxLimit' => 10,
         ];
         $query = $this->Projects->find('search', search: $this->request->getQueryParams())
             ->contain(['Users']);
-			//->where(['title IS NOT' => null])
+        //->where(['title IS NOT' => null])
         $projects = $this->paginate($query);
-		
-		//count
-		$this->set('total_projects', $this->Projects->find()->count());
-		$this->set('total_projects_archived', $this->Projects->find()->where(['status' => 2])->count());
-		$this->set('total_projects_active', $this->Projects->find()->where(['status' => 1])->count());
-		$this->set('total_projects_disabled', $this->Projects->find()->where(['status' => 0])->count());
-		
-		//Count By Month
-		$this->set('january', $this->Projects->find()->where(['MONTH(created)' => date('1'), 'YEAR(created)' => date('Y')])->count());
-		$this->set('february', $this->Projects->find()->where(['MONTH(created)' => date('2'), 'YEAR(created)' => date('Y')])->count());
-		$this->set('march', $this->Projects->find()->where(['MONTH(created)' => date('3'), 'YEAR(created)' => date('Y')])->count());
-		$this->set('april', $this->Projects->find()->where(['MONTH(created)' => date('4'), 'YEAR(created)' => date('Y')])->count());
-		$this->set('may', $this->Projects->find()->where(['MONTH(created)' => date('5'), 'YEAR(created)' => date('Y')])->count());
-		$this->set('jun', $this->Projects->find()->where(['MONTH(created)' => date('6'), 'YEAR(created)' => date('Y')])->count());
-		$this->set('july', $this->Projects->find()->where(['MONTH(created)' => date('7'), 'YEAR(created)' => date('Y')])->count());
-		$this->set('august', $this->Projects->find()->where(['MONTH(created)' => date('8'), 'YEAR(created)' => date('Y')])->count());
-		$this->set('september', $this->Projects->find()->where(['MONTH(created)' => date('9'), 'YEAR(created)' => date('Y')])->count());
-		$this->set('october', $this->Projects->find()->where(['MONTH(created)' => date('10'), 'YEAR(created)' => date('Y')])->count());
-		$this->set('november', $this->Projects->find()->where(['MONTH(created)' => date('11'), 'YEAR(created)' => date('Y')])->count());
-		$this->set('december', $this->Projects->find()->where(['MONTH(created)' => date('12'), 'YEAR(created)' => date('Y')])->count());
 
-		$query = $this->Projects->find();
+        //count
+        $this->set('total_projects', $this->Projects->find()->count());
+        $this->set('total_projects_archived', $this->Projects->find()->where(['status' => 2])->count());
+        $this->set('total_projects_active', $this->Projects->find()->where(['status' => 1])->count());
+        $this->set('total_projects_disabled', $this->Projects->find()->where(['status' => 0])->count());
+
+        //Count By Month
+        $this->set('january', $this->Projects->find()->where(['MONTH(created)' => date('1'), 'YEAR(created)' => date('Y')])->count());
+        $this->set('february', $this->Projects->find()->where(['MONTH(created)' => date('2'), 'YEAR(created)' => date('Y')])->count());
+        $this->set('march', $this->Projects->find()->where(['MONTH(created)' => date('3'), 'YEAR(created)' => date('Y')])->count());
+        $this->set('april', $this->Projects->find()->where(['MONTH(created)' => date('4'), 'YEAR(created)' => date('Y')])->count());
+        $this->set('may', $this->Projects->find()->where(['MONTH(created)' => date('5'), 'YEAR(created)' => date('Y')])->count());
+        $this->set('jun', $this->Projects->find()->where(['MONTH(created)' => date('6'), 'YEAR(created)' => date('Y')])->count());
+        $this->set('july', $this->Projects->find()->where(['MONTH(created)' => date('7'), 'YEAR(created)' => date('Y')])->count());
+        $this->set('august', $this->Projects->find()->where(['MONTH(created)' => date('8'), 'YEAR(created)' => date('Y')])->count());
+        $this->set('september', $this->Projects->find()->where(['MONTH(created)' => date('9'), 'YEAR(created)' => date('Y')])->count());
+        $this->set('october', $this->Projects->find()->where(['MONTH(created)' => date('10'), 'YEAR(created)' => date('Y')])->count());
+        $this->set('november', $this->Projects->find()->where(['MONTH(created)' => date('11'), 'YEAR(created)' => date('Y')])->count());
+        $this->set('december', $this->Projects->find()->where(['MONTH(created)' => date('12'), 'YEAR(created)' => date('Y')])->count());
+
+        $query = $this->Projects->find();
 
         $expectedMonths = [];
         for ($i = 11; $i >= 0; $i--) {
@@ -170,7 +172,7 @@ class ProjectsController extends AppController
      */
     public function view($id = null)
     {
-		$this->set('title', 'Projects Details');
+        $this->set('title', 'Projects Details');
         $project = $this->Projects->get($id, contain: ['Users']);
         $this->set(compact('project'));
 
@@ -184,8 +186,8 @@ class ProjectsController extends AppController
      */
     public function add()
     {
-		$this->set('title', 'New Projects');
-		/*EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
+        $this->set('title', 'New Projects');
+        /*EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
 			foreach ($logs as $log) {
 				$log->setMetaInfo($log->getMetaInfo() + ['a_name' => 'Add']);
 				$log->setMetaInfo($log->getMetaInfo() + ['c_name' => 'Projects']);
@@ -217,8 +219,8 @@ class ProjectsController extends AppController
      */
     public function edit($id = null)
     {
-		$this->set('title', 'Projects Edit');
-		/*EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
+        $this->set('title', 'Projects Edit');
+        /*EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
 			foreach ($logs as $log) {
 				$log->setMetaInfo($log->getMetaInfo() + ['a_name' => 'Edit']);
 				$log->setMetaInfo($log->getMetaInfo() + ['c_name' => 'Projects']);
@@ -239,7 +241,7 @@ class ProjectsController extends AppController
             }
             $this->Flash->error(__('The project could not be saved. Please, try again.'));
         }
-		$users = $this->Projects->Users->find('list', limit: 200)->all();
+        $users = $this->Projects->Users->find('list', limit: 200)->all();
         $this->set(compact('project', 'users'));
     }
 
@@ -252,15 +254,15 @@ class ProjectsController extends AppController
      */
     public function delete($id = null)
     {
-		EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
-			foreach ($logs as $log) {
-				$log->setMetaInfo($log->getMetaInfo() + ['a_name' => 'Delete']);
-				$log->setMetaInfo($log->getMetaInfo() + ['c_name' => 'Projects']);
-				$log->setMetaInfo($log->getMetaInfo() + ['ip' => $this->request->clientIp()]);
-				$log->setMetaInfo($log->getMetaInfo() + ['url' => Router::url(null, true)]);
-				$log->setMetaInfo($log->getMetaInfo() + ['slug' => $this->Authentication->getIdentity('slug')->getIdentifier('slug')]);
-			}
-		});
+        EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
+            foreach ($logs as $log) {
+                $log->setMetaInfo($log->getMetaInfo() + ['a_name' => 'Delete']);
+                $log->setMetaInfo($log->getMetaInfo() + ['c_name' => 'Projects']);
+                $log->setMetaInfo($log->getMetaInfo() + ['ip' => $this->request->clientIp()]);
+                $log->setMetaInfo($log->getMetaInfo() + ['url' => Router::url(null, true)]);
+                $log->setMetaInfo($log->getMetaInfo() + ['slug' => $this->Authentication->getIdentity('slug')->getIdentifier('slug')]);
+            }
+        });
         $this->request->allowMethod(['post', 'delete']);
         $project = $this->Projects->get($id);
         if ($this->Projects->delete($project)) {
@@ -271,29 +273,29 @@ class ProjectsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
-	
-	public function archived($id = null)
+
+    public function archived($id = null)
     {
-		$this->set('title', 'Projects Edit');
-		EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
-			foreach ($logs as $log) {
-				$log->setMetaInfo($log->getMetaInfo() + ['a_name' => 'Archived']);
-				$log->setMetaInfo($log->getMetaInfo() + ['c_name' => 'Projects']);
-				$log->setMetaInfo($log->getMetaInfo() + ['ip' => $this->request->clientIp()]);
-				$log->setMetaInfo($log->getMetaInfo() + ['url' => Router::url(null, true)]);
-				$log->setMetaInfo($log->getMetaInfo() + ['slug' => $this->Authentication->getIdentity('slug')->getIdentifier('slug')]);
-			}
-		});
+        $this->set('title', 'Projects Edit');
+        EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
+            foreach ($logs as $log) {
+                $log->setMetaInfo($log->getMetaInfo() + ['a_name' => 'Archived']);
+                $log->setMetaInfo($log->getMetaInfo() + ['c_name' => 'Projects']);
+                $log->setMetaInfo($log->getMetaInfo() + ['ip' => $this->request->clientIp()]);
+                $log->setMetaInfo($log->getMetaInfo() + ['url' => Router::url(null, true)]);
+                $log->setMetaInfo($log->getMetaInfo() + ['slug' => $this->Authentication->getIdentity('slug')->getIdentifier('slug')]);
+            }
+        });
         $project = $this->Projects->get($id, [
             'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $project = $this->Projects->patchEntity($project, $this->request->getData());
-			$project->status = 2; //archived
+            $project->status = 2; //archived
             if ($this->Projects->save($project)) {
                 $this->Flash->success(__('The project has been archived.'));
 
-				return $this->redirect($this->referer());
+                return $this->redirect($this->referer());
             }
             $this->Flash->error(__('The project could not be archived. Please, try again.'));
         }
