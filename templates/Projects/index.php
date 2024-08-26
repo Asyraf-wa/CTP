@@ -217,28 +217,30 @@ echo $this->Html->script('bootstrapModal', ['block' => 'scriptBottom']);
 			</div>
 
 			<style>
+				.project_box {
+					color: #000000;
+					height: 380px;
+				}
+
 				.project_box1 {
 					background-image: linear-gradient(135deg, #7bbef5 10%, #c9e6ab);
-					color: #000000;
 				}
 
 				.project_box2 {
 					background-image: linear-gradient(135deg, #b0affa 10%, #f6d2da);
-					color: #000000;
 				}
 
 				.project_box3 {
 					background-image: linear-gradient(135deg, #f690af 10%, #f6e05f);
-					color: #000000;
 				}
 
 				.dev_icon {
 					font-size: 2.25rem;
 				}
 			</style>
-			<div class="row">
+			<div class="row mt-4">
 				<div class="col-md-4">
-					<div class="card project_box1 border-0">
+					<div class="card project_box project_box1 border-0">
 						<div class='ribbon-featured'>Featured</div>
 						<div class="card-body mx-3 my-3">
 							<h4 class="fw-bold">Re-CRUD</h4>
@@ -262,33 +264,28 @@ echo $this->Html->script('bootstrapModal', ['block' => 'scriptBottom']);
 					</div>
 				</div>
 				<div class="col-md-4">
-					<div class="card project_box2 border-0">
+					<div class="card project_box project_box2 border-0">
+						<div class='ribbon-featured'>Featured</div>
 						<div class="card-body mx-3 my-3">
-							<h4 class="fw-bold">Re-CRUD</h4>
-							<div class="justify">Re-CRUD allows developers to construct complete Create Read Update Delete Search and Report CRUD components using the Re-CRUD generator.</div>
+							<h4 class="fw-bold">e-XATT</h4>
+							<div class="justify">The e-XATT system is an examination scheduling system that arranges the exam venue according to the number of students, taking into account factors such as consecutive examinations, student seating capacity, and room availability.</div>
 							<div class="my-4">Developed by Asyraf Wahi Anuar</div>
 							<div class="dev_icon">
-								<i class="devicon-cakephp-plain mx-1 my-1"></i>
-								<i class="devicon-php-plain mx-1 my-1"></i>
-								<i class="devicon-mysql-original mx-1 my-1"></i>
-								<i class="devicon-apache-plain mx-1 my-1"></i>
-								<i class="devicon-bootstrap-plain mx-1 my-1"></i>
-								<i class="devicon-javascript-plain mx-1 my-1"></i>
-								<i class="devicon-html5-plain mx-1 my-1"></i>
-								<i class="devicon-css3-plain mx-1 my-1"></i>
+								<i class="devicon-cplusplus-plain mx-1 my-1"></i>
+								<i class="devicon-mongodb-plain mx-1 my-1"></i>
 								<i class="devicon-github-original mx-1 my-1"></i>
-								<i class="devicon-composer-line mx-1 my-1"></i>
-								<i class="devicon-androidstudio-plain mx-1 my-1"></i>
 								<i class="devicon-powershell-plain mx-1 my-1"></i>
+								<i class="devicon-vscode-plain mx-1 my-1"></i>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4">
-					<div class="card project_box3 border-0">
+					<div class="card project_box project_box3 border-0">
+						<div class='ribbon-featured'>Featured</div>
 						<div class="card-body mx-3 my-3">
-							<h4 class="fw-bold">Re-CRUD</h4>
-							<div class="justify">Re-CRUD allows developers to construct complete Create Read Update Delete Search and Report CRUD components using the Re-CRUD generator.</div>
+							<h4 class="fw-bold">Internship Info System</h4>
+							<div class="justify">Internship Information System allows intern candidates to build their resumes, generate application correspondence, and manage their internship activities and logbooks.</div>
 							<div class="my-4">Developed by Asyraf Wahi Anuar</div>
 							<div class="dev_icon">
 								<i class="devicon-cakephp-plain mx-1 my-1"></i>
@@ -301,7 +298,6 @@ echo $this->Html->script('bootstrapModal', ['block' => 'scriptBottom']);
 								<i class="devicon-css3-plain mx-1 my-1"></i>
 								<i class="devicon-github-original mx-1 my-1"></i>
 								<i class="devicon-composer-line mx-1 my-1"></i>
-								<i class="devicon-androidstudio-plain mx-1 my-1"></i>
 								<i class="devicon-powershell-plain mx-1 my-1"></i>
 							</div>
 						</div>
