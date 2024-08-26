@@ -120,6 +120,7 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/users', ['controller' => 'Users', 'action' => 'index']);
         $routes->connect('/articles', ['controller' => 'Articles', 'action' => 'index']);
         $routes->connect('/categories', ['controller' => 'Categories', 'action' => 'index']);
+        $routes->connect('/quotes', ['controller' => 'Quotes', 'action' => 'index']);
         $routes->connect('/settings', ['prefix' => 'admin', 'controller' => 'Settings', 'action' => 'update']);
         $routes->fallbacks(DashedRoute::class);
     });
