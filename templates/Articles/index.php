@@ -38,7 +38,7 @@ $this->assign('title', 'Code The Pixel - Coding and Tutorial');
 </svg>
 	'), ['action' => ''], ['class' => 'btn btn-secondary btn-xs', 'escape' => false, 'data-bs-toggle' => 'collapse', 'data-bs-target' => '#flush-search', 'aria-expanded' => 'false', 'aria-controls' => 'flush-search']) ?>
 		<?php if (!empty($_isSearch)) {
-			echo $this->Html->link(__('<i class="fas fa-sync-alt fa-sm"></i>'), ['action' => 'index', '?' => array_intersect_key($this->request->getQuery(), array_flip(['sort', 'direction']))], ['class' => 'btn btn-outline-secondary btn-sm my-2 shadow', 'escape' => false, 'title' => 'Reset']);
+			echo $this->Html->link(__('<i class="fas fa-sync-alt fa-sm"></i>'), ['action' => 'index', '?' => array_intersect_key($this->request->getQuery(), array_flip(['sort', 'direction']))], ['class' => '', 'escape' => false, 'title' => 'Reset']);
 		} ?>
 	</div>
 

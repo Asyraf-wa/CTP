@@ -5,12 +5,8 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Utility\Hash;
+use Cake\ORM\TableRegistry;
 
-/**
- * Articles Controller
- *
- * @property \App\Model\Table\ArticlesTable $Articles
- */
 class ArticlesController extends AppController
 {
     public function initialize(): void
@@ -25,14 +21,8 @@ class ArticlesController extends AppController
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         parent::beforeFilter($event);
-        $this->Authentication->allowUnauthenticated(['index', 'view']);
+        $this->Authentication->allowUnauthenticated(['index', 'view', 'stats', 'blog']);
     }
-
-    /*public function viewClasses(): array
-    {
-        return [JsonView::class];
-		return [JsonView::class, XmlView::class];
-    }*/
 
     public function json()
     {
@@ -98,8 +88,8 @@ class ArticlesController extends AppController
         //$articles = $this->paginate($query)->toArray();
 
         $categories = $this->Articles->Categories->find('list', ['limit' => 200]);
-        $tags = $this->Articles->Tagged->find()->distinct(['Tags.slug', 'Tags.label'])->contain(['Tags'])->toArray();
-        $tags = Hash::combine($tags, '{n}.tag.slug', '{n}.tag.label');
+        //$tags = $this->Articles->Tagged->find()->distinct(['Tags.slug', 'Tags.label'])->contain(['Tags'])->toArray();
+        //$tags = Hash::combine($tags, '{n}.tag.slug', '{n}.tag.label');
         //$this->set(compact('articles','categories'));
         //$this->set(compact('articles', 'categories', 'tags'));
 
@@ -189,7 +179,9 @@ class ArticlesController extends AppController
         //    ->order(['label' => 'ASC']);
         //debug($tagging);
         //exit;
-        $tags = $this->Articles->Tagged->find('cloud')->toArray();
+        $tags = $this->Articles->Tagged->find()->distinct(['Tags.slug', 'Tags.label'])->contain(['Tags'])->toArray();
+        $tags = Hash::combine($tags, '{n}.tag.slug', '{n}.tag.label');
+        //$tags = $this->Articles->Tagged->find('cloud')->toArray();
 
         $this->set(compact('articles', 'categories', 'tags', 'monthArray', 'countArray', 'tags', 'tagging'));
     }
@@ -198,7 +190,7 @@ class ArticlesController extends AppController
     {
         $this->set('title', 'Blog');
         $this->paginate = [
-            'maxLimit' => 20,
+            'maxLimit' => 18,
         ];
         $query = $this->Articles
             ->find('search', search: $this->request->getQueryParams())
@@ -277,19 +269,104 @@ class ArticlesController extends AppController
             $countArray[] = $data['count'];
         }
 
-        $allTags = $this->fetchTable('TagsTags');
+        /* $allTags = $this->fetchTable('TagsTags');
         $tagging = $allTags->find('all')->orderBy(['label' => 'ASC']);
-        $tags = $this->Articles->Tagged->find('cloud')->toArray();
+        $tags = $this->Articles->Tagged->find('cloud')->toArray(); */
 
-        $this->set(compact('blogs', 'categories', 'tags', 'monthArray', 'countArray', 'tags', 'tagging'));
+        $tags = $this->Articles->Tagged->find()->distinct(['Tags.slug', 'Tags.label'])->contain(['Tags'])->toArray();
+        $tags = Hash::combine($tags, '{n}.tag.slug', '{n}.tag.label');
+
+        $this->set(compact('blogs', 'categories', 'tags', 'monthArray', 'countArray', 'tags'));
     }
-    /**
-     * View method
-     *
-     * @param string|null $id Article id.
-     * @return \Cake\Http\Response|null|void Renders view
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
+
+    public function stats()
+    {
+
+        $articles = $this->fetchTable('articles');
+        //publish activity user (for module)
+        $articles = $articles->find('all')
+            //->where(['user_id' => $userID])
+            ->limit(5)
+            ->orderBy(['created' => 'DESC']);
+
+        //count all user activities and group by date for heatmap
+        $userLogsTable = TableRegistry::getTableLocator()->get('Articles');
+        $query = $userLogsTable->find();
+        $query->select([
+            'count' => $query->func()->count('*'),
+            'date' => $query->func()->date_format(['created' => 'identifier', "%Y-%m-%d"])
+        ])
+            ->groupBy(['date']);
+
+        $results = $query->all()->toArray();
+
+        $formattedResults = [];
+        foreach ($results as $result) {
+            $formattedResults[] = [
+                'date' => $result->date,
+                'count' => $result->count
+            ];
+        }
+
+        $this->set([
+            'results' => $formattedResults,
+            '_serialize' => ['results']
+        ]);
+
+        //count all user activities and group by month for bar chart
+        $query = $userLogsTable->find();
+        $query->select([
+            'count' => $query->func()->count('*'),
+            'date' => $query->func()->date_format(['created' => 'identifier', "%b-%Y"])
+        ])
+            ->groupBy(['month' => 'MONTH(created)']);
+
+        $results = $query->all()->toArray();
+
+        $totalActivityByMonth = [];
+        foreach ($results as $result) {
+            $totalActivityByMonth[] = [
+                'month' => $result->date,
+                'count' => $result->count
+            ];
+        }
+
+        $this->set([
+            'results' => $totalActivityByMonth,
+            '_serialize' => ['results']
+        ]);
+
+
+        //article table loaded
+        /* $articles = $this->fetchTable('Articles');
+        $article_count_all = $articles->find()->all()->count();
+        $article_active = $articles->find()->where(['published' => 1])->count();
+        $article_disabled = $articles->find()->where(['published' => 3])->count();
+        $article_archived = $articles->find()->where(['published' => 3])->count();
+        $article_featured = $articles->find()->where(['featured' => 1])->count();
+        $article_unpublish = $articles->find()->where(['published' => 3])->count();
+
+        $total_quantity = $articles->find();
+        $count_quantity = $total_quantity->select(['sum' => $total_quantity->func()->sum('Articles.hits')])->first();
+        $sum_quantity = $count_quantity->sum;
+
+        $article_last = $articles->find('all')
+            ->where([
+                //'published' => 1,
+                //'category_id' => '1',
+            ])
+            ->orderBy(['created' => 'DESC'])
+            ->limit(5);
+ */
+        $this->set(compact(
+            'articles',
+            'formattedResults',
+            'totalActivityByMonth',
+            //'article_count_all', 'article_active', 'article_disabled', 'article_archived', 'article_featured', 'article_unpublish', 'article_last', 'sum_quantity'
+        ));
+    }
+
+
     public function view($slug = null, $id = null)
     {
         $this->set('title', 'Articles Details');
@@ -298,6 +375,15 @@ class ArticlesController extends AppController
             ->findBySlug($slug)
             ->contain(['Users', 'Categories'])
             ->firstOrFail();
+
+        $articles = $this->fetchTable('Articles');
+        //$query = $articles->query();
+        //$query->update()
+        $query = $articles->updateQuery();
+        $query->set($query->newExpr('hits = hits + 1'))
+            //->set($query->newExpr('hits = hits + 1'))
+            ->where(['slug' => $slug])
+            ->execute();
 
         $query = $this->Articles->find();
         $totalHits = $query->select(['total' => $query->func()->sum('hits')])->first()->total;

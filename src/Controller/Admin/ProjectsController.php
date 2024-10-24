@@ -25,6 +25,7 @@ class ProjectsController extends AppController
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         parent::beforeFilter($event);
+        $this->Authentication->allowUnauthenticated(['index', 'view']);
     }
 
     /*public function viewClasses(): array

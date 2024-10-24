@@ -41,6 +41,7 @@ echo $this->Html->script('https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle
             //echo $this->Form->control('user_id', ['options' => $users]); 
             ?>
             <?php echo $this->Form->control('title'); ?>
+            <?php echo $this->Form->control('repo', ['class' => 'form-control', 'label' => 'Repository Link']); ?>
 
             <div class="row">
                 <div class="col-md-3">

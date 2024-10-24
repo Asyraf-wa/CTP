@@ -47,7 +47,9 @@ class UsersController extends AppController
         $this->set('title', 'Sign-in');
         $result = $this->Authentication->getResult();
         if ($result->isValid()) {
-            $target = $this->Authentication->getLoginRedirect() ?? '/dashboard';
+            $target = $this->Authentication->getLoginRedirect() ?? '/dashboards';
+            //debug($target);
+            //exit;
             $this->UserLogs->userLoginActivity($this->Authentication->getIdentity('id')->getIdentifier('id'));
             $this->updateLoginFields(); //capture ip and login time
             $session = $this->request->getSession();

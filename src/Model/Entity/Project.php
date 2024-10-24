@@ -45,6 +45,7 @@ class Project extends Entity
         'user_id' => true,
         'category' => true,
         'title' => true,
+        'repo' => true,
         'year' => true,
         'slug' => true,
         'body' => true,

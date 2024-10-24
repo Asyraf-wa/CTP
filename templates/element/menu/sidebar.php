@@ -49,6 +49,9 @@ $a_name = $this->request->getParam('action');
                     <li class="menu-item <?= $c_name == 'Categories' && $a_name == 'index' ? 'active' : '' ?>">
                         <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-layer-group"></i> Categories'), ['prefix' => 'Admin', 'controller' => 'Categories', 'action' => 'index'], ['class' => 'menu-link', 'escape' => false]) ?>
                     </li>
+                    <li class="menu-item <?= $c_name == 'Projects' && $a_name == 'index' ? 'active' : '' ?>">
+                        <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-laptop-code"></i> Projects'), ['prefix' => 'Admin', 'controller' => 'Projects', 'action' => 'index'], ['class' => 'menu-link', 'escape' => false]) ?>
+                    </li>
                     <li class="menu-item <?= $c_name == 'Users' && $a_name == 'index' ? 'active' : '' ?>">
                         <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-users-viewfinder"></i> User Management'), ['prefix' => 'Admin', 'controller' => 'Users', 'action' => 'index'], ['class' => 'menu-link', 'escape' => false]) ?>
                     </li>

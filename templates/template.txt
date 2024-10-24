@@ -29,6 +29,14 @@
 	</div>
 </div>
 
+=========================================
+
+<div class="card bg-body-tertiary border-0 shadow mb-4 gradient-border blog_box">
+                <div class="card-body text-body-secondary">
+
+                </div>
+            </div>
+
 ===========================================
 
  <?php foreach ($popular as $article) : ?>

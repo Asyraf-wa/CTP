@@ -24,6 +24,7 @@ class ProjectsController extends AppController
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         parent::beforeFilter($event);
+        $this->Authentication->allowUnauthenticated(['index']);
     }
 
     /*public function viewClasses(): array
@@ -80,7 +81,8 @@ class ProjectsController extends AppController
             'maxLimit' => 10,
         ];
         $query = $this->Projects->find('search', search: $this->request->getQueryParams())
-            ->contain(['Users']);
+            ->contain(['Users'])
+            ->orderBy(['Projects.year' => 'DESC']);
         //->where(['title IS NOT' => null])
         $projects = $this->paginate($query);
 

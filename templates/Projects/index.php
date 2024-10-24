@@ -33,15 +33,15 @@ echo $this->Html->script('bootstrapModal', ['block' => 'scriptBottom']);
 	</div>
 
 	<div class="horizontal-tabs border-bottom">
-		<?= $this->Html->link(__('<i class="fa-solid fa-code me-2"></i> Code'), ['controller' => '#'], ['class' => 'topMenu', 'escape' => false]) ?>
-		<?= $this->Html->link(__('<i class="fa-solid fa-triangle-exclamation me-2"></i> Issues'), ['controller' => '#'], ['class' => 'topMenu', 'escape' => false]) ?>
-		<?= $this->Html->link(__('<i class="fa-solid fa-code-pull-request me-2"></i> Pull requests'), ['controller' => '#'], ['class' => 'topMenu', 'escape' => false]) ?>
-		<?= $this->Html->link(__('<i class="fa-regular fa-circle-play me-2"></i> Actions'), ['controller' => '#'], ['class' => 'topMenu', 'escape' => false]) ?>
-		<?= $this->Html->link(__('<i class="fa-regular fa-folder-closed me-2"></i> Projects'), ['controller' => '#'], ['class' => 'topMenu active', 'escape' => false]) ?>
-		<?= $this->Html->link(__('<i class="fa-solid fa-book-open me-2"></i> Wiki'), ['controller' => '#'], ['class' => 'topMenu', 'escape' => false]) ?>
-		<?= $this->Html->link(__('<i class="fa-solid fa-shield-halved me-2"></i> Security'), ['controller' => '#'], ['class' => 'topMenu', 'escape' => false]) ?>
-		<?= $this->Html->link(__('<i class="fa-solid fa-chart-line me-2"></i> Insights'), ['controller' => '#'], ['class' => 'topMenu', 'escape' => false]) ?>
-		<?= $this->Html->link(__('<i class="fa-solid fa-gear me-2"></i> Settings'), ['controller' => '#'], ['class' => 'topMenu', 'escape' => false]) ?>
+		<?= $this->Html->link(__('<i class="fa-solid fa-code me-2"></i> Code'), ['controller' => 'Projects'], ['class' => 'topMenu', 'escape' => false]) ?>
+		<?= $this->Html->link(__('<i class="fa-solid fa-triangle-exclamation me-2"></i> Issues'), ['controller' => 'Projects'], ['class' => 'topMenu', 'escape' => false]) ?>
+		<?= $this->Html->link(__('<i class="fa-solid fa-code-pull-request me-2"></i> Pull requests'), ['controller' => 'Projects'], ['class' => 'topMenu', 'escape' => false]) ?>
+		<?= $this->Html->link(__('<i class="fa-regular fa-circle-play me-2"></i> Actions'), ['controller' => 'Projects'], ['class' => 'topMenu', 'escape' => false]) ?>
+		<?= $this->Html->link(__('<i class="fa-regular fa-folder-closed me-2"></i> Projects'), ['controller' => 'Projects'], ['class' => 'topMenu active', 'escape' => false]) ?>
+		<?= $this->Html->link(__('<i class="fa-solid fa-book-open me-2"></i> Wiki'), ['controller' => 'Projects'], ['class' => 'topMenu', 'escape' => false]) ?>
+		<?= $this->Html->link(__('<i class="fa-solid fa-shield-halved me-2"></i> Security'), ['controller' => 'Projects'], ['class' => 'topMenu', 'escape' => false]) ?>
+		<?= $this->Html->link(__('<i class="fa-solid fa-chart-line me-2"></i> Insights'), ['controller' => 'Projects'], ['class' => 'topMenu', 'escape' => false]) ?>
+		<?= $this->Html->link(__('<i class="fa-solid fa-gear me-2"></i> Settings'), ['controller' => 'Projects'], ['class' => 'topMenu', 'escape' => false]) ?>
 	</div>
 
 	<div class="row mt-4">
@@ -106,11 +106,11 @@ echo $this->Html->script('bootstrapModal', ['block' => 'scriptBottom']);
 					</tr>
 					<?php foreach ($projects as $project): ?>
 						<tr data-bs-toggle="collapse" data-bs-target="#row<?= h($project->id) ?>" class="table-row">
-							<td width="20%"><i class="fa-solid fa-folder mx-3"></i> <?= h($project->title) ?></td>
-							<td width="60%">
+							<td width="40%"><i class="fa-solid fa-folder mx-3"></i> <?= h($project->title) ?></td>
+							<td width="40%">
 								<?php echo strip_tags($this->Text->truncate(
 									$project->body,
-									100,
+									65,
 									[
 										'ellipsis' => '...',
 										'exact' => false
@@ -151,6 +151,21 @@ echo $this->Html->script('bootstrapModal', ['block' => 'scriptBottom']);
 													<td>About</td>
 													<td>:</td>
 													<td class="text-justify"><?= ($project->body) ?></td>
+												</tr>
+												<tr>
+													<td>Repository</td>
+													<td>:</td>
+													<td class="text-justify">
+														<?php if ($project->repo == NULL) {
+															echo '-';
+														} else
+															echo $this->Html->link(
+																$project->title,
+																$project->repo,
+																['target' => '_blank', '_full' => true]
+															)
+														?>
+													</td>
 												</tr>
 											</table>
 										</div>
@@ -216,29 +231,7 @@ echo $this->Html->script('bootstrapModal', ['block' => 'scriptBottom']);
 				<div class="text-end"><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></div>
 			</div>
 
-			<style>
-				.project_box {
-					color: #000000;
-					height: 380px;
-				}
-
-				.project_box1 {
-					background-image: linear-gradient(135deg, #7bbef5 10%, #c9e6ab);
-				}
-
-				.project_box2 {
-					background-image: linear-gradient(135deg, #b0affa 10%, #f6d2da);
-				}
-
-				.project_box3 {
-					background-image: linear-gradient(135deg, #f690af 10%, #f6e05f);
-				}
-
-				.dev_icon {
-					font-size: 2.25rem;
-				}
-			</style>
-			<div class="row mt-4">
+			<div class="row mt-5">
 				<div class="col-md-4">
 					<div class="card project_box project_box1 border-0">
 						<div class='ribbon-featured'>Featured</div>
@@ -344,26 +337,19 @@ echo $this->Html->script('bootstrapModal', ['block' => 'scriptBottom']);
 
 			<div class="mb-3 fw-bold fs-5">Languages</div>
 			<div class="multicolor-line mt-4 mb-3"></div>
-			<span style="font-size: 1em; color: #4f5d95;"><i class="fas fa-circle"></i></span><a href="#" class="project"> PHP 51%</a>
+			<div class="row">
+				<div class="col-auto"><span style="font-size: 1em; color: #4f5d95;"><i class="fas fa-circle"></i></span><a href="#" class="project me-3"> PHP 51%</a></div>
+				<div class="col-auto"><span style="font-size: 1em; color: #f1e05a;"><i class="fas fa-circle"></i></span><a href="#" class="project me-3"> JavaScript 38%</a></div>
+				<div class="col-auto"><span style="font-size: 1em; color: #cd1f1c;"><i class="fas fa-circle"></i></span><a href="#" class="project me-3"> Twig 9%</a></div>
+				<div class="col-auto"><span style="font-size: 1em; color: #198754;"><i class="fas fa-circle"></i></span><a href="#" class="project me-3"> Others 2%</a></div>
+			</div>
+
+
+
+
 
 		</div>
 	</div>
-
-
-</div>
-
-<div class="container mt-4">
-	TailHub is what happens when I have way too much time on my hands. http://bensomething.com
-
-	<h5><span class="badge text-bg-primary me-3">New</span><span class="badge text-bg-primary me-3">New</span><span class="badge text-bg-primary me-3">New</span><span class="badge text-bg-primary me-3">New</span></h5>
-
-	<div class="row text-center bg-body-tertiary ms-1 me-1">
-		<div class="col-md-3 border rounded-top pt-3 pb-3">123 Commits</div>
-		<div class="col-md-3 border pt-3 pb-3">456 Branches</div>
-		<div class="col-md-3 border pt-3 pb-3">789 Releases</div>
-		<div class="col-md-3 border rounded-top pt-3 pb-3">123 Contributors</div>
-	</div>
-	<div class="multicolor-line"></div>
 
 
 </div>

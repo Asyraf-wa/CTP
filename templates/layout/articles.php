@@ -89,23 +89,20 @@ $a_name = $this->request->getParam('action');
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <?= $this->Html->link('Home', ['controller' => 'articles', 'action' => '', '_full' => true, 'prefix' => false], ['class' => 'nav-link']); ?>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Projects</a>
-                        </li>
+                        <li class="nav-item <?= ($c_name == 'Articles' && $a_name == 'index') ? 'menu-active-style' : '' ?>"><?= $this->Html->link('Home', ['controller' => 'articles', 'action' => 'index', '_full' => true, 'prefix' => false], ['class' => 'nav-link']); ?> </li>
+
+                        <li class="nav-item <?= $c_name == 'Projects' ? 'menu-active-style' : '' ?>"><?= $this->Html->link('Projects', ['controller' => 'Projects', 'action' => '', '_full' => true, 'prefix' => false], ['class' => 'nav-link']); ?> </li>
+
+                        <li class="nav-item <?= ($c_name == 'Articles' && $a_name == 'blog') ? 'menu-active-style' : '' ?>"><?= $this->Html->link('Blogs', ['controller' => 'Articles', 'action' => 'blog', '_full' => true, 'prefix' => false], ['class' => 'nav-link']); ?> </li>
+
                         <li class="nav-item">
                             <a class="nav-link" href="#">Playground</a> <!--buat simple2 project, mcm calculator, etc-->
                         </li>
+                        <li class="nav-item <?= $c_name == 'about' ? 'menu-active-style' : '' ?>"><?= $this->Html->link('About Me', ['controller' => 'about', 'action' => '', '_full' => true, 'prefix' => false], ['class' => 'nav-link']); ?> </li>
+
+
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Blog</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Features</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Nerd Stats</a>
+                            <?= $this->Html->link('Nerd Stats', ['controller' => 'articles', 'action' => 'stats', '_full' => true, 'prefix' => false], ['class' => 'nav-link']); ?>
                         </li>
                         <li class="nav-item">
                             <a class="btn btn-sm border-0 transparent nav-link" data-bs-toggle="offcanvas" onclick="toggleFull()" role="button">
@@ -277,11 +274,11 @@ $a_name = $this->request->getParam('action');
                     <div class="col-md-2 mb-3">
                         <h5>Section</h5>
                         <ul class="nav flex-column">
-                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+                            <li class="nav-item mb-2"><?= $this->Html->link('Home', ['controller' => 'articles', 'action' => '', '_full' => true, 'prefix' => false], ['class' => 'nav-link p-0 text-muted']); ?></li>
                             <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Project</a></li>
                             <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Playground</a></li>
-                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Blog</a></li>
-                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Nerd Stats</a></li>
+                            <li class="nav-item mb-2"><?= $this->Html->link('Blogs', ['controller' => 'Blogs', 'action' => '', '_full' => true, 'prefix' => false], ['class' => 'nav-link p-0 text-muted']); ?></li>
+                            <li class="nav-item mb-2"><?= $this->Html->link('Sitemap', ['controller' => 'sitemap', 'action' => '', '_full' => true, 'prefix' => false], ['class' => 'nav-link p-0 text-muted']); ?></li>
                         </ul>
                     </div>
                     <div class="col-md-2 mb-3">
