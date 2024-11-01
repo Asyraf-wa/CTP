@@ -1,29 +1,7 @@
 <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
 <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
 <?php echo $this->Html->css('terminal.css'); ?>
-<style>
-    .bg_me {
-        /* background: url(../ctp/img/pattern_me.webp) !important; */
-        background-image: url('../ctp/img/pattern_me.webp');
-        background-position: right;
-        /* Align the background to the right */
-        background-repeat: no-repeat;
-        /* Prevent the image from repeating */
-        height: 400px;
-        /* Set the height of the element */
-        background-size: auto 400px;
-        /* Adjust the background image to fit the height */
-    }
 
-    .about_all {
-        padding-top: 100px;
-    }
-
-    .ctp_logo {
-        padding-top: 100px;
-        padding-left: 150px;
-    }
-</style>
 <div class="container-fluid bg_me">
     <div class="container">
         <div class="row">
@@ -100,11 +78,11 @@
                     <div class="justify">My journey of finishing online coursework for my Full-Stack Certification.</div>
                     <div class="my-4">
                         ✅ Responsive Web Design Certification<br />
-                        ✅ JavaScript Algorithms and Data Structures Certification<br />
-                        ✅ Front End Libraries Certification<br />
-                        ✅ Data Visualization Certification<br />
-                        ❎ APIs and Microservices Certification<br />
-                        ❎ Quality Assurance Certification
+                        ➖ JavaScript Algorithms and Data Structures Certification<br />
+                        ➖ Front End Libraries Certification<br />
+                        ➖ Data Visualization Certification<br />
+                        ➖ APIs and Microservices Certification<br />
+                        ➖ Quality Assurance Certification
                     </div>
                 </div>
             </div>
@@ -131,31 +109,10 @@
 
 </div>
 
-
-<style>
-    .map {
-        height: 350px;
-        position: relative;
-        background-image: url('../ctp/img/map.jpg');
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
-    }
-
-    .map .contact {
-        height: 350px;
-        margin-top: 70px;
-        margin-bottom: 200px;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        background-image: linear-gradient(135deg, #f690af 10%, #f6e05f);
-    }
-</style>
 <div class="container-fluid px-0 pt-5" style="margin-bottom: 150px;">
     <div class="map">
-        <div class="container contact shadow">
+        <div class="container contact shadow p-4">
+            <h4 class="fw-bold">Contact </h4>
 
             <?php
             $length =   7;
@@ -204,7 +161,7 @@
                 </div>
             </div>
 
-            <?php echo $this->Form->control('notes', ['class' => 'form-control ckeditor', 'required' => false]); ?>
+            <?php echo $this->Form->textarea('notes', ['class' => 'form-control', 'required' => false]); ?>
             <?php
             /* if ($this->Identity->isLoggedIn()) {
     echo '';
@@ -215,9 +172,9 @@
             ?>
             <div class="h-captcha" data-sitekey="<?php echo $hcaptcha_sitekey; ?>"></div>
             </fieldset>
-            <div class="text-end">
-                <?= $this->Form->button('Reset', ['type' => 'reset', 'class' => 'btn btn-outline-primary btn-flat btn-sm']) ?>
-                <?= $this->Form->button(__('Submit'), ['type' => 'submit', 'class' => 'btn btn-outline-primary btn-flat btn-sm']) ?>
+            <div class="text-end mt-2">
+                <?= $this->Form->button('Reset', ['type' => 'reset', 'class' => 'btn btn-primary btn-flat btn-sm']) ?>
+                <?= $this->Form->button(__('Submit'), ['type' => 'submit', 'class' => 'btn btn-primary btn-flat btn-sm']) ?>
                 <?= $this->Form->end() ?>
             </div>
         </div>
@@ -240,42 +197,7 @@
             }
         </script>
 
-        <div class="row">
-            <div class="col-md-4 d-flex justify-content-center align-items-center pt-5">
-                <?php echo $this->Html->image('../files/Users/avatar/' . $this->Identity->get('slug') . '/' . $this->Identity->get('avatar'), ['class' => 'mt-4 d-block border border-light border-2 rounded-circle shadow mx-auto', 'width' => '192px', 'height' => '192px']); ?>
-            </div>
-            <div class="col-md-4 pt-5">
-                <h1 class="fw-bold text-dark mt-4">محمد Asyraf Wahi Anuar</h1>
-                <h4 class="mt-2 text-dark">
-                    <style>
-                        span.block-bots {
-                            display: none;
-                        }
-                    </style>
-                    asyraf.wahianuar@gmail.com <span class="block-bots" aria-hidden="true">GO AWAY SPAM BOTS!</span>
-                    <div class="mt-4">
-                        <?php
-                        echo $this->Html->link(
-                            '<i class="devicon-github-original colored fs-2"></i>',
-                            'https://github.com',
-                            ['escape' => false, 'target' => '_blank', 'class' => 'nostyle_link me-3']
-                        );
-                        ?>
 
-                        <?php
-                        echo $this->Html->link(
-                            '<i class="devicon-linkedin-plain text-dark fs-2"></i>',
-                            'https://github.com',
-                            ['escape' => false, 'target' => '_blank', 'class' => 'nostyle_link']
-                        );
-                        ?>
-
-
-                    </div>
-                </h4>
-            </div>
-            <div class="col-md-4"></div>
-        </div>
     </div>
 </div>
 </div>

@@ -90,7 +90,7 @@ class ContactsTable extends Table
      */
     public function validationDefault(Validator $validator): Validator
     {
-        $validator
+        /* $validator
             ->integer('user_id')
             ->allowEmptyString('user_id');
 
@@ -154,7 +154,7 @@ class ContactsTable extends Table
         $validator
             ->scalar('slug')
             ->maxLength('slug', 255)
-            ->allowEmptyString('slug');
+            ->allowEmptyString('slug'); */
 
         return $validator;
     }

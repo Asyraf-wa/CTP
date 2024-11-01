@@ -70,6 +70,7 @@ return function (RouteBuilder $routes): void {
 
         $builder->connect('/articles', ['controller' => 'Articles', 'action' => 'index']);
         $builder->connect('/articles/*', ['controller' => 'Articles', 'action' => 'view']);
+        $builder->connect('/blogs/*', ['controller' => 'Articles', 'action' => 'blogpost']);
 
         /* $builder->connect(
             '/*',

@@ -119,6 +119,7 @@ $a_name = $this->request->getParam('action');
                         <input class="form-check-input" type="checkbox" id="darkModeSwitch" checked>
                     </div>
                     <div class="col-2"><input class="form-control border-0 bg-body-tertiary shadow-none" type="text" placeholder="Search..."></div>
+
                 </div>
             </div>
         </nav>

@@ -21,7 +21,7 @@ class ArticlesController extends AppController
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         parent::beforeFilter($event);
-        $this->Authentication->allowUnauthenticated(['index', 'view', 'stats', 'blog']);
+        $this->Authentication->allowUnauthenticated(['index', 'view', 'stats', 'blogpost', 'blog']);
     }
 
     public function json()
@@ -197,8 +197,8 @@ class ArticlesController extends AppController
             //->contain(['Tags'])
             ->contain(['Users', 'Categories', 'Tags'])
             ->where(['Articles.status' => 1])
-            ->where(['category_id' => '1', '2', '3', '4'])
-            ->orderBy(['Articles.publish_on' => 'DESC']);
+            ->where(['category_id' => '5'])
+            ->orderBy(['Articles.created' => 'DESC']);
         $blogs = $this->paginate($query);
         //$articles = $this->paginate($query)->toArray();
 
@@ -336,28 +336,48 @@ class ArticlesController extends AppController
             '_serialize' => ['results']
         ]);
 
+        //Tree MAP START
+        $titleandcount = $this->Articles->find('all', [
+            'fields' => ['title', 'hits'],
+            'order' => ['hits' => 'DESC'],
+            'limit' => 20
+        ])->toArray();
+        // Format the data 
+        $titleandcountData = [];
+        foreach ($titleandcount as $article) {
+            $titleandcountData[] = [
+                'x' => $article->title,
+                'y' => $article->hits
+            ];
+        }
+        // Output the formatted data 
+        $this->set('data', json_encode($titleandcountData));
+        $this->set('_serialize', ['data']);
+        //Tree MAP END
 
-        //article table loaded
-        /* $articles = $this->fetchTable('Articles');
-        $article_count_all = $articles->find()->all()->count();
-        $article_active = $articles->find()->where(['published' => 1])->count();
-        $article_disabled = $articles->find()->where(['published' => 3])->count();
-        $article_archived = $articles->find()->where(['published' => 3])->count();
-        $article_featured = $articles->find()->where(['featured' => 1])->count();
-        $article_unpublish = $articles->find()->where(['published' => 3])->count();
+        //BarChart START
+        $barchart = $this->Articles->find('all', [
+            'fields' => ['title', 'hits'],
+            'order' => ['hits' => 'DESC'],
+            'where' => ['Articles.status' => 1],
+            'where' => ['Articles.category_id' => '1', '2', '3', '4']
+            //'limit' => 20
+            //->where(['Articles.status' => 1])
+            //->where(['category_id' => '1', '2', '3', '4'])
+        ])->toArray();
+        // Format the data 
+        $barchartData = [];
+        foreach ($barchart as $article) {
+            $barchartData[] = [
+                'x' => $article->title,
+                'y' => $article->hits
+            ];
+        }
+        // Output the formatted data 
+        $this->set('barData', json_encode($barchartData));
+        $this->set('_serialize', ['barData']);
+        //BarChart END
 
-        $total_quantity = $articles->find();
-        $count_quantity = $total_quantity->select(['sum' => $total_quantity->func()->sum('Articles.hits')])->first();
-        $sum_quantity = $count_quantity->sum;
-
-        $article_last = $articles->find('all')
-            ->where([
-                //'published' => 1,
-                //'category_id' => '1',
-            ])
-            ->orderBy(['created' => 'DESC'])
-            ->limit(5);
- */
         $this->set(compact(
             'articles',
             'formattedResults',
@@ -393,6 +413,68 @@ class ArticlesController extends AppController
                 'status' => 1,
                 //'category_id' => '1',
             ])
+            ->orderBy(['hits' => 'DESC'])
+            ->limit(7);
+
+        $latest = $this->Articles->find()
+            ->where(['status' => 1])
+            ->orderBy(['publish_on' => 'DESC'])
+            ->limit(12)
+            ->all();
+
+
+        $categories = $this->Articles->Categories->find('list', ['limit' => 200]);
+        $tags = $this->Articles->Tagged->find()->distinct(['Tags.slug', 'Tags.label'])->contain(['Tags'])->toArray();
+        $tags = Hash::combine($tags, '{n}.tag.slug', '{n}.tag.label');
+        //$this->set(compact('articles','categories'));
+        //$this->set(compact('articles', 'categories', 'tags'));
+
+
+
+        //$articleHits = $this->request->getData('Articles.hits');
+
+        //debug($articleHits);
+        //exit;
+
+        //$percentage_hits = $articleHits * 100 / $totalHits;
+
+        $quotes = $this->fetchTable('Quotes');
+        $random_quote = $quotes->find()
+            ->where(['status' => 1])
+            ->limit(1)
+            ->orderBy('rand()');
+        //->firstOrFail();
+
+        $this->set(compact('article', 'popular', 'latest', 'totalHits', 'tags', 'random_quote'));
+    }
+
+    public function blogpost($slug = null, $id = null)
+    {
+        $this->set('title', 'Blog');
+
+        $article = $this->Articles
+            ->findBySlug($slug)
+            ->contain(['Users', 'Categories'])
+            ->firstOrFail();
+
+        $articles = $this->fetchTable('Articles');
+        //$query = $articles->query();
+        //$query->update()
+        $query = $articles->updateQuery();
+        $query->set($query->newExpr('hits = hits + 1'))
+            //->set($query->newExpr('hits = hits + 1'))
+            ->where(['slug' => $slug])
+            ->execute();
+
+        $query = $this->Articles->find();
+        $totalHits = $query->select(['total' => $query->func()->sum('hits')])->first()->total;
+
+        $popular = $this->Articles->find()
+            ->where([
+                'status' => 1,
+                'category_id' => '5',
+            ])
+            //->where(['category_id' => '5'])
             ->orderBy(['hits' => 'DESC'])
             ->limit(7);
 

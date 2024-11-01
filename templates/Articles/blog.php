@@ -258,16 +258,11 @@ $this->assign('title', 'Blog');
                                 ]
                             )); ?>
                         </p>
-                        <?= $this->Html->link(__('Read More'), ['action' => 'view', 'prefix' => false, $article->slug], ['class' => 'read_more', 'escapeTitle' => false]) ?>
+                        <?= $this->Html->link(__('Read More'), ['controller' => 'blogs', 'action' => '', 'prefix' => false, $article->slug], ['class' => 'read_more', 'escapeTitle' => false]) ?>
                     </div>
                 </div>
             </div>
         <?php endforeach; ?>
-
-        <div class="col-md-3 yellow">x</div>
-        <div class="col-md-3 red">x</div>
-        <div class="col-md-3 purple">x</div>
-        <div class="col-md-3 orange">x</div>
     </div>
 
     <div aria-label="Page navigation" class="mt-3 px-2">
