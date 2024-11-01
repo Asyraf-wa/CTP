@@ -282,7 +282,7 @@ class ArticlesController extends AppController
     public function stats()
     {
 
-        $articles = $this->fetchTable('articles');
+        $articles = $this->Articles->find();
         //publish activity user (for module)
         $articles = $articles->find('all')
             //->where(['user_id' => $userID])
