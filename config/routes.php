@@ -71,6 +71,7 @@ return function (RouteBuilder $routes): void {
         $builder->connect('/articles', ['controller' => 'Articles', 'action' => 'index']);
         $builder->connect('/articles/*', ['controller' => 'Articles', 'action' => 'view']);
         $builder->connect('/blogs/*', ['controller' => 'Articles', 'action' => 'blogpost']);
+        //$builder->connect('/admin', ['controller' => 'Users', 'action' => 'login', 'prefix' => 'admin']);
 
         /* $builder->connect(
             '/*',
@@ -114,11 +115,11 @@ return function (RouteBuilder $routes): void {
         $routes->fallbacks(DashedRoute::class);
     }); */
 
-    $routes->prefix('Admin', function (RouteBuilder $routes) {
+    $routes->prefix('admin', function (RouteBuilder $routes) {
         // Because you are in the admin scope,
         // you do not need to include the /admin prefix
         // or the Admin route element.
-        //$routes->connect('/', ['controller' => 'Pages', 'action' => 'index']);
+        $routes->connect('/', ['controller' => 'Users', 'action' => 'login']);
         $routes->connect('/dashboards', ['controller' => 'Dashboards', 'action' => 'index']);
         $routes->connect('/users', ['controller' => 'Users', 'action' => 'index']);
         $routes->connect('/articles', ['controller' => 'Articles', 'action' => 'index']);
