@@ -424,7 +424,8 @@ class ArticlesController extends AppController
             ->all();
 
 
-        $categories = $this->Articles->Categories->find('list', ['limit' => 200]);
+        //$categories = $this->Articles->Categories->find('list', ['limit' => 200]);
+        $categories = $this->Articles->Categories->find('list', limit: 200)->all();
         $tags = $this->Articles->Tagged->find()->distinct(['Tags.slug', 'Tags.label'])->contain(['Tags'])->toArray();
         $tags = Hash::combine($tags, '{n}.tag.slug', '{n}.tag.label');
         //$this->set(compact('articles','categories'));
