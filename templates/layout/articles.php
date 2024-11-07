@@ -47,10 +47,12 @@ $a_name = $this->request->getParam('action');
     <meta name="twitter:image" content="URL to your image">
     <meta name="twitter:site" content="@yourtwitterhandle">
 
-
-
     <title><?= $system_abbr ?>: <?= $this->fetch('title') ?></title>
     <?= $this->Html->meta('icon') ?>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Code The Pixel" />
+    <link rel="manifest" href="/site.webmanifest" />
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
