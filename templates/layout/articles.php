@@ -99,15 +99,26 @@ $a_name = $this->request->getParam('action');
 
                         <li class="nav-item <?= ($c_name == 'Articles' && $a_name == 'blog') ? 'menu-active-style' : '' ?>"><?= $this->Html->link('Blogs', ['controller' => 'Articles', 'action' => 'blog', '_full' => true, 'prefix' => false], ['class' => 'nav-link']); ?> </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Playground</a> <!--buat simple2 project, mcm calculator, etc-->
-                        </li>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" href="#">Playground</a> buat simple2 project, mcm calculator, etc
+                        </li> -->
                         <li class="nav-item <?= $c_name == 'about' ? 'menu-active-style' : '' ?>"><?= $this->Html->link('About Me', ['controller' => 'about', 'action' => '', '_full' => true, 'prefix' => false], ['class' => 'nav-link']); ?> </li>
 
 
                         <li class="nav-item">
                             <?= $this->Html->link('Nerd Stats', ['controller' => 'articles', 'action' => 'stats', '_full' => true, 'prefix' => false], ['class' => 'nav-link']); ?>
                         </li>
+                        <style>
+                            .vl {
+                                width: 3px;
+                                height: 100%;
+                                background: linear-gradient(to bottom, #fcb150 33.33%, #11a8ab 33.33%, #11a8ab 66.66%, #e64c65 66.66%);
+                            }
+                        </style>
+                        <li class="nav-item">
+                            <div class="vl mx-3"></div>
+                        </li>
+
                         <li class="nav-item">
                             <a class="btn btn-sm border-0 transparent nav-link" data-bs-toggle="offcanvas" onclick="toggleFull()" role="button">
                                 <svg width="25" height="25" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -118,11 +129,27 @@ $a_name = $this->request->getParam('action');
                                 </svg>
                             </a>
                         </li>
+
                     </ul>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="darkModeSwitch" checked>
+
+
+                    <div class="dropdown">
+                        <button class="btn border-0 dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            Mode
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="#" data-theme="dark">Dark Mode</a></li>
+                            <li><a class="dropdown-item" href="#" data-theme="light">Light Mode</a></li>
+                        </ul>
                     </div>
-                    <div class="col-2"><input class="form-control border-0 bg-body-tertiary shadow-none" type="text" placeholder="Search..."></div>
+
+
+
+                    <div class="col-2">
+                        <?php echo $this->Form->create(null, ['valueSources' => 'query', 'url' => ['controller' => 'articles', 'action' => 'index']]); ?>
+                        <input type="text" name="search" class="form-control border-0 bg-body-tertiary shadow-none" placeholder="Search..." id="search" aria-label="Search...">
+                        <?= $this->Form->end() ?>
+                    </div>
 
                 </div>
             </div>
@@ -276,31 +303,44 @@ $a_name = $this->request->getParam('action');
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2 mb-3">
+
+                    <div class="col-md-1 mb-3 border-start">
                         <h5>Section</h5>
                         <ul class="nav flex-column">
-                            <li class="nav-item mb-2"><?= $this->Html->link('Home', ['controller' => 'articles', 'action' => '', '_full' => true, 'prefix' => false], ['class' => 'nav-link p-0 text-muted']); ?></li>
-                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Project</a></li>
-                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Playground</a></li>
-                            <li class="nav-item mb-2"><?= $this->Html->link('Blogs', ['controller' => 'Blogs', 'action' => '', '_full' => true, 'prefix' => false], ['class' => 'nav-link p-0 text-muted']); ?></li>
-                            <li class="nav-item mb-2"><?= $this->Html->link('Sitemap', ['controller' => 'sitemap', 'action' => '', '_full' => true, 'prefix' => false], ['class' => 'nav-link p-0 text-muted']); ?></li>
+                            <li class="nav-item mb-2"><?= $this->Html->link('- Home', ['controller' => 'articles', 'action' => '', '_full' => true, 'prefix' => false], ['class' => 'nav-link p-0 text-muted']); ?></li>
+                            <li class="nav-item mb-2"><?= $this->Html->link('- Project', ['controller' => 'Projects', 'action' => '', '_full' => true, 'prefix' => false], ['class' => 'nav-link p-0 text-muted']); ?></li>
+                            <li class="nav-item mb-2"><?= $this->Html->link('- Blog', ['controller' => 'articles', 'action' => 'blogs', '_full' => true, 'prefix' => false], ['class' => 'nav-link p-0 text-muted']); ?></li>
+                            <li class="nav-item mb-2"><?= $this->Html->link('- About Me', ['controller' => 'About', 'action' => 'about-me', '_full' => true, 'prefix' => false], ['class' => 'nav-link p-0 text-muted']); ?></li>
+                            <li class="nav-item mb-2"><?= $this->Html->link('- Sitemap', ['controller' => 'sitemap', 'action' => '', '_full' => true, 'prefix' => false], ['class' => 'nav-link p-0 text-muted']); ?></li>
                         </ul>
                     </div>
-                    <div class="col-md-2 mb-3">
-                        <form>
-                            <h5>Subscribe to our newsletter</h5>
-                            <p>Monthly digest of what's new and exciting from us.</p>
-                            <div class="d-flex flex-column flex-sm-row w-100 gap-2">
-                                <label for="newsletter1" class="visually-hidden">Email address</label>
-                                <input id="newsletter1" type="text" class="form-control" placeholder="Email address">
-                                <button class="btn btn-primary" type="button">Subscribe</button>
-                            </div>
-                        </form>
+                    <div class="col-md-3 mb-3">
+                        <h5>Tags</h5>
+                        <?php echo $this->Html->link('CakePHP', ['controller' => 'Articles', 'action' => '', '?' => ['tag' => 'CakePHP']], ['class' => 'btn btn-primary rounded-0 btn-sm mt-1', 'escapeTitle' => false]); ?>
+                        <?php echo $this->Html->link('Chart', ['controller' => 'Articles', 'action' => '', '?' => ['tag' => 'chart']], ['class' => 'btn btn-primary rounded-0 btn-sm mt-1', 'escapeTitle' => false]); ?>
+                        <?php echo $this->Html->link('SiteMap', ['controller' => 'Articles', 'action' => '', '?' => ['tag' => 'sitemap']], ['class' => 'btn btn-primary rounded-0 btn-sm mt-1', 'escapeTitle' => false]); ?>
+                        <?php echo $this->Html->link('CDN', ['controller' => 'Articles', 'action' => '', '?' => ['tag' => 'cdn']], ['class' => 'btn btn-primary rounded-0 btn-sm mt-1', 'escapeTitle' => false]); ?>
+                        <?php echo $this->Html->link('HTML', ['controller' => 'Articles', 'action' => '', '?' => ['tag' => 'html']], ['class' => 'btn btn-primary rounded-0 btn-sm mt-1', 'escapeTitle' => false]); ?>
+                        <?php echo $this->Html->link('CSS', ['controller' => 'Articles', 'action' => '', '?' => ['tag' => 'css']], ['class' => 'btn btn-primary rounded-0 btn-sm mt-1', 'escapeTitle' => false]); ?>
+                        <?php echo $this->Html->link('Joomla', ['controller' => 'Articles', 'action' => '', '?' => ['tag' => 'joomla']], ['class' => 'btn btn-primary rounded-0 btn-sm mt-1', 'escapeTitle' => false]); ?>
+                        <?php echo $this->Html->link('API', ['controller' => 'Articles', 'action' => '', '?' => ['tag' => 'api']], ['class' => 'btn btn-primary rounded-0 btn-sm mt-1', 'escapeTitle' => false]); ?>
+                        <?php echo $this->Html->link('Apps', ['controller' => 'Articles', 'action' => '', '?' => ['tag' => 'apps']], ['class' => 'btn btn-primary rounded-0 btn-sm mt-1', 'escapeTitle' => false]); ?>
+                        <?php echo $this->Html->link('Authentication', ['controller' => 'Articles', 'action' => '', '?' => ['tag' => 'authentication']], ['class' => 'btn btn-primary rounded-0 btn-sm mt-1', 'escapeTitle' => false]); ?>
+                        <?php echo $this->Html->link('Authorization', ['controller' => 'Articles', 'action' => '', '?' => ['tag' => 'authorization']], ['class' => 'btn btn-primary rounded-0 btn-sm mt-1', 'escapeTitle' => false]); ?>
+                        <?php echo $this->Html->link('Bot', ['controller' => 'Articles', 'action' => '', '?' => ['tag' => 'boot']], ['class' => 'btn btn-primary rounded-0 btn-sm mt-1', 'escapeTitle' => false]); ?>
+                        <?php echo $this->Html->link('CakePDF', ['controller' => 'Articles', 'action' => '', '?' => ['tag' => 'cakepdf']], ['class' => 'btn btn-primary rounded-0 btn-sm mt-1', 'escapeTitle' => false]); ?>
+                        <?php echo $this->Html->link('Helper', ['controller' => 'Articles', 'action' => '', '?' => ['tag' => 'helper']], ['class' => 'btn btn-primary rounded-0 btn-sm mt-1', 'escapeTitle' => false]); ?>
+                        <?php echo $this->Html->link('Heatmap', ['controller' => 'Articles', 'action' => '', '?' => ['tag' => 'heatmap']], ['class' => 'btn btn-primary rounded-0 btn-sm mt-1', 'escapeTitle' => false]); ?>
+                        <?php echo $this->Html->link('Blog', ['controller' => 'Articles', 'action' => '', '?' => ['tag' => 'blog']], ['class' => 'btn btn-primary rounded-0 btn-sm mt-1', 'escapeTitle' => false]); ?>
+                        <?php echo $this->Html->link('Captcha', ['controller' => 'Articles', 'action' => '', '?' => ['tag' => 'captcha']], ['class' => 'btn btn-primary rounded-0 btn-sm mt-1', 'escapeTitle' => false]); ?>
+                        <?php echo $this->Html->link('Concatenation', ['controller' => 'Articles', 'action' => '', '?' => ['tag' => 'concatenation']], ['class' => 'btn btn-primary rounded-0 btn-sm mt-1', 'escapeTitle' => false]); ?>
+                        <?php echo $this->Html->link('Count', ['controller' => 'Articles', 'action' => '', '?' => ['tag' => 'count']], ['class' => 'btn btn-primary rounded-0 btn-sm mt-1', 'escapeTitle' => false]); ?>
+
                     </div>
                 </div>
                 <div class="d-flex flex-column flex-sm-row justify-content-between pt-4  border-top">
-                    <p>© <?php echo date('Y'); ?> <?php echo $system_name; ?>. <i class="fa-solid fa-code"></i> with ❤️ by
-                        <a href="https://codethepixel.com" target="_blank" class="footer-link fw-bolder">Code The Pixel</a>
+                    <p>© <?php echo date('Y'); ?> <?php echo $system_name; ?>. Code by
+                        <a href="https://codethepixel.com" target="_blank" class="footer-link fw-bolder">Asyraf Wahi Anuar</a>
                     </p>
                 </div>
             </footer>
@@ -339,24 +379,29 @@ $a_name = $this->request->getParam('action');
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
         const htmlElement = document.documentElement;
-        const switchElement = document.getElementById('darkModeSwitch');
+        const dropdownButton = document.getElementById('dropdownMenuButton');
+        const dropdownItems = document.querySelectorAll('.dropdown-item');
 
         // Set the default theme to dark if no setting is found in local storage
         const currentTheme = localStorage.getItem('bsTheme') || 'dark';
         htmlElement.setAttribute('data-bs-theme', currentTheme);
-        switchElement.checked = currentTheme === 'dark';
+        dropdownButton.textContent = currentTheme === 'dark' ? 'Mode' : 'Mode';
 
-        switchElement.addEventListener('change', function() {
-            if (this.checked) {
-                htmlElement.setAttribute('data-bs-theme', 'dark');
-                localStorage.setItem('bsTheme', 'dark');
-            } else {
-                htmlElement.setAttribute('data-bs-theme', 'light');
-                localStorage.setItem('bsTheme', 'light');
-            }
+        dropdownItems.forEach(item => {
+            item.addEventListener('click', function(event) {
+                event.preventDefault();
+                const selectedTheme = this.getAttribute('data-theme');
+                htmlElement.setAttribute('data-bs-theme', selectedTheme);
+                localStorage.setItem('bsTheme', selectedTheme);
+                dropdownButton.textContent = selectedTheme === 'dark' ? 'Mode' : 'Mode';
+            });
         });
     });
 </script>
+
+
+
+
 
 <script>
     const gridButton = document.getElementById('gridButton');
