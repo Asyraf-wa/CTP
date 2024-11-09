@@ -7,6 +7,10 @@ namespace App\Controller\Admin;
 use App\Controller\AppController;
 use Cake\Utility\Hash;
 
+use AuditStash\Meta\RequestMetadata;
+use Cake\Event\EventManager;
+use Cake\Routing\Router;
+
 /**
  * Articles Controller
  *
@@ -26,6 +30,14 @@ class ArticlesController extends AppController
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         parent::beforeFilter($event);
+
+        $eventManager = $this->fetchTable()->getEventManager();
+        $eventManager->on(
+            new RequestMetadata(
+                request: $this->getRequest(),
+                user: $this->getRequest()->getAttribute('identity')?->getIdentifier()
+            )
+        );
     }
 
     /*public function viewClasses(): array
@@ -234,15 +246,15 @@ class ArticlesController extends AppController
     public function edit($id = null)
     {
         $this->set('title', 'Articles Edit');
-        /*EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
-			foreach ($logs as $log) {
-				$log->setMetaInfo($log->getMetaInfo() + ['a_name' => 'Edit']);
-				$log->setMetaInfo($log->getMetaInfo() + ['c_name' => 'Articles']);
-				$log->setMetaInfo($log->getMetaInfo() + ['ip' => $this->request->clientIp()]);
-				$log->setMetaInfo($log->getMetaInfo() + ['url' => Router::url(null, true)]);
-				$log->setMetaInfo($log->getMetaInfo() + ['slug' => $this->Authentication->getIdentity('slug')->getIdentifier('slug')]);
-			}
-		});*/
+        EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
+            foreach ($logs as $log) {
+                $log->setMetaInfo($log->getMetaInfo() + ['a_name' => 'Edit']);
+                $log->setMetaInfo($log->getMetaInfo() + ['c_name' => 'Articles']);
+                $log->setMetaInfo($log->getMetaInfo() + ['ip' => $this->request->clientIp()]);
+                $log->setMetaInfo($log->getMetaInfo() + ['url' => Router::url(null, true)]);
+                $log->setMetaInfo($log->getMetaInfo() + ['slug' => $this->Authentication->getIdentity('slug')->getIdentifier('slug')]);
+            }
+        });
         $article = $this->Articles->get($id, [
             'contain' => ['Tags'],
         ]);
