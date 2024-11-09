@@ -47,8 +47,8 @@ echo $this->Html->script('qr-code-styling-1-5-0.min.js');
         </div>
         <div class="col-md-6">
             <div class="article-header-text text-secondary">
-                <div class="svg-container-37">
-                    <?php if ($article->icon != NULL) {
+                <!-- <div class="svg-container-37">
+                    <?php /* if ($article->icon != NULL) {
                         echo $article->icon;
                     } else {
                         echo '<svg viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -57,9 +57,9 @@ echo $this->Html->script('qr-code-styling-1-5-0.min.js');
                                     <path d="M12 48C12 45.7909 13.7909 44 16 44H32C34.2091 44 36 45.7909 36 48V64C36 66.2091 34.2091 68 32 68H16C13.7909 68 12 66.2091 12 64V48Z" stroke="#C2CCDE" stroke-linecap="round" />
                                     <path d="M44 48C44 45.7909 45.7909 44 48 44H64C66.2091 44 68 45.7909 68 48V64C68 66.2091 66.2091 68 64 68H48C45.7909 68 44 66.2091 44 64V48Z" stroke="#C2CCDE" stroke-linecap="round" />
                                 </svg>';
-                    }
+                    } */
                     ?>
-                </div>
+                </div> -->
                 <h1 class="fw-bold">
                     <?= h($article->title) ?>
                 </h1>
@@ -306,9 +306,9 @@ $this->Breadcrumbs->add([
                     <div class="col-md-2">
                         <?php
                         $domain = Router::url("/", true);
-                        //$sub = 'articles/';
+                        $sub = 'articles/';
                         $identifier = $article->slug;
-                        $combine = $domain . $identifier;
+                        $combine = $domain . $sub . $identifier;
                         echo '<div class="card bg-body-tertiary border border-0 rounded-0 gap_0_box_small">
                             <div class="module_tiles"><div class="module_gradient">';
                         echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster, ['class' => 'module_bg_cover', 'alt' => $article->title]);

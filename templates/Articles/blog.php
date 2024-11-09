@@ -96,7 +96,7 @@ $this->assign('title', 'Blog');
                         <div class="blog_title mb-0 mt-2">Search Blog</div>
                     </div>
                     <div class="col-3 text-end">
-                        <img src="/CTP/img/icon/4233837.png" alt="virus" class="" style="opacity: .9" width="48px" height="48px">
+                        <?= $this->Html->image('icon/4233837.png', ['alt' => 'Logo', 'class' => '', 'style' => 'opacity: .9', 'width' => '48px', 'height' => '48px']); ?>
                     </div>
                 </div>
                 <?php echo $this->Form->create(null, ['valueSources' => 'query', 'url' => ['controller' => 'articles', 'action' => 'blog']]); ?>
