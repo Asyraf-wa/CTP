@@ -410,15 +410,14 @@ class ArticlesController extends AppController
         $totalHits = $query->select(['total' => $query->func()->sum('hits')])->first()->total;
 
         $popular = $this->Articles->find()
-            ->where([
-                'status' => 1,
-                //'category_id' => '1',
-            ])
+            ->where(['status' => 1])
+            ->where(['category_id' => '1', '2', '3', '4'])
             ->orderBy(['hits' => 'DESC'])
             ->limit(7);
 
         $latest = $this->Articles->find()
             ->where(['status' => 1])
+            ->where(['category_id' => '1', '2', '3', '4'])
             ->orderBy(['publish_on' => 'DESC'])
             ->limit(12)
             ->all();
