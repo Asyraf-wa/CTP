@@ -1710,3 +1710,42 @@ nav ul li a:hover::after {
     right: 0;
     background-image: linear-gradient(135deg, #392d69 10%, #b57bee);
 }
+
+/* Menu bar */
+.horizontal-tabs {
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+
+    @media (max-width: 1000px) {
+        scrollbar-width: none;
+        position: relative;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    a.topMenu {
+        display: inline-flex;
+        flex-shrink: 0;
+        align-items: center;
+        height: 48px;
+        padding: 0 0.25rem;
+        color: inherit;
+        border-bottom: 3px solid transparent;
+        text-decoration: none;
+        transition: 0.15s ease;
+
+        &:hover,
+        &:focus,
+        &.active {
+            color: var(--c-accent-primary);
+            border-bottom-color: var(--c-accent-primary);
+        }
+
+        & + * {
+            margin-left: 1rem;
+        }
+    }
+}
