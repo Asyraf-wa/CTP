@@ -82,7 +82,7 @@ class ArticlesController extends AppController
             //->contain(['Tags'])
             ->contain(['Users', 'Categories', 'Tags'])
             ->where(['Articles.status' => 1])
-            ->where(['category_id' => '1', '2', '3', '4'])
+            ->where(['category_id' => '1', '2', '3', '4', '6'])
             ->orderBy(['Articles.publish_on' => 'DESC']);
         $articles = $this->paginate($query);
         //$articles = $this->paginate($query)->toArray();
@@ -411,13 +411,13 @@ class ArticlesController extends AppController
 
         $popular = $this->Articles->find()
             ->where(['status' => 1])
-            ->where(['category_id' => '1', '2', '3', '4'])
+            ->where(['category_id' => '1', '2', '3', '4', '6'])
             ->orderBy(['hits' => 'DESC'])
             ->limit(7);
 
         $latest = $this->Articles->find()
             ->where(['status' => 1])
-            ->where(['category_id' => '1', '2', '3', '4'])
+            ->where(['category_id' => '1', '2', '3', '4', '6'])
             ->orderBy(['publish_on' => 'DESC'])
             ->limit(12)
             ->all();
