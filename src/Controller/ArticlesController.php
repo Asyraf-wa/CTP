@@ -81,8 +81,18 @@ class ArticlesController extends AppController
             ->find('search', search: $this->request->getQueryParams())
             //->contain(['Tags'])
             ->contain(['Users', 'Categories', 'Tags'])
-            ->where(['Articles.status' => 1])
-            ->where(['category_id' => '1', '2', '3', '4', '6'])
+            ->where([
+                'Articles.status' => 1,
+                'OR' => [
+                    ['category_id' => 1],
+                    ['category_id' => 2],
+                    ['category_id' => 3],
+                    ['category_id' => 4],
+                    ['category_id' => 6]
+                ]
+            ])
+            //->where(['Articles.status' => 1])
+            //->where(['category_id' => ['1', '2', '3', '4', '6']])
             ->orderBy(['Articles.publish_on' => 'DESC']);
         $articles = $this->paginate($query);
         //$articles = $this->paginate($query)->toArray();
