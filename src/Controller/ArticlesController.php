@@ -6,6 +6,9 @@ namespace App\Controller;
 
 use Cake\Utility\Hash;
 use Cake\ORM\TableRegistry;
+use AuditStash\Meta\RequestMetadata;
+use Cake\Event\EventManager;
+use Cake\Routing\Router;
 
 class ArticlesController extends AppController
 {
@@ -60,26 +63,16 @@ class ArticlesController extends AppController
         );
         $this->set(compact('articles'));
     }
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|null|void Renders view
-     */
+
     public function index()
     {
         $this->set('title', 'Articles List');
         $this->paginate = [
             'maxLimit' => 20,
         ];
-        /*  $query = $this->Articles->find('search', search: $this->request->getQueryParams())
-            ->contain(['Users', 'Categories', 'Tags'])
-            ->where(['Articles.status' => 1])
-            ->orderBy(['Articles.publish_on' => 'DESC']);
-        $articles = $this->paginate($query); */
 
         $query = $this->Articles
             ->find('search', search: $this->request->getQueryParams())
-            //->contain(['Tags'])
             ->contain(['Users', 'Categories', 'Tags'])
             ->where([
                 'Articles.status' => 1,
@@ -91,110 +84,18 @@ class ArticlesController extends AppController
                     ['category_id' => 6]
                 ]
             ])
-            //->where(['Articles.status' => 1])
-            //->where(['category_id' => ['1', '2', '3', '4', '6']])
             ->orderBy(['Articles.publish_on' => 'DESC']);
         $articles = $this->paginate($query);
-        //$articles = $this->paginate($query)->toArray();
 
-        //$categories = $this->Articles->Categories->find('list', ['limit' => 200]);
         $categories = $this->Articles->Categories->find('list', limit: 200)->all();
-        //$tags = $this->Articles->Tagged->find()->distinct(['Tags.slug', 'Tags.label'])->contain(['Tags'])->toArray();
-        //$tags = Hash::combine($tags, '{n}.tag.slug', '{n}.tag.label');
-        //$this->set(compact('articles','categories'));
-        //$this->set(compact('articles', 'categories', 'tags'));
-
-        //$this->set('_serialize', ['users']);
-
-        //count
-        $this->set('total_articles', $this->Articles->find()->count());
-        $this->set('total_articles_archived', $this->Articles->find()->where(['status' => 2])->count());
-        $this->set('total_articles_active', $this->Articles->find()->where(['status' => 1])->count());
-        $this->set('total_articles_disabled', $this->Articles->find()->where(['status' => 0])->count());
-
-
-        $query = $this->Articles->find();
-
-        $expectedMonths = [];
-        for ($i = 11; $i >= 0; $i--) {
-            $expectedMonths[] = date('M-Y', strtotime("-$i months"));
-        }
-
-        $query->select([
-            'count' => $query->func()->count('*'),
-            'date' => $query->func()->date_format(['created' => 'identifier', "%b-%Y"]),
-            'month' => 'MONTH(created)',
-            'year' => 'YEAR(created)'
-        ])
-            ->where([
-                'created >=' => date('Y-m-01', strtotime('-11 months')),
-                'created <=' => date('Y-m-t')
-            ])
-            ->groupBy(['year', 'month'])
-            ->orderBy(['year' => 'ASC', 'month' => 'ASC']);
-
-        $results = $query->all()->toArray();
-
-        $totalByMonth = [];
-        foreach ($expectedMonths as $expectedMonth) {
-            $found = false;
-            $count = 0;
-
-            foreach ($results as $result) {
-                if ($expectedMonth === $result->date) {
-                    $found = true;
-                    $count = $result->count;
-                    break;
-                }
-            }
-
-            $totalByMonth[] = [
-                'month' => $expectedMonth,
-                'count' => $count
-            ];
-        }
-
-        $this->set([
-            'results' => $totalByMonth,
-            '_serialize' => ['results']
-        ]);
-
-        //data as JSON arrays for report chart
-        $totalByMonth = json_encode($totalByMonth);
-        $dataArray = json_decode($totalByMonth, true);
-        $monthArray = [];
-        $countArray = [];
-        foreach ($dataArray as $data) {
-            $monthArray[] = $data['month'];
-            $countArray[] = $data['count'];
-        }
 
         $allTags = $this->fetchTable('TagsTags');
-        //$taggung_kira = $taggung->find()->all()->count();
         $tagging = $allTags->find('all')->orderBy(['label' => 'ASC']);
 
-
-
-
-
-        //debug($tagging);
-        //exit;
-
-
-        //$tagging = $this->TagsTags->find('all');
-
-        /* ->where([
-				'status' => 1,
-				'id' => '1',
-				]) */
-        //    ->order(['label' => 'ASC']);
-        //debug($tagging);
-        //exit;
         $tags = $this->Articles->Tagged->find()->distinct(['Tags.slug', 'Tags.label'])->contain(['Tags'])->toArray();
         $tags = Hash::combine($tags, '{n}.tag.slug', '{n}.tag.label');
-        //$tags = $this->Articles->Tagged->find('cloud')->toArray();
 
-        $this->set(compact('articles', 'categories', 'tags', 'monthArray', 'countArray', 'tags', 'tagging'));
+        $this->set(compact('articles', 'categories', 'tags', 'tags', 'tagging'));
     }
 
     public function blog()
@@ -205,94 +106,33 @@ class ArticlesController extends AppController
         ];
         $query = $this->Articles
             ->find('search', search: $this->request->getQueryParams())
-            //->contain(['Tags'])
             ->contain(['Users', 'Categories', 'Tags'])
-            ->where(['Articles.status' => 1])
-            ->where(['category_id' => '5'])
+            ->where([
+                'Articles.status' => 1,
+                'OR' => [
+                    ['category_id' => 5]
+                ]
+            ])
             ->orderBy(['Articles.created' => 'DESC']);
         $blogs = $this->paginate($query);
-        //$articles = $this->paginate($query)->toArray();
 
         $categories = $this->Articles->Categories->find('list', ['limit' => 200]);
         $tags = $this->Articles->Tagged->find()->distinct(['Tags.slug', 'Tags.label'])->contain(['Tags'])->toArray();
         $tags = Hash::combine($tags, '{n}.tag.slug', '{n}.tag.label');
 
         //count
-        $this->set('total_articles', $this->Articles->find()->count());
-        $this->set('total_articles_archived', $this->Articles->find()->where(['status' => 2])->count());
-        $this->set('total_articles_active', $this->Articles->find()->where(['status' => 1])->count());
-        $this->set('total_articles_disabled', $this->Articles->find()->where(['status' => 0])->count());
+        //$this->set('total_articles', $this->Articles->find()->count());
+        //$this->set('total_articles_archived', $this->Articles->find()->where(['status' => 2])->count());
 
-
-        $query = $this->Articles->find();
-
-        $expectedMonths = [];
-        for ($i = 11; $i >= 0; $i--) {
-            $expectedMonths[] = date('M-Y', strtotime("-$i months"));
-        }
-
-        $query->select([
-            'count' => $query->func()->count('*'),
-            'date' => $query->func()->date_format(['created' => 'identifier', "%b-%Y"]),
-            'month' => 'MONTH(created)',
-            'year' => 'YEAR(created)'
-        ])
-            ->where([
-                'created >=' => date('Y-m-01', strtotime('-11 months')),
-                'created <=' => date('Y-m-t')
-            ])
-            ->groupBy(['year', 'month'])
-            ->orderBy(['year' => 'ASC', 'month' => 'ASC']);
-
-        $results = $query->all()->toArray();
-
-        $totalByMonth = [];
-        foreach ($expectedMonths as $expectedMonth) {
-            $found = false;
-            $count = 0;
-
-            foreach ($results as $result) {
-                if ($expectedMonth === $result->date) {
-                    $found = true;
-                    $count = $result->count;
-                    break;
-                }
-            }
-
-            $totalByMonth[] = [
-                'month' => $expectedMonth,
-                'count' => $count
-            ];
-        }
-
-        $this->set([
-            'results' => $totalByMonth,
-            '_serialize' => ['results']
-        ]);
-
-        //data as JSON arrays for report chart
-        $totalByMonth = json_encode($totalByMonth);
-        $dataArray = json_decode($totalByMonth, true);
-        $monthArray = [];
-        $countArray = [];
-        foreach ($dataArray as $data) {
-            $monthArray[] = $data['month'];
-            $countArray[] = $data['count'];
-        }
-
-        /* $allTags = $this->fetchTable('TagsTags');
-        $tagging = $allTags->find('all')->orderBy(['label' => 'ASC']);
-        $tags = $this->Articles->Tagged->find('cloud')->toArray(); */
 
         $tags = $this->Articles->Tagged->find()->distinct(['Tags.slug', 'Tags.label'])->contain(['Tags'])->toArray();
         $tags = Hash::combine($tags, '{n}.tag.slug', '{n}.tag.label');
 
-        $this->set(compact('blogs', 'categories', 'tags', 'monthArray', 'countArray', 'tags'));
+        $this->set(compact('blogs', 'categories', 'tags', 'tags'));
     }
 
     public function stats()
     {
-
         $articles = $this->Articles->find();
         //publish activity user (for module)
         $articles = $articles->find('all')
@@ -408,11 +248,8 @@ class ArticlesController extends AppController
             ->firstOrFail();
 
         $articles = $this->fetchTable('Articles');
-        //$query = $articles->query();
-        //$query->update()
         $query = $articles->updateQuery();
         $query->set($query->newExpr('hits = hits + 1'))
-            //->set($query->newExpr('hits = hits + 1'))
             ->where(['slug' => $slug])
             ->execute();
 
@@ -420,14 +257,29 @@ class ArticlesController extends AppController
         $totalHits = $query->select(['total' => $query->func()->sum('hits')])->first()->total;
 
         $popular = $this->Articles->find()
-            ->where(['status' => 1])
-            ->where(['category_id' => '1', '2', '3', '4', '6'])
+            ->where([
+                'Articles.status' => 1,
+                'OR' => [
+                    ['category_id' => 1],
+                    ['category_id' => 2],
+                    ['category_id' => 3],
+                    ['category_id' => 4],
+                    ['category_id' => 6]
+                ]
+            ])
             ->orderBy(['hits' => 'DESC'])
             ->limit(7);
 
-        $latest = $this->Articles->find()
-            ->where(['status' => 1])
-            ->where(['category_id' => '1', '2', '3', '4', '6'])
+        $latest = $this->Articles->find()->where([
+            'Articles.status' => 1,
+            'OR' => [
+                ['category_id' => 1],
+                ['category_id' => 2],
+                ['category_id' => 3],
+                ['category_id' => 4],
+                ['category_id' => 6]
+            ]
+        ])
             ->orderBy(['publish_on' => 'DESC'])
             ->limit(12)
             ->all();
@@ -440,15 +292,7 @@ class ArticlesController extends AppController
         //$this->set(compact('articles','categories'));
         //$this->set(compact('articles', 'categories', 'tags'));
 
-
-
-        //$articleHits = $this->request->getData('Articles.hits');
-
-        //debug($articleHits);
-        //exit;
-
-        //$percentage_hits = $articleHits * 100 / $totalHits;
-
+        // random quotes
         $quotes = $this->fetchTable('Quotes');
         $random_quote = $quotes->find()
             ->where(['status' => 1])
@@ -469,11 +313,8 @@ class ArticlesController extends AppController
             ->firstOrFail();
 
         $articles = $this->fetchTable('Articles');
-        //$query = $articles->query();
-        //$query->update()
         $query = $articles->updateQuery();
         $query->set($query->newExpr('hits = hits + 1'))
-            //->set($query->newExpr('hits = hits + 1'))
             ->where(['slug' => $slug])
             ->execute();
 
@@ -485,7 +326,6 @@ class ArticlesController extends AppController
                 'status' => 1,
                 'category_id' => '5',
             ])
-            //->where(['category_id' => '5'])
             ->orderBy(['hits' => 'DESC'])
             ->limit(7);
 
@@ -502,13 +342,6 @@ class ArticlesController extends AppController
         //$this->set(compact('articles','categories'));
         //$this->set(compact('articles', 'categories', 'tags'));
 
-
-
-        //$articleHits = $this->request->getData('Articles.hits');
-
-        //debug($articleHits);
-        //exit;
-
         //$percentage_hits = $articleHits * 100 / $totalHits;
 
         $quotes = $this->fetchTable('Quotes');
@@ -521,23 +354,18 @@ class ArticlesController extends AppController
         $this->set(compact('article', 'popular', 'latest', 'totalHits', 'tags', 'random_quote'));
     }
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
-     */
     public function add()
     {
         $this->set('title', 'New Articles');
-        /*EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
-			foreach ($logs as $log) {
-				$log->setMetaInfo($log->getMetaInfo() + ['a_name' => 'Add']);
-				$log->setMetaInfo($log->getMetaInfo() + ['c_name' => 'Articles']);
-				$log->setMetaInfo($log->getMetaInfo() + ['ip' => $this->request->clientIp()]);
-				$log->setMetaInfo($log->getMetaInfo() + ['url' => Router::url(null, true)]);
-				$log->setMetaInfo($log->getMetaInfo() + ['slug' => $this->Authentication->getIdentity('slug')->getIdentifier('slug')]);
-			}
-		});*/
+        EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
+            foreach ($logs as $log) {
+                $log->setMetaInfo($log->getMetaInfo() + ['a_name' => 'Add']);
+                $log->setMetaInfo($log->getMetaInfo() + ['c_name' => 'Articles']);
+                $log->setMetaInfo($log->getMetaInfo() + ['ip' => $this->request->clientIp()]);
+                $log->setMetaInfo($log->getMetaInfo() + ['url' => Router::url(null, true)]);
+                $log->setMetaInfo($log->getMetaInfo() + ['slug' => $this->Authentication->getIdentity('slug')->getIdentifier('slug')]);
+            }
+        });
         $article = $this->Articles->newEmptyEntity();
         if ($this->request->is('post')) {
             $article = $this->Articles->patchEntity($article, $this->request->getData());
@@ -553,25 +381,18 @@ class ArticlesController extends AppController
         $this->set(compact('article', 'users', 'categories'));
     }
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Article id.
-     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function edit($id = null)
     {
         $this->set('title', 'Articles Edit');
-        /*EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
-			foreach ($logs as $log) {
-				$log->setMetaInfo($log->getMetaInfo() + ['a_name' => 'Edit']);
-				$log->setMetaInfo($log->getMetaInfo() + ['c_name' => 'Articles']);
-				$log->setMetaInfo($log->getMetaInfo() + ['ip' => $this->request->clientIp()]);
-				$log->setMetaInfo($log->getMetaInfo() + ['url' => Router::url(null, true)]);
-				$log->setMetaInfo($log->getMetaInfo() + ['slug' => $this->Authentication->getIdentity('slug')->getIdentifier('slug')]);
-			}
-		});*/
+        EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
+            foreach ($logs as $log) {
+                $log->setMetaInfo($log->getMetaInfo() + ['a_name' => 'Edit']);
+                $log->setMetaInfo($log->getMetaInfo() + ['c_name' => 'Articles']);
+                $log->setMetaInfo($log->getMetaInfo() + ['ip' => $this->request->clientIp()]);
+                $log->setMetaInfo($log->getMetaInfo() + ['url' => Router::url(null, true)]);
+                $log->setMetaInfo($log->getMetaInfo() + ['slug' => $this->Authentication->getIdentity('slug')->getIdentifier('slug')]);
+            }
+        });
         $article = $this->Articles->get($id, [
             'contain' => [],
         ]);
@@ -589,13 +410,6 @@ class ArticlesController extends AppController
         $this->set(compact('article', 'users', 'categories'));
     }
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id Article id.
-     * @return \Cake\Http\Response|null|void Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function delete($id = null)
     {
         EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
