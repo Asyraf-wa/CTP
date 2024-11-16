@@ -251,7 +251,7 @@ html {
 }
 
 .green {
-    background-color: #9bc505;
+    background-color: #82a30e;
 }
 
 .darkblue {
@@ -264,6 +264,10 @@ html {
 
 .brown {
     background-color: #795446;
+}
+
+.violet {
+    background-color: #ff00ff;
 }
 
 .dusty_pink {
@@ -375,46 +379,6 @@ a.nostyle_link:hover {
     position: relative;
     float: left;
     display: inline-block;
-}
-
-.emerald {
-    background-color: #1abc9c;
-}
-
-.red {
-    background-color: #ca2017;
-}
-
-.purple {
-    background-color: #a532cb;
-}
-
-.orange {
-    background-color: #ec7c00;
-}
-
-.blue {
-    background-color: #0c86b4;
-}
-
-.yellow {
-    background-color: #c4b502;
-}
-
-.green {
-    background-color: #9bc505;
-}
-
-.darkblue {
-    background-color: #34495e;
-}
-
-.pink {
-    background-color: #cc1153;
-}
-
-.brown {
-    background-color: #795446;
 }
 
 .icon-center {
