@@ -171,7 +171,7 @@
                 </div>
 
                 <div class="col-md-1 mb-3 border-start">
-                    <h5>Section</h5>
+                    <div class="card-title mb-2">Section</div>
                     <ul class="nav flex-column">
                         <li class="nav-item mb-2"><?= $this->Html->link('- Home', ['controller' => 'articles', 'action' => '', '_full' => true, 'prefix' => false], ['class' => 'nav-link p-0 text-muted']); ?></li>
                         <li class="nav-item mb-2"><?= $this->Html->link('- Project', ['controller' => 'Projects', 'action' => '', '_full' => true, 'prefix' => false], ['class' => 'nav-link p-0 text-muted']); ?></li>
@@ -181,7 +181,7 @@
                     </ul>
                 </div>
                 <div class="col-md-3 mb-3">
-                    <h5>Tags</h5>
+                    <div class="card-title mb-2">Tags</div>
                     <?php echo $this->Html->link('CakePHP', ['controller' => 'Articles', 'action' => '', '?' => ['tag' => 'CakePHP']], ['class' => 'btn btn-primary rounded-0 btn-sm mt-1', 'escapeTitle' => false]); ?>
                     <?php echo $this->Html->link('Chart', ['controller' => 'Articles', 'action' => '', '?' => ['tag' => 'chart']], ['class' => 'btn btn-primary rounded-0 btn-sm mt-1', 'escapeTitle' => false]); ?>
                     <?php echo $this->Html->link('SiteMap', ['controller' => 'Articles', 'action' => '', '?' => ['tag' => 'sitemap']], ['class' => 'btn btn-primary rounded-0 btn-sm mt-1', 'escapeTitle' => false]); ?>

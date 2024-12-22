@@ -43,7 +43,7 @@ $a_name = $this->request->getParam('action');
                 </li>
 
                 <li class="nav-item">
-                    <a class="btn btn-sm border-0 transparent nav-link" data-bs-toggle="offcanvas" onclick="toggleFull()" role="button">
+                    <a class="btn btn-sm border-0 transparent nav-link" data-bs-toggle="offcanvas" onclick="toggleFull()" role="button" aria-label="fullscreen">
                         <svg width="25" height="25" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M34 64H24C19.5817 64 16 60.4183 16 56V46" stroke="#C2CCDE" stroke-linecap="round" stroke-linejoin="round" />
                             <path d="M46 64H56C60.4183 64 64 60.4183 64 56V46" stroke="#C2CCDE" stroke-linecap="round" stroke-linejoin="round" />

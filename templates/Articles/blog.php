@@ -1,8 +1,8 @@
 <?php
 
 use Cake\Routing\Router; //load at the beginning of file
-echo $this->Html->css('select2/css/select2.css');
-echo $this->Html->script('select2/js/select2.full.min.js');
+//echo $this->Html->css('select2/css/select2.css');
+//echo $this->Html->script('select2/js/select2.full.min.js');
 echo $this->Html->css('jquery.datetimepicker.min.css');
 echo $this->Html->script('jquery.datetimepicker.full.js');
 $domain = Router::url("/", true);
