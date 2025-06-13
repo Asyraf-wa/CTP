@@ -39,24 +39,95 @@ class UsersController extends AppController
     {
         parent::beforeFilter($event);
 
-        $this->Authentication->allowUnauthenticated(['login', 'registration', 'forgotPassword', 'forgotUsername', 'resetPassword', 'verify']);
+        $this->Authentication->allowUnauthenticated(['login', 'registration', 'forgotPassword', 'forgotUsername', 'resetPassword', 'verify', 'auth']);
     }
+
+    // public function login()
+    // {
+    //     $this->set('title', 'Sign-in');
+    //     $result = $this->Authentication->getResult();
+    //     if ($result->isValid()) {
+    //         $target = $this->Authentication->getLoginRedirect() ?? '/dashboards';
+    //         //debug($target);
+    //         //exit;
+    //         $this->UserLogs->userLoginActivity($this->Authentication->getIdentity('id')->getIdentifier('id'));
+    //         $this->updateLoginFields(); //capture ip and login time
+    //         $session = $this->request->getSession();
+    //         return $this->redirect($target);
+    //     }
+    //     if ($this->request->is('post')) {
+    //         $this->Flash->error('Invalid username or password');
+    //     }
+    // }
+
+    public function auth()
+    {
+        $this->set('title', 'Generate Temporary Password');
+        if ($this->request->is('post')) {
+            $email = $this->request->getData('email');
+            $userTable = TableRegistry::getTableLocator()->get('Users');
+
+            if (empty($email)) {
+                $this->Flash->error(__('Please insert your email address'));
+                return;
+            }
+
+            $user = $userTable->find('all')->where(['email' => $email])->first();
+            if ($user) {
+                $temporaryPassword = str_pad((string)rand(0, 999999), 6, '0', STR_PAD_LEFT);
+                $user->password = $temporaryPassword;
+                $user->token_created_at = date('Y-m-d H:i:s', strtotime('+3 minutes'));
+                if ($userTable->save($user)) {
+                    $mailer = new Mailer('default');
+                    $mailer->setTransport('smtp');
+                    $mailer->setFrom(['noreply@codethepixel.com' => 'ReCRUD'])
+                        ->setTo($email)
+                        ->setEmailFormat('html')
+                        ->setSubject('One-Time PIN (OTP) for ReCRUD')
+                        ->deliver('Hi,<br/><br/>You have request for One-Time PIN (OTP) for Re-CRUD account login.<br/><br/>Please enter the 6 digit OTP to continue<br/><br/>' . $temporaryPassword . '<br/><br/>This OTP is valid for 3 minutes only.<br/><br/>If you did not request this, please ignore this email.<br/><br/>Thank you,<br/>ReCRUD Team');
+
+                    $this->Flash->success('A temporary pin has been sent to ' . $email . ', please check your email');
+                    return $this->redirect(['action' => 'login', '?' => ['email' => $email]]);
+                } else {
+                    $this->Flash->error(__('The temporary pin could not be saved. Please, try again.'));
+                }
+            } else {
+                $this->Flash->error(__('Email is not registered in system'));
+            }
+        }
+    }
+
 
     public function login()
     {
         $this->set('title', 'Sign-in');
-        $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
-            $target = $this->Authentication->getLoginRedirect() ?? '/dashboards';
-            //debug($target);
-            //exit;
-            $this->UserLogs->userLoginActivity($this->Authentication->getIdentity('id')->getIdentifier('id'));
-            $this->updateLoginFields(); //capture ip and login time
-            $session = $this->request->getSession();
-            return $this->redirect($target);
-        }
         if ($this->request->is('post')) {
-            $this->Flash->error('Invalid username or password');
+            $email = $this->request->getData('email');
+            $password = $this->request->getData('password');
+
+            $user = $this->Users->find('all')->where(['email' => $email])->first();
+            if ($user) {
+                $currentDateTime = date('Y-m-d H:i:s');
+                if (new \DateTime($currentDateTime) <= new \DateTime($user->token_created_at->i18nFormat('yyyy-MM-dd HH:mm:ss'))) {
+                    $result = $this->Authentication->getResult();
+                    if ($result->isValid()) {
+                        $redirect = $this->request->getQuery('redirect', [
+                            'controller' => 'Dashboards',
+                            'action' => 'index',
+                        ]);
+                        $this->UserLogs->userLoginActivity($this->Authentication->getIdentity('id')->getIdentifier('id'));
+                        $this->updateLoginFields(); // capture IP and login time
+                        return $this->redirect($redirect);
+                    } else {
+                        $this->Flash->error('Invalid OTP');
+                    }
+                } else {
+                    $this->Flash->error('Expired OTP');
+                    return $this->redirect(['action' => 'auth']);
+                }
+            } else {
+                $this->Flash->error('Invalid OTP');
+            }
         }
     }
 
