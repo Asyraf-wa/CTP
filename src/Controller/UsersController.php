@@ -80,11 +80,11 @@ class UsersController extends AppController
                 if ($userTable->save($user)) {
                     $mailer = new Mailer('default');
                     $mailer->setTransport('smtp');
-                    $mailer->setFrom(['noreply@codethepixel.com' => 'ReCRUD'])
+                    $mailer->setFrom(['noreply@codethepixel.com' => 'Code The Pixel'])
                         ->setTo($email)
                         ->setEmailFormat('html')
-                        ->setSubject('One-Time PIN (OTP) for ReCRUD')
-                        ->deliver('Hi,<br/><br/>You have request for One-Time PIN (OTP) for Re-CRUD account login.<br/><br/>Please enter the 6 digit OTP to continue<br/><br/>' . $temporaryPassword . '<br/><br/>This OTP is valid for 3 minutes only.<br/><br/>If you did not request this, please ignore this email.<br/><br/>Thank you,<br/>ReCRUD Team');
+                        ->setSubject('One-Time PIN (OTP) for Code The Pixel')
+                        ->deliver('Hi,<br/><br/>You have request for One-Time PIN (OTP) for Code The Pixel account login.<br/><br/>Please enter the 6 digit OTP to continue<br/><br/>' . $temporaryPassword . '<br/><br/>This OTP is valid for 3 minutes only.<br/><br/>If you did not request this, please ignore this email.<br/><br/>Thank you,<br/>Code The Pixel Bot');
 
                     $this->Flash->success('A temporary pin has been sent to ' . $email . ', please check your email');
                     return $this->redirect(['action' => 'login', '?' => ['email' => $email]]);
