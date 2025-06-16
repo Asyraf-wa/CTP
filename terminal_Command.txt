@@ -1,0 +1,8 @@
+- Deploy and install dependencies on the server
+- SSH into your web server and navigate to your project folder.
+- Run git pull origin your-branch to sync the latest changes.
+- Then, install the dependencies using:
+
+composer install --no-dev --optimize-autoloader
+
+- This ensures your vendor folder is updated based on the locked versions in composer.lock.
