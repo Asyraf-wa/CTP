@@ -184,13 +184,13 @@ $counter = ($page * $limit) - $limit + 1; */
 			$combine = $domain . $sub . $identifier;
 
 			switch ($i++) {
-					//Row 1 [3 items]
+				//Row 1 [3 items]
 				case "1":
 					echo '<div class="col-md-6">';
 					echo '<div class="big-feed-container">';
 					echo ($article->featured == 1) ? "<div class='ribbon-featured'>Featured</div>" : "";
-					echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster, ['class' => 'big-bg-cover', 'width' => '644px', 'height' => '300px', 'alt' => $article->title]);
-					echo '<a href="' . $combine . '" class="feed-title-light-link">';
+					echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster, ['class' => 'big-bg-cover', 'width' => '644px', 'height' => '300px', 'alt' => $article->title, 'fetchpriority' => 'high']);
+					echo '<a href="' . $combine . '" class="feed-title-light-link" rel="preload" as="image">';
 					echo '<div class="big-gradient-feed big-gradient-brown">';
 					echo '<div class="big-feed-title text-dark">';
 					echo h($article->title);
@@ -263,7 +263,7 @@ $counter = ($page * $limit) - $limit + 1; */
 					echo '</a>';
 					echo '</div></div>';
 					break;
-					//Row 2 [3 items]
+				//Row 2 [3 items]
 				case "4":
 					echo '<div class="col-md-3">';
 					echo '<div class="small-feed-container">';
@@ -326,8 +326,8 @@ $counter = ($page * $limit) - $limit + 1; */
 					echo '<div class="col-md-6">';
 					echo '<div class="big-feed-container">';
 					echo ($article->featured == 1) ? "<div class='ribbon-featured'>Featured</div>" : "";
-					echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster, ['class' => 'big-bg-cover', 'width' => '644px', 'height' => '300px', 'alt' => $article->title]);
-					echo '<a href="' . $combine . '" class="feed-title-light-link">';
+					echo $this->Html->image('../files/Articles/poster/' . $article->slug . '/' . $article->poster, ['class' => 'big-bg-cover', 'width' => '644px', 'height' => '300px', 'alt' => $article->title, 'fetchpriority' => 'high']);
+					echo '<a href="' . $combine . '" class="feed-title-light-link" rel="preload" as="image">';
 					echo '<div class="big-gradient-feed big-gradient-yellow">';
 					echo '<div class="big-feed-title text-dark">';
 					echo h($article->title);
@@ -348,7 +348,7 @@ $counter = ($page * $limit) - $limit + 1; */
 					echo '</a>';
 					echo '</div></div>';
 					break;
-					//Row 3 [4 items]
+				//Row 3 [4 items]
 				case "7":
 					echo '<div class="col-md-3">';
 					echo '<div class="small-feed-container">';
@@ -454,7 +454,7 @@ $counter = ($page * $limit) - $limit + 1; */
 					echo '</a>';
 					echo '</div></div>';
 					break;
-					//Row 4 [3 items]
+				//Row 4 [3 items]
 				case "11":
 					echo '<div class="col-md-6">';
 					echo '<div class="big-feed-container">';
@@ -533,7 +533,7 @@ $counter = ($page * $limit) - $limit + 1; */
 					echo '</a>';
 					echo '</div></div>';
 					break;
-					//Row 5 [3 items]
+				//Row 5 [3 items]
 				case "14":
 					echo '<div class="col-md-3">';
 					echo '<div class="small-feed-container">';
@@ -612,7 +612,7 @@ $counter = ($page * $limit) - $limit + 1; */
 					echo '</a>';
 					echo '</div></div>';
 					break;
-					//Row 6 [4 items]
+				//Row 6 [4 items]
 				case "17":
 					echo '<div class="col-md-3">';
 					echo '<div class="small-feed-container">';
