@@ -120,7 +120,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
                 'prefix' => false,
                 'plugin' => null,
                 'controller' => 'Users',
-                'action' => 'login',
+                'action' => 'auth',
             ]),
             'queryParam' => 'redirect',
         ]);

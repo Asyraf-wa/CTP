@@ -62,7 +62,9 @@ class UsersController extends AppController
 
     public function auth()
     {
-        $this->set('title', 'Generate Temporary Password');
+        $this->set('title', 'Authentication Page');
+        $this->viewBuilder()->disableAutoLayout();
+        $this->viewBuilder()->setTemplate('auth');
         if ($this->request->is('post')) {
             $email = $this->request->getData('email');
             $userTable = TableRegistry::getTableLocator()->get('Users');
@@ -101,6 +103,8 @@ class UsersController extends AppController
     public function login()
     {
         $this->set('title', 'Sign-in');
+        $this->viewBuilder()->disableAutoLayout();
+        $this->viewBuilder()->setTemplate('login');
         if ($this->request->is('post')) {
             $email = $this->request->getData('email');
             $password = $this->request->getData('password');
