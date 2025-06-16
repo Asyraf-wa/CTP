@@ -5,6 +5,7 @@
     "type": "project",
     "license": "MIT",
     "require": {
+        "recrud/recrud": "^2.0",
         "php": ">=8.1",
         "cakephp/authentication": "^3.0",
         "cakephp/cakephp": "^5.0.1",
