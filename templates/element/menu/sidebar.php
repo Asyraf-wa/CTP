@@ -5,7 +5,7 @@ $a_name = $this->request->getParam('action');
 <!-- Menu -->
 <nav id="sidebar" class="bg-body-tertiary shadow">
     <div class="sidebar-header pt-2 ps-3">
-        <b class="gradient-animate-small"><b class="logo-small">&lt;&#47;&gt;</b> Re-CRUD</b>
+        <b class="gradient-animate-small"><b class="logo-small">&lt;&#47;&gt;</b> Code The Pixel</b>
     </div>
     <div class="px-0">
         <ul class="list-unstyled components">
