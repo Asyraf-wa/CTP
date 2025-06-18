@@ -3,12 +3,16 @@
 use Cake\Routing\Router; //load at the beginning of file
 //echo $this->Html->css('select2/css/select2.css');
 //echo $this->Html->script('select2/js/select2.full.min.js');
-echo $this->Html->css('jquery.datetimepicker.min.css');
-echo $this->Html->script('jquery.datetimepicker.full.js');
+//echo $this->Html->css('jquery.datetimepicker.min.css');
+//echo $this->Html->script('jquery.datetimepicker.full.js');
+
+echo $this->Html->css('jquery-ui-date.min.css');
+echo $this->Html->script('jquery-ui-date.min.js');
 $domain = Router::url("/", true);
 $c_name = $this->request->getParam('controller');
 $this->assign('title', 'Code The Pixel - Coding and Tutorial');
 ?>
+
 
 <div class="container mt-4">
 	<div class="text-end">
@@ -90,16 +94,20 @@ $this->assign('title', 'Code The Pixel - Coding and Tutorial');
 									'empty' => 'empty',
 									'autocomplete' => 'off',
 								]); ?>
+
 								<script>
-									$('#publish_from').datetimepicker({
-										lang: 'en',
-										timepicker: false,
-										format: 'Y-m-d',
-										formatDate: 'Y/m/d',
-										//minDate:'-1970/01/01', // yesterday is minimum date
-										//maxDate:'+1970/01/02' // and tommorow is maximum date calendar
+									$(function() {
+										var currentDate = new Date();
+										var lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0); // Last day of current month
+										$("#publish_from").datepicker({
+											dateFormat: "yy-mm-dd",
+											changeMonth: true,
+											changeYear: true,
+											maxDate: lastDayOfMonth // Restricts selection to the current month
+										});
 									});
 								</script>
+
 							</div>
 							<div class="col-md-2 col-xs-4">
 								<?php echo $this->Form->control('publish_to', [
@@ -114,13 +122,15 @@ $this->assign('title', 'Code The Pixel - Coding and Tutorial');
 									'autocomplete' => 'off',
 								]); ?>
 								<script>
-									$('#publish_to').datetimepicker({
-										lang: 'en',
-										timepicker: false,
-										format: 'Y-m-d',
-										formatDate: 'Y/m/d',
-										//minDate:'-1970/01/01', // yesterday is minimum date
-										//maxDate:'+1970/01/02' // and tommorow is maximum date calendar
+									$(function() {
+										var currentDate = new Date();
+										var lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0); // Last day of current month
+										$("#publish_to").datepicker({
+											dateFormat: "yy-mm-dd",
+											changeMonth: true,
+											changeYear: true,
+											maxDate: lastDayOfMonth // Restricts selection to the current month
+										});
 									});
 								</script>
 							</div>
