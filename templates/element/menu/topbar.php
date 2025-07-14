@@ -67,6 +67,19 @@
                         </li>
                     </ul>
                     <b class="top_menu_separator"></b>
+                    <?php
+                    echo $this->Html->link(
+                        '<i class="fa-solid fa-arrow-up-right-from-square"></i>',
+                        'https://' . env('HTTP_HOST'),
+                        [
+                            'class' => 'btn btn-sm border-0 transparent',
+                            'escape' => false,
+                            'target' => '_blank',
+                            'title' => 'Open main site'
+                        ]
+                    );
+                    ?>
+                    <b class="top_menu_separator"></b>
                     <a class="btn btn-sm border-0 transparent" data-bs-toggle="offcanvas" onclick="toggleFull()" role="button"><i class="fa-solid fa-expand"></i></a>
                     <?php if ($this->Identity->isLoggedIn()) {
                     ?>
